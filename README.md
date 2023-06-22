@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # vue3-ts-bms
 
 This template should help get you started developing with Vue 3 in Vite.
@@ -44,3 +45,7 @@ npm run build
 ```sh
 npm run lint
 ```
+=======
+# vue-ts-cms
+基于node.js+express-vue3+ts的前后端分离项目之后台管理系统
+>>>>>>> 35d8958c3d6d62ef983bd69ea5ffb2da9887dfa0
