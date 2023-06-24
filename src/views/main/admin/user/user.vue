@@ -4,19 +4,22 @@
       <user-search />
     </div>
     <div class="content">
-      <div class="header">头部</div>
-      <div class="table">表格</div>
-      <div class="pagination">分页</div>
+      <user-content />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import userSearch from './cpns/user-search.vue';
+import userContent from './cpns/user-content.vue';
 </script>
 
 <style lang="less" scoped>
 .app {
-  font-size: 14px;
+  .content {
+    margin-top: 25px;
+    border-radius: 8px;
+    background-color: #fff;
+  }
 }
 </style>
