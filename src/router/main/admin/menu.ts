@@ -1,4 +1,4 @@
 export default {
   path: '/main/admin/menu',
-  component: () => import('@/views/main/admin/menu.vue')
+  component: () => import('@/views/main/admin/menu/menu.vue')
 }

@@ -1,4 +1,4 @@
 export default {
   path: '/main/admin/role',
-  component: () => import('@/views/main/admin/role.vue')
+  component: () => import('@/views/main/admin/role/role.vue')
 }

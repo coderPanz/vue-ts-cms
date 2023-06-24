@@ -6,7 +6,7 @@
       </el-icon>
     </div>
     <div class="content">
-      <bread-crumb /> 
+      <bread-crumb />
       <div class="infos">
         <el-icon size="22"><BellFilled /></el-icon>
         <el-icon size="22"><Message /></el-icon>
@@ -18,7 +18,7 @@
           <template #dropdown>
             <el-dropdown-menu>
               <el-dropdown-item>个人信息</el-dropdown-item>
-              <el-dropdown-item>退出登录</el-dropdown-item>
+              <el-dropdown-item  @click="exitLogin">退出登录</el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
@@ -29,7 +29,9 @@
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import router from '@/router'
 import breadCrumb from '../nav-header/cpn/bread-crumb .vue'
+import { localIns } from '@/utils/cache/cache'
 // 1.1菜单状态图标切换
 // 1.2发出事件给父组件访问isFold变量
 const emit = defineEmits(['iconSwitch'])
@@ -38,6 +40,12 @@ const isFold = ref<boolean>(true)
     isFold.value = !isFold.value
     emit('iconSwitch', isFold.value)
   }
+
+// 删除token, 退出登录
+function exitLogin() {
+  localIns.removeCache('token')
+  router.push('/login')
+}
 </script>
 
 <style lang="less" scoped>
