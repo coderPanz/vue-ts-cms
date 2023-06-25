@@ -29,4 +29,3 @@ const breadCrumbPaths = computed(() => {
   padding-left: 10px;
 }
 </style>
-@/utils/breadCrumb/breadCrumb

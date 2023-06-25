@@ -35,8 +35,8 @@
     </el-form>
 
     <div class="btns">
-      <el-button @click="resetForm">重置</el-button>
-      <el-button @click="queryUser" type="primary">查询</el-button>
+      <el-button @click="resetDataList">重置</el-button>
+      <el-button @click="queryDataList" type="primary">查询</el-button>
     </div>
   </div>
 </template>
@@ -51,19 +51,26 @@ const formData = reactive<IformData>({
   id: '',
   name: '',
   status: 0,
-  createdAt: []
+  createdAt: ''
 })
+
+// 定义事件
+const emit = defineEmits(['queryData', 'resetData'])
 
 // 2. 重置查询表单
 // 2.1 获取el-form组件实例进行所有输入的reset, 在el-form-item绑定prop相应的重置的字段
+// 2.2 发出重置事件到父组件中进而间接操作content组件控制的网络请求
 const formDataRef = ref<InstanceType<typeof ElForm>>()
-function resetForm() {
+function resetDataList() {
   formDataRef.value.resetFields()
+  emit('resetData')
 }
 
 // 3. 查询
-function queryUser() {
-
+// 3.1 发出查询事件到父组件中进而间接操作content组件控制的网络请求
+function queryDataList() {
+  // console.log(formData)
+  emit('queryData', formData)
 }
 </script>
 

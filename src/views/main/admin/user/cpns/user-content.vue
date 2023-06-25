@@ -65,17 +65,23 @@ const { userList, count } = storeToRefs(adminStore)
 
 // 2. 分页器
 // 2.1 定义一个函数发送请求获取分页数据(这里我们定义一页显示10条数据)
-function getPageList() {
+function getPageList(formData?: any) {
   const size = pageSize.value
   const offset = (currentPage.value - 1) * pageSize.value
+
+  // 把search表单中的数据和size和offset数据结合起来
+  const allDataReq = { ...formData, size, offset }
   // 发送网络请求
-  adminStore.fetchGetUserList({ size, offset })
+  adminStore.fetchGetUserList(allDataReq)
 }
 
-// 2.2 当页面切换时发送网络请求获取下一页的数据
+// 2.2 当页数切换时发送网络请求获取下一页的数据
 function reFreshPage() {
   getPageList()
 }
+
+// 2.3 把getPageList请求函数暴露出去, 方便重置操作
+defineExpose({ getPageList })
 </script>
 
 <style lang="less" scoped>
