@@ -4,6 +4,7 @@ import type { ILogin } from '@/types/index'
 import { localIns } from '@/utils/cache/cache'
 import router from '@/router'
 import increaseRoute from '@/utils/Dynamic-Route/Dynamic-Route'
+import role from '@/router/main/admin/role'
 
 // 指定state中的数据类型
 interface IState {
@@ -27,19 +28,17 @@ const useLoginStore = defineStore('login', {
         const id = res.data.id
         const userInfos = await userInfosReq(id)
         const role_id = userInfos.data.data.roles[0]
-
-        // 2. 获取角色id
+        // // 2. 获取角色id
         const roleInfos = await roleInfosReq(role_id)
         const roleId = roleInfos.data.data.id
-
-        // 3. 通过角色id获取菜单树
+        // // 3. 通过角色id获取菜单树
         const menuTreeData = await menuTreeReq(roleId)
         localIns.setCache('localMenuTree', menuTreeData.data)
         this.localMenuTree = menuTreeData.data
 
-        // 登录成功后显示main页面前动态添加路由
+        // // 登录成功后显示main页面前动态添加路由
         increaseRoute(menuTreeData.data)
-        // 4. 跳转页面
+        // // 4. 跳转页面
         router.push('/main')
       } catch (error) {
         console.error()

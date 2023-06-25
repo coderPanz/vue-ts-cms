@@ -1,4 +1,3 @@
-import infos from '@/router/main/product/infos';
 import { getUserListReq } from '@/server/index'
 import { defineStore } from "pinia";
 
@@ -13,11 +12,10 @@ const useAdminStore = defineStore('admin', {
   }),
   actions: {
     // 获取用户列表的网络请求
-    async fetchGetUserList(infos?: any) {
-      const res = await getUserListReq(infos)
-      // console.log(res.data.data)
+    async fetchGetUserList(data: any) {
+      const res = await getUserListReq(data)
       this.userList = res.data.data
-      this.count = res.data.count
+      this.count = res.data.totalCount
     }
   }
 })

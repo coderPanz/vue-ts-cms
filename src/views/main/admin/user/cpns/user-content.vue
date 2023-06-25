@@ -34,7 +34,14 @@
       </el-table>
     </div>
     <div class="pagination">
-      <el-pagination v-model:page-size="pageSize" v-model:current-page="currentPage" background layout="prev, pager, next" :total="count" />
+      <el-pagination
+        v-model:page-size="pageSize"
+        v-model:current-page="currentPage"
+        background
+        layout="prev, pager, next"
+        :total="count"
+        @current-change="reFreshPage"
+      />
     </div>
   </div>
 </template>
@@ -43,23 +50,31 @@
 import useAdminStore from '@/store/main/admin'
 import { storeToRefs } from 'pinia'
 import format from '@/utils/formatDate/format'
-import { ref } from 'vue';
+import { ref } from 'vue'
+
+// 设置分页相关数据
+const currentPage = ref(1)
+const pageSize = ref(10)
+
 // 1. 获取用户列表
 const adminStore = useAdminStore()
-// 1. 1 发送网络请求(注意第一次我不需要发送请求我们不需要传入offset, 目的是为了后端能够)
-adminStore.fetchGetUserList()
+// 1. 1 发送网络请求(第一次渲染页面后发送网络请求)
+getPageList()
 // 1. 2  注意异步操作请求数据的时候需要对数据进行响应式处理才能在页面实时渲染
 const { userList, count } = storeToRefs(adminStore)
 
 // 2. 分页器
-const currentPage = ref(1)
-const pageSize = ref(10)
 // 2.1 定义一个函数发送请求获取分页数据(这里我们定义一页显示10条数据)
-function getUserList() {
-  const size = pageSize.value // 每一页最多显示多少条数据
-  const offset = (currentPage.value - 1) * 10 // 切换页面后所需要获取的总数据个数
-  const infos = { size, offset }
-  adminStore.fetchGetUserList(infos)
+function getPageList() {
+  const size = pageSize.value
+  const offset = (currentPage.value - 1) * pageSize.value
+  // 发送网络请求
+  adminStore.fetchGetUserList({ size, offset })
+}
+
+// 2.2 当页面切换时发送网络请求获取下一页的数据
+function reFreshPage() {
+  getPageList()
 }
 </script>
 

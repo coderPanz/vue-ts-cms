@@ -11,7 +11,7 @@ export async function postLoginRequest(account: ILogin) {
 
 // 2. 获取用户详细信息
 export async function userInfosReq(id: Number) {
-  return await pzrequest.get({
+  return await pzrequest.post({
     url: `/user/${id}`
   })
 }
