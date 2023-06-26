@@ -14,6 +14,7 @@ const useAdminStore = defineStore('admin', {
     // 获取用户列表的网络请求
     async fetchGetUserList(data: any) {
       const res = await getUserListReq(data)
+      console.log(res)
       this.userList = res.data.data
       this.count = res.data.totalCount
     }

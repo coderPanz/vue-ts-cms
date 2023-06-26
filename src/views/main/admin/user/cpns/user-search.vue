@@ -69,7 +69,6 @@ function resetDataList() {
 // 3. 查询
 // 3.1 发出查询事件到父组件中进而间接操作content组件控制的网络请求
 function queryDataList() {
-  // console.log(formData)
   emit('queryData', formData)
 }
 </script>

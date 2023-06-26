@@ -23,7 +23,6 @@ function resetDataList() {
 
 // 2. 查询 ---- 从子组件中获取查询条件并调用请求函数查询数据
 function queryDataList(formData: IformData) {
-  console.log(formData)
   userContentRef.value?.getPageList(formData)
 }
 </script>
