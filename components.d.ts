@@ -11,6 +11,8 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     Aside: typeof import('./src/components/aside/aside.vue')['default']
     'BreadCrumb ': typeof import('./src/components/nav-header/cpn/bread-crumb .vue')['default']
+    ComDialog: typeof import('./src/components/Dialog/com-Dialog.vue')['default']
+    Dialog: typeof import('./src/components/Dialog/Dialog.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElBreadcrumb: typeof import('element-plus/es')['ElBreadcrumb']

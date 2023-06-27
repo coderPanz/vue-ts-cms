@@ -3,15 +3,6 @@
     <div class="header">
       <h3>用户列表</h3>
       <el-button type="primary" @click="dialogVisible">新建用户</el-button>
-      <el-dialog title="创建用户" width="30%" v-model="isShow">
-        <span>This is a message</span>
-        <template #footer>
-          <span class="dialog-footer">
-            <el-button>Cancel</el-button>
-            <el-button type="primary"> Confirm </el-button>
-          </span>
-        </template>
-      </el-dialog>
     </div>
     <div class="table">
       <el-table :data="userList" border style="width: 100%">
@@ -55,6 +46,7 @@
         @current-change="reFreshPage"
       />
     </div>
+    <com-dialog ref="comDialogRef"/>
   </div>
 </template>
 
@@ -63,6 +55,7 @@ import useAdminStore from '@/store/main/admin'
 import { storeToRefs } from 'pinia'
 import format from '@/utils/formatDate/format'
 import { ref } from 'vue'
+import comDialog from '@/components/Dialog/com-Dialog.vue'
 
 // 设置分页相关数据
 const currentPage = ref(1)
@@ -105,9 +98,10 @@ function deleteUser(id: any) {
 }
 
 // 4. 新建用户
-const isShow = ref(false)
+const comDialogRef = ref<InstanceType<typeof comDialog>>()
+const isShow = ref<boolean>(false)
 function dialogVisible() {
-  isShow.value = !isShow.value
+  comDialogRef.value?.isShowExpose(isShow.value)
 }
 
 </script>

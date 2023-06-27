@@ -4,7 +4,7 @@
       <user-search @reset-data="resetDataList" @query-data="queryDataList"/>
     </div>
     <div class="content">
-      <user-content ref="userContentRef" />
+      <user-content ref="userContentRef"/>
     </div>
   </div>
 </template>
@@ -25,6 +25,7 @@ function resetDataList() {
 function queryDataList(formData: IformData) {
   userContentRef.value?.getPageList(formData)
 }
+
 </script>
 
 <style lang="less" scoped>
