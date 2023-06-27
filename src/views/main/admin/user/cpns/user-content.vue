@@ -2,7 +2,16 @@
   <div class="content">
     <div class="header">
       <h3>用户列表</h3>
-      <el-button type="primary">新建用户</el-button>
+      <el-button type="primary" @click="dialogVisible">新建用户</el-button>
+      <el-dialog title="创建用户" width="30%" v-model="isShow">
+        <span>This is a message</span>
+        <template #footer>
+          <span class="dialog-footer">
+            <el-button>Cancel</el-button>
+            <el-button type="primary"> Confirm </el-button>
+          </span>
+        </template>
+      </el-dialog>
     </div>
     <div class="table">
       <el-table :data="userList" border style="width: 100%">
@@ -28,8 +37,11 @@
           </template>
         </el-table-column>
         <el-table-column prop="date" label="操作" align="center">
-          <el-button>编辑</el-button>
-          <el-button type="danger">删除</el-button>
+          <!-- 使用作用域插槽获取当前数据的唯一标识:id -->
+          <template #default="scope">
+            <el-button>编辑</el-button>
+            <el-button type="danger" @click="deleteUser(scope.row.id)">删除</el-button>
+          </template>
         </el-table-column>
       </el-table>
     </div>
@@ -56,8 +68,10 @@ import { ref } from 'vue'
 const currentPage = ref(1)
 const pageSize = ref(10)
 
-// 1. 获取用户列表
+// 创建store实例
 const adminStore = useAdminStore()
+
+// 1. 获取用户列表
 // 1. 1 发送网络请求(第一次渲染页面后发送网络请求)
 getPageList()
 // 1. 2  注意异步操作请求数据的时候需要对数据进行响应式处理才能在页面实时渲染
@@ -82,6 +96,20 @@ function reFreshPage() {
 
 // 2.3 把getPageList请求函数暴露出去, 方便重置操作
 defineExpose({ getPageList })
+
+// 3. 删除数据
+// 3.1 找到该用户对应的id并执行删除操作, 之后再发送一次网络请求获取最新的数据进行展示
+function deleteUser(id: any) {
+  adminStore.fetchDeleteUserList(id)
+  getPageList()
+}
+
+// 4. 新建用户
+const isShow = ref(false)
+function dialogVisible() {
+  isShow.value = !isShow.value
+}
+
 </script>
 
 <style lang="less" scoped>

@@ -53,6 +53,9 @@ class PZrequest {
   post(config: PZrequestConfig) {
     return this.request({ ...config, method: 'POST' })
   }
+  delete(config: PZrequestConfig) {
+    return this.request({ ...config, method: 'DELETE' })
+  }
 }
 
 export default PZrequest

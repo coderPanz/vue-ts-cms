@@ -7,3 +7,10 @@ export function getUserListReq(data: any) {
     data: data
   })
 }
+
+// 删除指定id用户
+export function deleteIdUserReq(id: any) {
+  return pzrequest.delete({
+    url: `user/${id}`
+  })
+}
