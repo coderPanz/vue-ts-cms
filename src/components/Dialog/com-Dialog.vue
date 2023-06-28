@@ -1,24 +1,24 @@
 <template>
   <div class="dialog">
-    <el-dialog center title="创建用户" width="30%" v-model="isShow" :before-close="handleClose">
+    <el-dialog center title="创建用户" width="30%" v-model="isShow" :model="dialogForm" :before-close="handleClose">
       <el-form label-width="70px">
         <el-form-item label="用户名">
-          <el-input />
+          <el-input v-model="dialogForm.name"/>
         </el-form-item>
         <el-form-item label="密码">
-          <el-input />
+          <el-input v-model="dialogForm.password"/>
         </el-form-item>
         <el-form-item label="所属角色">
-          <el-input />
+          <el-input v-model="dialogForm.roles"/>
         </el-form-item>
         <el-form-item label="所属部门">
-          <el-input />
+          <el-input v-model="dialogForm.department"/>
         </el-form-item>
       </el-form>
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="cancelShow">取消</el-button>
-          <el-button type="primary"> 确定 </el-button>
+          <el-button @click="submitBtn" type="primary"> 确定 </el-button>
         </span>
       </template>
     </el-dialog>
@@ -26,7 +26,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { reactive, ref } from 'vue';
+import type { IDialogForm } from '@/types/Dialog/dialogForm'
 
 // 1. 点击新建后的弹出
 const isShow = ref<boolean>(false)
@@ -44,6 +45,19 @@ function cancelShow() {
 // 3. 点击弹窗 × 号时需要对isShow取反
 function handleClose() {
   isShow.value = !isShow.value
+}
+
+// 4. 绑定表单中的数据
+const dialogForm = reactive<IDialogForm>({
+  name: '',
+  password: '',
+  roles: '',
+  department: ''
+})
+
+// 5. 点击确认获取表单数据并携带发送到服务器继续创建操作
+function submitBtn() {
+  console.log(dialogForm.name)
 }
 </script>
 
