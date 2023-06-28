@@ -28,7 +28,9 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue';
 import type { IDialogForm } from '@/types/Dialog/dialogForm'
-
+import useAdminStore from "@/store/main/admin"
+// 初始化仓库实例
+const adminStore = useAdminStore()
 // 1. 点击新建后的弹出
 const isShow = ref<boolean>(false)
 // 不直接操作属性, 封装一层函数再继续操作就有了后期的可控制属性的空间
@@ -57,7 +59,8 @@ const dialogForm = reactive<IDialogForm>({
 
 // 5. 点击确认获取表单数据并携带发送到服务器继续创建操作
 function submitBtn() {
-  console.log(dialogForm.name)
+  const { name, password, roles, department } = dialogForm
+
 }
 </script>
 
