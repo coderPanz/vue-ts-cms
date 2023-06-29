@@ -60,6 +60,7 @@ const dialogForm = reactive<IDialogForm>({
 // 5. 点击确认获取表单数据并携带发送到服务器继续创建操作
 function submitBtn() {
   const { name, password, roles, department } = dialogForm
+  // console.log(name, password, roles, department)
   adminStore.fetchCreateUser({ name, password, roles, department })
 }
 </script>
