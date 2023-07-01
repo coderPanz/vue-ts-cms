@@ -97,7 +97,7 @@ function deleteUser(id: any) {
   getPageList()
 }
 
-// 4. 新建用户
+// 4. 点击弹窗新建用户弹窗
 const comDialogRef = ref<InstanceType<typeof comDialog>>()
 const isShow = ref<boolean>(false)
 function dialogVisible() {

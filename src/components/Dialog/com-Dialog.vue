@@ -44,7 +44,7 @@ function cancelShow() {
   isShow.value = !isShow.value
 }
 
-// 3. 点击弹窗 × 号时需要对isShow取反
+// 3. 点击弹窗 'X'号关闭弹窗时需要对isShow取反
 function handleClose() {
   isShow.value = !isShow.value
 }
@@ -58,10 +58,14 @@ const dialogForm = reactive<IDialogForm>({
 })
 
 // 5. 点击确认获取表单数据并携带发送到服务器继续创建操作
+// 若创建成功弹窗一个成功的窗口, 若失败弹出失败窗口
 function submitBtn() {
   const { name, password, roles, department } = dialogForm
-  // console.log(name, password, roles, department)
-  adminStore.fetchCreateUser({ name, password, roles, department })
+  console.log(name, password, roles, department)
+  isShow.value = !isShow.value
+  adminStore.fetchCreateUser({ name, password, roles, department }).then(res => {
+    res
+  })
 }
 </script>
 
