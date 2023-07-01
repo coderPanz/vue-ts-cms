@@ -1,24 +1,36 @@
 <template>
   <div class="dialog">
-    <el-dialog center title="创建用户" width="30%" v-model="isShow" :model="dialogForm" :before-close="handleClose">
+    <el-dialog
+      center
+      title="创建用户"
+      width="30%"
+      v-model="isShow"
+      :model="dialogForm"
+      :before-close="handleClose"
+    >
       <el-form label-width="70px">
         <el-form-item label="用户名">
-          <el-input v-model="dialogForm.name"/>
+          <el-input v-model="dialogForm.name" />
         </el-form-item>
         <el-form-item label="密码">
-          <el-input v-model="dialogForm.password"/>
+          <el-input v-model="dialogForm.password" />
         </el-form-item>
         <el-form-item label="所属角色">
-          <el-input v-model="dialogForm.roles"/>
+          <el-select v-model="dialogForm.roles" >
+            <!-- v-for渲染出所需列表 -->
+            <el-option label="Zone one" value="shanghai" />
+          </el-select>
         </el-form-item>
         <el-form-item label="所属部门">
-          <el-input v-model="dialogForm.department"/>
+          <el-select v-model="dialogForm.department">
+            <el-option label="Zone one" value="shanghai" />
+          </el-select>
         </el-form-item>
       </el-form>
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="cancelShow">取消</el-button>
-          <el-button @click="submitBtn" type="primary"> 确定 </el-button>
+          <el-button :plain="true" @click="submitBtn" type="primary">确定</el-button>
         </span>
       </template>
     </el-dialog>
@@ -26,9 +38,10 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref } from 'vue';
+import { reactive, ref } from 'vue'
 import type { IDialogForm } from '@/types/Dialog/dialogForm'
-import useAdminStore from "@/store/main/admin"
+import useAdminStore from '@/store/main/admin'
+import { ElMessage } from 'element-plus/lib/components/index.js'
 // 初始化仓库实例
 const adminStore = useAdminStore()
 // 1. 点击新建后的弹出
@@ -53,8 +66,8 @@ function handleClose() {
 const dialogForm = reactive<IDialogForm>({
   name: '',
   password: '',
-  roles: '',
-  department: ''
+  roles: [],
+  department: []
 })
 
 // 5. 点击确认获取表单数据并携带发送到服务器继续创建操作
@@ -63,8 +76,19 @@ function submitBtn() {
   const { name, password, roles, department } = dialogForm
   console.log(name, password, roles, department)
   isShow.value = !isShow.value
-  adminStore.fetchCreateUser({ name, password, roles, department }).then(res => {
-    res
+  adminStore.fetchCreateUser({ name, password, roles, department }).then((res: any) => {
+    // 如果创建成功说明res.data.data有值, 弹出成功弹出, 否则弹出失败窗口
+    if (res.data.data) {
+      ElMessage({
+        message: '创建成功!',
+        type: 'success'
+      })
+    } else {
+      ElMessage({
+        message: '创建失败!',
+        type: 'warning'
+      })
+    }
   })
 }
 </script>
@@ -72,11 +96,13 @@ function submitBtn() {
 <style lang="less" scoped>
 .dialog {
   :deep(.el-dialog) {
-    padding: calc(var(--el-dialog-padding-primary)) var(--el-dialog-padding-primary)
+    padding: calc(var(--el-dialog-padding-primary)) var(--el-dialog-padding-primary);
   }
   :deep(.el-dialog__title) {
     margin-left: 25px;
   }
+  .el-select {
+    width: 100%;
+  }
 }
-
 </style>
