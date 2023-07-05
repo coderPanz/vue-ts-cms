@@ -24,10 +24,16 @@ const useLoginStore = defineStore('login', {
         // 封装工具进行本地缓存
         localIns.setCache('token', res.data.token)
         this.token = res.data.token
-        console.log(res.data.id)
-        // 1. 获取用户roles数组中的_id
+        // 1. 获取角色id
         const role_id = res.data.id
-        console.log(role_id)
+        // 2. 通过角色id获取角色信息
+        const roleInfos = await roleInfosReq(role_id)
+        // 通过角色id获取菜单树
+        const menuTreeData = await menuTreeReq(role_id)
+        console.log(menuTreeData)
+
+
+        // 1. 获取用户roles数组中的_id
         // const userInfos = await userInfosReq(id)
         // const role_id = userInfos.data.data.roles[0]
         // // 2. 获取角色id
@@ -38,8 +44,8 @@ const useLoginStore = defineStore('login', {
         // localIns.setCache('localMenuTree', menuTreeData.data)
         // this.localMenuTree = menuTreeData.data
 
-        // // 登录成功后显示main页面前动态添加路由
-        // increaseRoute(menuTreeData.data)
+        // 登录成功后显示main页面前动态添加路由
+        increaseRoute(menuTreeData.data)
         // // 4. 跳转页面
         // router.push('/main')
       } catch (error) {
