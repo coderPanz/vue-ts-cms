@@ -18,8 +18,9 @@
         <el-form-item label="所属角色">
           <el-select v-model="dialogForm.roles" >
             <!-- v-for渲染出所需列表 -->
-            <!-- <template v-for="item in "></template> -->
-            <el-option label="Zone one" value="shanghai" />
+            <template v-for="item in roleList" :key="item._id">
+              <el-option :label="item.name" :value="item.name" />
+            </template>
           </el-select>
         </el-form-item>
         <el-form-item label="所属部门">
@@ -43,15 +44,21 @@ import { reactive, ref } from 'vue'
 import type { IDialogForm } from '@/types/Dialog/dialogForm'
 import useAdminStore from '@/store/main/admin'
 import { ElMessage } from 'element-plus/lib/components/index.js'
+import { storeToRefs } from 'pinia';
+
 // 初始化仓库实例
 const adminStore = useAdminStore()
 // 1. 点击新建后的弹出
 const isShow = ref<boolean>(false)
 // 1.1 不直接操作属性, 封装一层函数再继续操作就有了后期的可控制属性的空间
+// 1.2 点击创建用户按钮后获取角色列表, 并渲染到下拉单选框中, 当点击时显示可选的角色列表
 function isShowExpose(isParam: boolean) {
   isShow.value = !isParam
+  adminStore.fetchGetRolesList()
 }
-// 1.2 把isShowExpose暴露出去
+// 1.3 因为fetchGetRolesList是异步的, 所以实时监听roleList值得变换情况避免获取空值得情况
+const { roleList } = storeToRefs(adminStore)
+// 1.4 把isShowExpose暴露出去
 defineExpose({ isShowExpose })
 
 

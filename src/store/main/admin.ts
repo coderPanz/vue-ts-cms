@@ -5,11 +5,13 @@ import type { IDialogForm } from '@/types/Dialog/dialogForm'
 interface IState {
   userList: any[]
   count: Number
+  roleList: any[]
 }
 const useAdminStore = defineStore('admin', {
   state: (): IState => ({
     userList: [],
-    count: 0
+    count: 0,
+    roleList: []
   }),
   actions: {
     // 1. 获取用户列表的网络请求
@@ -29,7 +31,8 @@ const useAdminStore = defineStore('admin', {
     // 4. 获取角色列表以便在创建用户时显示对应的角色名称
     async fetchGetRolesList() {
       const res = await getRolesListReq()
-      console.log(res)
+      this.roleList = res.data.data
+      console.log(res.data.data)
     }
   }
 })

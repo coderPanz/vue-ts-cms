@@ -98,7 +98,6 @@ function deleteUser(id: any) {
 }
 
 // 4. 点击新建用户btn弹出新建用户弹窗
-// 4.1 点击该按钮后获取角色列表, 并渲染到下拉单选框中
 const comDialogRef = ref<InstanceType<typeof comDialog>>()
 const isShow = ref<boolean>(false)
 function dialogVisible() {
