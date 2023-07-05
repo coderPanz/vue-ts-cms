@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia'
-import { userInfosReq, postLoginRequest, roleInfosReq, menuTreeReq } from '@/server/index'
+import { postLoginRequest, menuTreeReq } from '@/server/index'
 import type { ILogin } from '@/types/index'
 import { localIns } from '@/utils/cache/cache'
 import router from '@/router'
 import increaseRoute from '@/utils/Dynamic-Route/Dynamic-Route'
-import role from '@/router/main/admin/role'
+import menu from '@/router/main/admin/menu'
 
 // 指定state中的数据类型
 interface IState {
@@ -26,12 +26,10 @@ const useLoginStore = defineStore('login', {
         this.token = res.data.token
         // 1. 获取角色id
         const role_id = res.data.id
-        // 2. 通过角色id获取角色信息
-        const roleInfos = await roleInfosReq(role_id)
-        // 通过角色id获取菜单树
+        // 2. 通过角色id获取菜单树
         const menuTreeData = await menuTreeReq(role_id)
-        console.log(menuTreeData)
-
+        localIns.setCache('localMenuTree', menuTreeData.data.data)
+        this.localMenuTree = menuTreeData.data.data
 
         // 1. 获取用户roles数组中的_id
         // const userInfos = await userInfosReq(id)
@@ -45,9 +43,9 @@ const useLoginStore = defineStore('login', {
         // this.localMenuTree = menuTreeData.data
 
         // 登录成功后显示main页面前动态添加路由
-        increaseRoute(menuTreeData.data)
+        increaseRoute(menuTreeData.data.data)
         // // 4. 跳转页面
-        // router.push('/main')
+        router.push('/main')
       } catch (error) {
         console.error()
       }

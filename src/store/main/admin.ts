@@ -1,4 +1,4 @@
-import { getUserListReq, deleteIdUserReq, createUserReq } from '@/server/index'
+import { getUserListReq, deleteIdUserReq, createUserReq, getRolesListReq } from '@/server/index'
 import { defineStore } from "pinia";
 import type { IDialogForm } from '@/types/Dialog/dialogForm'
 
@@ -25,6 +25,11 @@ const useAdminStore = defineStore('admin', {
     // 3. 创建用户
     async fetchCreateUser(data: IDialogForm) {
       const res = await createUserReq(data)
+    },
+    // 4. 获取角色列表以便在创建用户时显示对应的角色名称
+    async fetchGetRolesList() {
+      const res = await getRolesListReq()
+      console.log(res)
     }
   }
 })

@@ -22,3 +22,10 @@ export function createUserReq(data: IDialogForm) {
     data: data
   })
 }
+
+// 获取角色列表
+export function getRolesListReq() {
+  return pzrequest.get({
+    url: '/role'
+  })
+}

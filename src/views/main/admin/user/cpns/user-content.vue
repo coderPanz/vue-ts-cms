@@ -7,7 +7,7 @@
     <div class="table">
       <el-table :data="userList" border style="width: 100%">
         <el-table-column type="index" label="序号" width="70" align="center" />
-        <el-table-column prop="id" label="id" align="center" />
+        <el-table-column prop="_id" label="id" align="center" width="230"/>
         <el-table-column prop="name" label="用户名" align="center" />
         <el-table-column prop="status" label="状态" align="center" width="100">
           <!-- 作用域插槽 -->
@@ -31,7 +31,7 @@
           <!-- 使用作用域插槽获取当前数据的唯一标识:id -->
           <template #default="scope">
             <el-button>编辑</el-button>
-            <el-button type="danger" @click="deleteUser(scope.row.id)">删除</el-button>
+            <el-button type="danger" @click="deleteUser(scope.row._id)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -97,7 +97,8 @@ function deleteUser(id: any) {
   getPageList()
 }
 
-// 4. 点击弹窗新建用户弹窗
+// 4. 点击新建用户btn弹出新建用户弹窗
+// 4.1 点击该按钮后获取角色列表, 并渲染到下拉单选框中
 const comDialogRef = ref<InstanceType<typeof comDialog>>()
 const isShow = ref<boolean>(false)
 function dialogVisible() {

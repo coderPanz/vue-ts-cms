@@ -29,7 +29,7 @@
 import { ref, watch } from 'vue'
 import loginAccount from './login-account.vue'
 import loginIphone from './login-iphone.vue';
-import { localIns, sessionIns } from '@/utils/cache/cache';
+import { localIns } from '@/utils/cache/cache';
 
 // 3.点击登录
 // 3.1 获取子组件实例并指定类型, 使用InstanceType表示获取该类的返回值的类型

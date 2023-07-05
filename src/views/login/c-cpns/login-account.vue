@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref, watch } from 'vue'
+import { reactive, ref } from 'vue'
 import type { ILogin } from '@/types'
 import { type FormRules, type ElForm, ElMessage } from 'element-plus/lib/components/index.js'
 import useLoginStore from '@/store/login/login'

@@ -18,6 +18,7 @@
         <el-form-item label="所属角色">
           <el-select v-model="dialogForm.roles" >
             <!-- v-for渲染出所需列表 -->
+            <!-- <template v-for="item in "></template> -->
             <el-option label="Zone one" value="shanghai" />
           </el-select>
         </el-form-item>
@@ -46,11 +47,13 @@ import { ElMessage } from 'element-plus/lib/components/index.js'
 const adminStore = useAdminStore()
 // 1. 点击新建后的弹出
 const isShow = ref<boolean>(false)
-// 不直接操作属性, 封装一层函数再继续操作就有了后期的可控制属性的空间
+// 1.1 不直接操作属性, 封装一层函数再继续操作就有了后期的可控制属性的空间
 function isShowExpose(isParam: boolean) {
   isShow.value = !isParam
 }
+// 1.2 把isShowExpose暴露出去
 defineExpose({ isShowExpose })
+
 
 // 2. 点击取消后关闭弹窗
 function cancelShow() {
