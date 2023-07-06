@@ -72,6 +72,7 @@ function loginAction(isRemember: boolean) {
 defineExpose({
   loginAction
 })
+
 </script>
 
 <style lang="less" scoped>

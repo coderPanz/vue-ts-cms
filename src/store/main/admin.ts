@@ -30,6 +30,7 @@ const useAdminStore = defineStore('admin', {
     // 3. 创建用户
     async fetchCreateUser(data: IDialogForm) {
       const res = await createUserReq(data)
+      return res
     },
     // 4. 获取角色列表以便在创建用户时显示对应的角色名称
     async fetchGetRolesList() {

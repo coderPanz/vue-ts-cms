@@ -67,7 +67,6 @@ const adminStore = useAdminStore()
 // 1. 获取用户列表
 // 1. 1 发送网络请求(第一次渲染页面后发送网络请求)
 getPageList()
-console.log('first')
 // 1. 2  注意异步操作请求数据的时候需要对数据进行响应式处理才能在页面实时渲染
 const { userList, count } = storeToRefs(adminStore)
 

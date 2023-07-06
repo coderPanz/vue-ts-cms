@@ -5,14 +5,13 @@
       title="创建用户"
       width="30%"
       v-model="isShow"
-      :model="dialogForm"
       :before-close="handleClose"
     >
-      <el-form label-width="70px">
-        <el-form-item label="用户名">
+      <el-form label-width="70px" ref="ruleFormRef" :model="dialogForm" :rules="rules">
+        <el-form-item label="用户名" prop="name">
           <el-input v-model="dialogForm.name" />
         </el-form-item>
-        <el-form-item label="密码">
+        <el-form-item label="密码" prop="password">
           <el-input v-model="dialogForm.password" />
         </el-form-item>
         <el-form-item label="所属角色">
@@ -45,7 +44,7 @@
 import { reactive, ref } from 'vue'
 import type { IDialogForm } from '@/types/Dialog/dialogForm'
 import useAdminStore from '@/store/main/admin'
-import { ElMessage } from 'element-plus/lib/components/index.js'
+import { type FormRules, ElMessage } from 'element-plus/lib/components/index.js'
 import { storeToRefs } from 'pinia';
 
 // 初始化仓库实例
@@ -90,20 +89,22 @@ function submitBtn() {
   const { name, password, roles, department } = dialogForm
   console.log(name, password, roles, department)
   isShow.value = !isShow.value
-  // adminStore.fetchCreateUser({ name, password, roles, department }).then((res: any) => {
-  //   // 如果创建成功说明res.data.data有值, 弹出成功弹出, 否则弹出失败窗口
-  //   if (res.data.data) {
-  //     ElMessage({
-  //       message: '创建成功!',
-  //       type: 'success'
-  //     })
-  //   } else {
-  //     ElMessage({
-  //       message: '创建失败!',
-  //       type: 'warning'
-  //     })
-  //   }
-  // })
+  adminStore.fetchCreateUser({ name, password, roles, department })
+}
+// 6. 设置表单验证规则
+const rules: FormRules = {
+  name: [
+    { required: true, message: '请输入用户名', trigger: 'blur' },
+    { min: 3, max: 12, message: '用户名长度为3到12位', trigger: 'blur' }
+  ],
+  password: [
+    { required: true, message: '请输入密码', trigger: 'blur' },
+    {
+      pattern: /^(?=.*[a-zA-Z])(?=.*\d).{3,12}$/,
+      message: '密码长度为3到12位且必须含有数字和字母',
+      trigger: 'blur'
+    }
+  ]
 }
 </script>
 
