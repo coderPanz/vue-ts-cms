@@ -1,5 +1,5 @@
 export interface IformData {
-  id?: any
+  id?: String
   name?: String
   status?: Number
   createdAt?: String

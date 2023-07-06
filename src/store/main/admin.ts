@@ -1,4 +1,4 @@
-import { getUserListReq, deleteIdUserReq, createUserReq, getRolesListReq } from '@/server/index'
+import { getUserListReq, deleteIdUserReq, createUserReq, getRolesListReq, getDepartmentListReq } from '@/server/index'
 import { defineStore } from "pinia";
 import type { IDialogForm } from '@/types/Dialog/dialogForm'
 
@@ -6,12 +6,14 @@ interface IState {
   userList: any[]
   count: Number
   roleList: any[]
+  departmentList: any[]
 }
 const useAdminStore = defineStore('admin', {
   state: (): IState => ({
     userList: [],
     count: 0,
-    roleList: []
+    roleList: [],
+    departmentList: []
   }),
   actions: {
     // 1. 获取用户列表的网络请求
@@ -21,8 +23,9 @@ const useAdminStore = defineStore('admin', {
       this.count = res.data.totalCount
     },
     // 2. 删除用户后重新发送网络请求获取最新的数据
-    async fetchDeleteUserList(id: any) {
+    async fetchDeleteUserList(id: string) {
       const res = await deleteIdUserReq(id)
+      return res
     },
     // 3. 创建用户
     async fetchCreateUser(data: IDialogForm) {
@@ -32,7 +35,11 @@ const useAdminStore = defineStore('admin', {
     async fetchGetRolesList() {
       const res = await getRolesListReq()
       this.roleList = res.data.data
-      console.log(res.data.data)
+    },
+    // 5. 获取部门列表
+    async fetchGetDepartmentList() {
+      const res = await getDepartmentListReq()
+      this.departmentList = res.data.data
     }
   }
 })

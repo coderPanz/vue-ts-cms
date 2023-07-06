@@ -50,7 +50,7 @@ import type { IformData } from '@/types/index'
 const formData = reactive<IformData>({
   id: '',
   name: '',
-  status: 0,
+  status: 1,
   createdAt: ''
 })
 

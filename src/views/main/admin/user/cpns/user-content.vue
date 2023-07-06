@@ -91,10 +91,11 @@ function reFreshPage() {
 defineExpose({ getPageList })
 
 // 3. 删除数据
-// 3.1 找到该用户对应的id并执行删除操作, 之后再发送一次网络请求获取最新的数据进行展示
-function deleteUser(id: any) {
-  adminStore.fetchDeleteUserList(id)
-  getPageList()
+// 3.1 删除成功后在重新获取用户列表
+function deleteUser(id: string) {
+  adminStore.fetchDeleteUserList(id).then(res => {
+    if(res) getPageList()
+  })
 }
 
 // 4. 点击新建用户btn弹出新建用户弹窗

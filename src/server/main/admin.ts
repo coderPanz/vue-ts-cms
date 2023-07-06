@@ -1,6 +1,6 @@
 import { pzrequest } from '../requestPackage'
 import type { IDialogForm } from '@/types/Dialog/dialogForm'
-// 分页请求
+// 根据条件查询
 export function getUserListReq(data: any) {
   return pzrequest.post({
     url: '/user//paginationQuery',
@@ -8,8 +8,11 @@ export function getUserListReq(data: any) {
   })
 }
 
+// 获取用户列表
+// export function get
+
 // 删除指定id用户
-export function deleteIdUserReq(id: any) {
+export function deleteIdUserReq(id: string) {
   return pzrequest.delete({
     url: `/user/${id}`
   })
@@ -27,5 +30,12 @@ export function createUserReq(data: IDialogForm) {
 export function getRolesListReq() {
   return pzrequest.get({
     url: '/role'
+  })
+}
+
+// 获取部门列表
+export function getDepartmentListReq() {
+  return pzrequest.get({
+    url: '/department'
   })
 }

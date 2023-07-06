@@ -19,13 +19,15 @@
           <el-select v-model="dialogForm.roles" >
             <!-- v-for渲染出所需列表 -->
             <template v-for="item in roleList" :key="item._id">
-              <el-option :label="item.name" :value="item.name" />
+              <el-option :label="item.name" :value="item._id" />
             </template>
           </el-select>
         </el-form-item>
         <el-form-item label="所属部门">
           <el-select v-model="dialogForm.department">
-            <el-option label="Zone one" value="shanghai" />
+            <template v-for="item in departmentList" :key="item._id">
+              <el-option :label="item.name" :value="item._id" />
+            </template>
           </el-select>
         </el-form-item>
       </el-form>
@@ -51,13 +53,15 @@ const adminStore = useAdminStore()
 // 1. 点击新建后的弹出
 const isShow = ref<boolean>(false)
 // 1.1 不直接操作属性, 封装一层函数再继续操作就有了后期的可控制属性的空间
-// 1.2 点击创建用户按钮后获取角色列表, 并渲染到下拉单选框中, 当点击时显示可选的角色列表
+// 1.2 点击创建用户按钮后获取角色列表和部门列表, 并渲染到下拉单选框中, 当点击时显示可选的角色列表
 function isShowExpose(isParam: boolean) {
   isShow.value = !isParam
   adminStore.fetchGetRolesList()
+  adminStore.fetchGetDepartmentList()
 }
-// 1.3 因为fetchGetRolesList是异步的, 所以实时监听roleList值得变换情况避免获取空值得情况
+// 1.3 因为fetchGetRolesList是异步的, 所以需要实时监听角色列表和部门列表值得变化情况避免获取空值得情况
 const { roleList } = storeToRefs(adminStore)
+const { departmentList } = storeToRefs(adminStore)
 // 1.4 把isShowExpose暴露出去
 defineExpose({ isShowExpose })
 
@@ -86,20 +90,20 @@ function submitBtn() {
   const { name, password, roles, department } = dialogForm
   console.log(name, password, roles, department)
   isShow.value = !isShow.value
-  adminStore.fetchCreateUser({ name, password, roles, department }).then((res: any) => {
-    // 如果创建成功说明res.data.data有值, 弹出成功弹出, 否则弹出失败窗口
-    if (res.data.data) {
-      ElMessage({
-        message: '创建成功!',
-        type: 'success'
-      })
-    } else {
-      ElMessage({
-        message: '创建失败!',
-        type: 'warning'
-      })
-    }
-  })
+  // adminStore.fetchCreateUser({ name, password, roles, department }).then((res: any) => {
+  //   // 如果创建成功说明res.data.data有值, 弹出成功弹出, 否则弹出失败窗口
+  //   if (res.data.data) {
+  //     ElMessage({
+  //       message: '创建成功!',
+  //       type: 'success'
+  //     })
+  //   } else {
+  //     ElMessage({
+  //       message: '创建失败!',
+  //       type: 'warning'
+  //     })
+  //   }
+  // })
 }
 </script>
 
