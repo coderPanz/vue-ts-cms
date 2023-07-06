@@ -79,7 +79,7 @@ function getPageList(formData?: any) {
   // 把search表单中的数据和size和offset数据结合起来
   const allDataReq = { ...formData, size, offset }
   // 发送网络请求
-  adminStore.fetchGetUserList(allDataReq)
+  adminStore.fetchPaginationQuery(allDataReq)
 }
 
 // 2.2 当页数切换时发送网络请求获取下一页的数据

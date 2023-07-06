@@ -1,4 +1,4 @@
-import { getUserListReq, deleteIdUserReq, createUserReq, getRolesListReq, getDepartmentListReq } from '@/server/index'
+import { paginationQuery, deleteIdUserReq, createUserReq, getRolesListReq, getDepartmentListReq } from '@/server/index'
 import { defineStore } from "pinia";
 import type { IDialogForm } from '@/types/Dialog/dialogForm'
 
@@ -17,8 +17,8 @@ const useAdminStore = defineStore('admin', {
   }),
   actions: {
     // 1. 获取用户列表的网络请求
-    async fetchGetUserList(data: any) {
-      const res = await getUserListReq(data)
+    async fetchPaginationQuery(data: any) {
+      const res = await paginationQuery(data)
       this.userList = res.data.data
       this.count = res.data.totalCount
     },
