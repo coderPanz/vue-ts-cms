@@ -18,6 +18,7 @@ import type { ILogin } from '@/types'
 import { type FormRules, type ElForm, ElMessage } from 'element-plus/lib/components/index.js'
 import useLoginStore from '@/store/login/login'
 import { localIns } from '@/utils/cache/cache'
+import { validationRules } from '@/utils/FormRules/FormRules'
 
 const NAME = 'name'
 const PASSWORD = 'password'
@@ -31,20 +32,7 @@ const account = reactive<ILogin>({
 
 // 2.设置表单验证规则
 const ruleFormRef = ref<InstanceType<typeof ElForm>>()
-const rules: FormRules = {
-  name: [
-    { required: true, message: '请输入用户名', trigger: 'blur' },
-    { min: 3, max: 12, message: '用户名长度为3到12位', trigger: 'blur' }
-  ],
-  password: [
-    { required: true, message: '请输入密码', trigger: 'blur' },
-    {
-      pattern: /^(?=.*[a-zA-Z])(?=.*\d).{3,12}$/,
-      message: '密码长度为3到12位且必须含有数字和字母',
-      trigger: 'blur'
-    }
-  ]
-}
+const rules: FormRules = validationRules
 
 // 3. 登录操作
 // 3.1 登陆成功后如果点击了记住密码则缓存帐号密码

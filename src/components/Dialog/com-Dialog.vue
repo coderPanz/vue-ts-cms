@@ -46,6 +46,7 @@ import type { IDialogForm } from '@/types/Dialog/dialogForm'
 import useAdminStore from '@/store/main/admin'
 import { type FormRules, ElMessage } from 'element-plus/lib/components/index.js'
 import { storeToRefs } from 'pinia';
+import { validationRules } from "@/utils/FormRules/FormRules"
 
 // 初始化仓库实例
 const adminStore = useAdminStore()
@@ -89,23 +90,24 @@ function submitBtn() {
   const { name, password, roles, department } = dialogForm
   console.log(name, password, roles, department)
   isShow.value = !isShow.value
-  adminStore.fetchCreateUser({ name, password, roles, department })
-}
-// 6. 设置表单验证规则
-const rules: FormRules = {
-  name: [
-    { required: true, message: '请输入用户名', trigger: 'blur' },
-    { min: 3, max: 12, message: '用户名长度为3到12位', trigger: 'blur' }
-  ],
-  password: [
-    { required: true, message: '请输入密码', trigger: 'blur' },
-    {
-      pattern: /^(?=.*[a-zA-Z])(?=.*\d).{3,12}$/,
-      message: '密码长度为3到12位且必须含有数字和字母',
-      trigger: 'blur'
+  adminStore.fetchCreateUser({ name, password, roles, department }).then((res: any) => {
+    // 如果创建成功说明res.data.data有值, 弹出成功弹出, 否则弹出失败窗口
+    if (res) {
+      ElMessage({
+        message: '创建成功!',
+        type: 'success'
+      })
+    } else {
+      ElMessage({
+        message: '创建失败!',
+        type: 'warning'
+      })
     }
-  ]
+  })
 }
+// 6. 设置创建用户弹窗的表单验证规则
+const rules: FormRules = validationRules
+
 </script>
 
 <style lang="less" scoped>

@@ -1,5 +1,4 @@
 import type { RouteRecordRaw } from 'vue-router'
-import router from '@/router'
 
 export let firstMenu: any = null
 export default function increaseRoute(menuTree: any) {
