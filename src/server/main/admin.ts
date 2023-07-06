@@ -1,15 +1,12 @@
 import { pzrequest } from '../requestPackage'
 import type { IDialogForm } from '@/types/Dialog/dialogForm'
-// 分页查询
-export function paginationQuery(data: any) {
+// 分页查询(获取用户列表)
+export function paginationQueryReq(data: any) {
   return pzrequest.post({
     url: '/user//paginationQuery',
     data: data
   })
 }
-
-// 获取用户列表
-// export function getUserList
 
 // 删除指定id用户
 export function deleteIdUserReq(id: string) {
