@@ -2,7 +2,7 @@
   <div class="loginCpn">
     <div class="projectNama">学生登录</div>
     <el-tabs type="border-card" stretch v-model="activeName">
-      <el-tab-pane name="account" lab>
+      <el-tab-pane name="account">
         <template #label>
           <el-icon><User /></el-icon>
           <span>帐号登录</span>
@@ -37,12 +37,13 @@ import { localIns } from '@/utils/cache/cache';
 // 3.3 在帐号登录界面实现记住密码功能(传入状态参数到子组件中决定是否记住)
 // 3.4 缓存isRemember状态, ref从localStorage中取出
 const activeName = ref('account')
-const isRemember = ref<boolean>(localIns.getCache('isRemember'))
+const isRemember = ref(localIns.getCache('isRemember'))
 const accountIns = ref<InstanceType<typeof loginAccount>>()
+
 watch(isRemember, newValue => {
-  console.log(newValue)
   localIns.setCache('isRemember', newValue)
 })
+
 function loginNow() {
   if (activeName.value === 'account') {
     accountIns.value?.loginAction(isRemember.value)

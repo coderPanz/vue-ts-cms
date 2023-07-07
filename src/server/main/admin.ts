@@ -36,3 +36,11 @@ export function getDepartmentListReq() {
     url: '/department'
   })
 }
+
+// 更新数据
+export function updateDataReq(id: string, data: any) {
+  return pzrequest.patch({
+    url: `/user/${id}`,
+    data: data
+  })
+}

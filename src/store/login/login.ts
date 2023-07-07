@@ -4,7 +4,6 @@ import type { ILogin } from '@/types/index'
 import { localIns } from '@/utils/cache/cache'
 import router from '@/router'
 import increaseRoute from '@/utils/Dynamic-Route/Dynamic-Route'
-import menu from '@/router/main/admin/menu'
 
 // 指定state中的数据类型
 interface IState {
@@ -15,7 +14,7 @@ interface IState {
 const useLoginStore = defineStore('login', {
   state: (): IState => ({
     token: '',
-    localMenuTree: []
+    localMenuTree: null // 不要一开始初始化一个空数组, 否则会变为二维数组
   }),
   actions: {
     async fetchgetBackInfos(account: ILogin) {
@@ -58,7 +57,7 @@ const useLoginStore = defineStore('login', {
         this.localMenuTree = localMenuTree
 
         // 在登录后刷新页面时再次动态添加路由
-        const Routes =  increaseRoute(localMenuTree)
+        const Routes = increaseRoute(localMenuTree)
         Routes.forEach(item => {
           router.addRoute('main', item)
         })

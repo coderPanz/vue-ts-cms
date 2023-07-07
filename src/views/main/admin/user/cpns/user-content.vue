@@ -30,7 +30,7 @@
         <el-table-column prop="date" label="操作" align="center">
           <!-- 使用作用域插槽获取当前数据的唯一标识:id -->
           <template #default="scope">
-            <el-button>编辑</el-button>
+            <el-button @click="updateUser(scope.row._id)">编辑</el-button>
             <el-button type="danger" @click="deleteUser(scope.row._id)">删除</el-button>
           </template>
         </el-table-column>
@@ -102,11 +102,16 @@ function deleteUser(id: string) {
 const comDialogRef = ref<InstanceType<typeof comDialog>>()
 const isShow = ref<boolean>(false)
 function dialogVisible() {
-  comDialogRef.value?.isShowExpose(isShow.value)
+  comDialogRef.value?.isShowExpose(isShow.value, true)
 }
 // 4.2 若新建用户成功则重新获取用户列表
 function reGetDataList() {
   getPageList()
+}
+
+// 5. 更新用户
+function updateUser(id: string) {
+  comDialogRef.value?.isShowExpose(isShow.value, false, id)
 }
 </script>
 

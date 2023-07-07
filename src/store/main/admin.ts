@@ -1,4 +1,4 @@
-import { paginationQueryReq, deleteIdUserReq, createUserReq, getRolesListReq, getDepartmentListReq } from '@/server/index'
+import { paginationQueryReq, deleteIdUserReq, createUserReq, getRolesListReq, getDepartmentListReq, updateDataReq } from '@/server/index'
 import { defineStore } from "pinia";
 import type { IDialogForm } from '@/types/Dialog/dialogForm'
 
@@ -7,13 +7,15 @@ interface IState {
   count: Number
   roleList: any[]
   departmentList: any[]
+  id: any // 保存用户id, 用于编辑用户操作
 }
 const useAdminStore = defineStore('admin', {
   state: (): IState => ({
     userList: [],
     count: 0,
     roleList: [],
-    departmentList: []
+    departmentList: [],
+    id: ''
   }),
   actions: {
     // 1. 获取用户列表的网络请求
@@ -41,6 +43,11 @@ const useAdminStore = defineStore('admin', {
     async fetchGetDepartmentList() {
       const res = await getDepartmentListReq()
       this.departmentList = res.data.data
+    },
+    // 6. 更新用户
+    async fetchUpdateUser(id: string, data: any) {
+      const res = await updateDataReq(id, data)
+      return res
     }
   }
 })

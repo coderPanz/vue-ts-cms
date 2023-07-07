@@ -1,12 +1,6 @@
 <template>
   <div class="dialog">
-    <el-dialog
-      center
-      title="创建用户"
-      width="30%"
-      v-model="isShow"
-      :before-close="handleClose"
-    >
+    <el-dialog center :title="Judge? '新建用户': '编辑用户'" width="30%" v-model="isShow" :before-close="handleClose">
       <el-form label-width="70px" ref="ruleFormRef" :model="dialogForm" :rules="rules">
         <el-form-item label="用户名" prop="name">
           <el-input v-model="dialogForm.name" />
@@ -15,7 +9,7 @@
           <el-input v-model="dialogForm.password" />
         </el-form-item>
         <el-form-item label="所属角色">
-          <el-select v-model="dialogForm.roles" >
+          <el-select v-model="dialogForm.roles">
             <!-- v-for渲染出所需列表 -->
             <template v-for="item in roleList" :key="item._id">
               <el-option :label="item.name" :value="item._id" />
@@ -45,9 +39,8 @@ import { reactive, ref } from 'vue'
 import type { IDialogForm } from '@/types/Dialog/dialogForm'
 import useAdminStore from '@/store/main/admin'
 import { type FormRules, ElMessage, type FormInstance } from 'element-plus/lib/components/index.js'
-import { storeToRefs } from 'pinia';
-import { validationRules } from "@/utils/FormRules/FormRules"
-
+import { storeToRefs } from 'pinia'
+import { validationRules } from '@/utils/FormRules/FormRules'
 
 // 1. 绑定表单中的数据
 const dialogForm = reactive<IDialogForm>({
@@ -67,17 +60,19 @@ const adminStore = useAdminStore()
 const isShow = ref<boolean>(false)
 // 3.1 不直接操作属性, 封装一层函数再继续操作就有了后期的可控制属性的空间
 // 3.2 点击创建用户按钮后获取角色列表和部门列表, 并渲染到下拉单选框中, 当点击时显示可选的角色列表
-function isShowExpose(isParam: boolean) {
+// 3.3 传入第二个参数记录点击的按钮, 若是新建btn则弹窗显示'新建用户', 若是编辑btn则显示'编辑用户'
+// 3.4 保存这个id到store中, 以便submitBtn使用
+const Judge = ref<boolean>(true)
+function isShowExpose(isParam: boolean, judge: boolean, id?: string) {
   isShow.value = !isParam
   adminStore.fetchGetRolesList()
   adminStore.fetchGetDepartmentList()
+  Judge.value = judge
+  adminStore.id = id
 }
 // 3.3 因为fetchGetRolesList是异步的, 所以需要实时监听角色列表和部门列表值得变化情况避免获取空值得情况
 const { roleList } = storeToRefs(adminStore)
 const { departmentList } = storeToRefs(adminStore)
-// 3.4 把isShowExpose暴露出去
-defineExpose({ isShowExpose })
-
 
 // 4. 点击取消后先重置数据后关闭弹窗
 function cancelShow() {
@@ -91,39 +86,56 @@ function handleClose() {
   isShow.value = !isShow.value
 }
 
-
-// 6. 点击确认获取表单数据并携带发送到服务器继续创建操作
-// 6.1 若创建成功弹窗一个成功的窗口, 若失败弹出失败窗口
-// 6.2 创建成功后后需要重新获取用户列表的操作
-// 6.3 重置数据后关闭弹窗
+// 6. 判断是新建数据or更新数据, 根据情况发送不同的网络请求
+// 6.1 点击确认获取表单数据并携带发送到服务器继续创建操作
+// 6.2 若创建成功弹窗一个成功的窗口, 若失败弹出失败窗口
+// 6.3 创建成功后后需要重新获取用户列表的操作
+// 6.4 重置数据后关闭弹窗
 const emit = defineEmits(['reGetDataList'])
+
 function submitBtn() {
-  // 进行验证
-  ruleFormRef.value?.validate((valid: any) => {
-    if(valid) {
-      const { name, password, roles, department } = dialogForm
-      adminStore.fetchCreateUser({ name, password, roles, department }).then((res: any) => {
-        // 如果创建成功说明res.data.data有值, 弹出成功弹出, 否则弹出失败窗口
-        if (res.data.msg === '创建成功!') {
-          ElMessage({
-            message: '创建成功!',
-            type: 'success'
-          })
-          emit('reGetDataList')
-        } else {
-          ElMessage({
-            message: '创建失败!',
-            type: 'warning'
-          })
-        }
-      })
-    } else {
-      ElMessage.error('输入信息格式错误!')
-    }
-  })
+  const { name, password, roles, department } = dialogForm
+  // Judge.value 为true则说明为创建数据, 否则为更新数据
+  if(Judge.value) {
+    adminStore.fetchCreateUser({ name, password, roles, department })
+    .then((res: any) => {
+      // 如果创建成功说明res.data.data有值, 弹出成功弹出, 否则弹出失败窗口
+      if (res.data.msg === '创建成功!') {
+        ElMessage({
+          message: '创建成功!',
+          type: 'success'
+        })
+        emit('reGetDataList')
+      } else {
+        ElMessage({
+          message: '创建失败!',
+          type: 'warning'
+        })
+      }
+    })
+  } else {
+    adminStore.fetchUpdateUser(adminStore.id, { name, password, roles, department })
+    .then((res: any) => {
+      if(res.data.msg == '更新成功!') {
+        ElMessage({
+          message: '更新成功!',
+          type: 'success'
+        })
+        emit('reGetDataList')
+      } else {
+        ElMessage({
+          message: '更新失败!',
+          type: 'warning'
+        })
+      }
+    })
+  }
+
   ruleFormRef.value?.resetFields()
   isShow.value = !isShow.value
 }
+// 把相关方法暴露出去
+defineExpose({ isShowExpose, submitBtn })
 
 </script>
 

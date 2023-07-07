@@ -37,7 +37,7 @@ const rules: FormRules = validationRules
 // 3. 登录操作
 // 3.1 登陆成功后如果点击了记住密码则缓存帐号密码
 const loginStore = useLoginStore()
-function loginAction(isRemember: boolean) {
+function loginAction(isRemember: any) {
   ruleFormRef.value?.validate((valid: any) => {
     if (valid) {
       const name = account.name

@@ -47,6 +47,7 @@ class PZrequest {
   request(config: PZrequestConfig) {
     return this.instance.request(config)
   }
+
   get(config: PZrequestConfig) {
     return this.request({ ...config, method: 'GET' })
   }
@@ -55,6 +56,9 @@ class PZrequest {
   }
   delete(config: PZrequestConfig) {
     return this.request({ ...config, method: 'DELETE' })
+  }
+  patch(config: PZrequestConfig) {
+    return this.request({ ...config, method: 'PATCH' })
   }
 }
 
