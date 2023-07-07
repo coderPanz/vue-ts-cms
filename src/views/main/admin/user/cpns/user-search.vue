@@ -62,7 +62,7 @@ const emit = defineEmits(['queryData', 'resetData'])
 // 2.2 发出重置事件到父组件中进而间接操作content组件控制的网络请求
 const formDataRef = ref<InstanceType<typeof ElForm>>()
 function resetDataList() {
-  formDataRef.value.resetFields()
+  formDataRef.value?.resetFields()
   emit('resetData')
 }
 
