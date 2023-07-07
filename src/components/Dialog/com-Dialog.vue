@@ -85,18 +85,21 @@ const dialogForm = reactive<IDialogForm>({
 })
 
 // 5. 点击确认获取表单数据并携带发送到服务器继续创建操作
-// 若创建成功弹窗一个成功的窗口, 若失败弹出失败窗口
+// 5.1 若创建成功弹窗一个成功的窗口, 若失败弹出失败窗口
+// 5.2 创建成功后后需要重新获取用户列表的操作
+const emit = defineEmits(['reGetDataList'])
 function submitBtn() {
   const { name, password, roles, department } = dialogForm
   console.log(name, password, roles, department)
   isShow.value = !isShow.value
   adminStore.fetchCreateUser({ name, password, roles, department }).then((res: any) => {
     // 如果创建成功说明res.data.data有值, 弹出成功弹出, 否则弹出失败窗口
-    if (res) {
+    if (res.data.msg === '创建成功!') {
       ElMessage({
         message: '创建成功!',
         type: 'success'
       })
+      emit('reGetDataList')
     } else {
       ElMessage({
         message: '创建失败!',

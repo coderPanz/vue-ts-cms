@@ -46,7 +46,7 @@
         @current-change="reFreshPage"
       />
     </div>
-    <com-dialog ref="comDialogRef"/>
+    <com-dialog ref="comDialogRef" @re-get-data-list="reGetDataList"/>
   </div>
 </template>
 
@@ -103,6 +103,10 @@ const comDialogRef = ref<InstanceType<typeof comDialog>>()
 const isShow = ref<boolean>(false)
 function dialogVisible() {
   comDialogRef.value?.isShowExpose(isShow.value)
+}
+// 4.2 若新建用户成功则重新获取用户列表
+function reGetDataList() {
+  getPageList()
 }
 </script>
 
