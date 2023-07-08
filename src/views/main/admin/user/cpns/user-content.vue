@@ -5,7 +5,7 @@
       <el-button type="primary" @click="dialogVisible">新建用户</el-button>
     </div>
     <div class="table">
-      <el-table :data="userList" border style="width: 100%">
+      <el-table :data="dataList" border style="width: 100%">
         <el-table-column type="index" label="序号" width="70" align="center" />
         <el-table-column prop="_id" label="id" align="center" width="230"/>
         <el-table-column prop="name" label="用户名" align="center" />
@@ -68,7 +68,7 @@ const adminStore = useAdminStore()
 // 1. 1 发送网络请求(第一次渲染页面后发送网络请求)
 getPageList()
 // 1. 2  注意异步操作请求数据的时候需要对数据进行响应式处理才能在页面实时渲染
-const { userList, count } = storeToRefs(adminStore)
+const { dataList, count } = storeToRefs(adminStore)
 
 // 2. 分页器
 // 2.1 定义一个函数发送请求获取分页数据(这里我们定义一页显示10条数据)

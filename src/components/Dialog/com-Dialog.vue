@@ -11,14 +11,14 @@
         <el-form-item label="所属角色">
           <el-select v-model="dialogForm.roles">
             <!-- v-for渲染出所需列表 -->
-            <template v-for="item in roleList" :key="item._id">
+            <template v-for="item in dataList" :key="item._id">
               <el-option :label="item.name" :value="item._id" />
             </template>
           </el-select>
         </el-form-item>
         <el-form-item label="所属部门">
           <el-select v-model="dialogForm.department">
-            <template v-for="item in departmentList" :key="item._id">
+            <template v-for="item in dataList" :key="item._id">
               <el-option :label="item.name" :value="item._id" />
             </template>
           </el-select>
@@ -65,14 +65,18 @@ const isShow = ref<boolean>(false)
 const Judge = ref<boolean>(true)
 function isShowExpose(isParam: boolean, judge: boolean, id?: string) {
   isShow.value = !isParam
-  adminStore.fetchGetRolesList()
-  adminStore.fetchGetDepartmentList()
+  // 应该在获取角色列表成功之后后再获取部门列表防止显示相同数据
+  adminStore.getDataListAction('role')
+  // .then(res => {
+  //   if(res.data.msg === '查询成功!') adminStore.getDataListAction('department')
+  //   return
+  // })
+
   Judge.value = judge
   adminStore.id = id
 }
 // 3.3 因为fetchGetRolesList是异步的, 所以需要实时监听角色列表和部门列表值得变化情况避免获取空值得情况
-const { roleList } = storeToRefs(adminStore)
-const { departmentList } = storeToRefs(adminStore)
+const { dataList } = storeToRefs(adminStore)
 
 // 4. 点击取消后先重置数据后关闭弹窗
 function cancelShow() {

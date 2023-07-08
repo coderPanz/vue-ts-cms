@@ -3,7 +3,7 @@ import type { IDialogForm } from '@/types/Dialog/dialogForm'
 
 
 // 分页查询(获取用户列表)
-export function queryReq(name: string, data: any) {
+export function queryReq(name: string, data?: any) {
   return pzrequest.post({
     url: `/${name}//paginationQuery`,
     data: data
