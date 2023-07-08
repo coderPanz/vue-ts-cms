@@ -1,4 +1,4 @@
-import { queryReq, deleteReq, createReq, getRolesListReq, getDepartmentListReq, updateReq } from '@/server/index'
+import { queryReq, deleteReq, createReq, updateReq } from '@/server/index'
 import { defineStore } from "pinia";
 import type { IDialogForm } from '@/types/Dialog/dialogForm'
 

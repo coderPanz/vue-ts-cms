@@ -32,17 +32,3 @@ export function updateReq(name: string, id: string, data: any) {
     data: data
   })
 }
-
-// 获取角色列表
-export function getRolesListReq() {
-  return pzrequest.get({
-    url: '/role'
-  })
-}
-
-// 获取部门列表
-export function getDepartmentListReq() {
-  return pzrequest.get({
-    url: '/department'
-  })
-}
