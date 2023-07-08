@@ -3,20 +3,23 @@ import { defineStore } from "pinia";
 import type { IDialogForm } from '@/types/Dialog/dialogForm'
 
 interface IState {
-  roleList: any[],
-  departmentList: any[],
-  count: Number
+  roleList: any[]
+  departmentList: any[]
+  userList: any[]
   dataList: any[]
+  count: Number
   id: any // 保存用户id, 用于编辑用户操作
 }
 const useAdminStore = defineStore('admin', {
   state: (): IState => ({
     roleList: [],
     departmentList: [],
+    userList: [],
     dataList: [],
     count: 0,
     id: ''
   }),
+  // 发送网络请求中转站, 尽量避免在vue组件中直接发送网络请求, 而是通过调用actions间接发送网络请求
   actions: {
     // 1. 获取用户列表的网络请求
     async getDataListAction(name: string, data?: any) {

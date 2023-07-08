@@ -5,7 +5,7 @@
       <el-button type="primary" @click="dialogVisible">新建用户</el-button>
     </div>
     <div class="table">
-      <el-table :data="dataList" border style="width: 100%">
+      <el-table :data="userList" border style="width: 100%">
         <el-table-column type="index" label="序号" width="70" align="center" />
         <el-table-column prop="_id" label="id" align="center" width="230"/>
         <el-table-column prop="name" label="用户名" align="center" />
@@ -68,7 +68,7 @@ const adminStore = useAdminStore()
 // 1. 1 发送网络请求(第一次渲染页面后发送网络请求)
 getPageList()
 // 1. 2  注意异步操作请求数据的时候需要对数据进行响应式处理才能在页面实时渲染
-const { dataList, count } = storeToRefs(adminStore)
+const { userList, count } = storeToRefs(adminStore)
 
 // 2. 分页器
 // 2.1 定义一个函数发送请求获取分页数据(这里我们定义一页显示10条数据)
@@ -79,7 +79,10 @@ function getPageList(formData?: any) {
   // 把search表单中的数据和size和offset数据结合起来
   const allDataReq = { ...formData, size, offset }
   // 发送网络请求
-  adminStore.getDataListAction('user', allDataReq)
+  adminStore.getDataListAction('user', allDataReq).then(res => {
+    // 赋值给pinia中的userlist以便展示user的数据
+    adminStore.userList = res.data.data
+  })
 }
 
 // 2.2 当页数切换时发送网络请求获取下一页的数据

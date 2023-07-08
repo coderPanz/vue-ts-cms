@@ -65,7 +65,7 @@ const isShow = ref<boolean>(false)
 const Judge = ref<boolean>(true)
 function isShowExpose(isParam: boolean, judge: boolean, id?: string) {
   isShow.value = !isParam
-  // 应该在获取角色列表成功之后后再获取部门列表, 然后将他们分别存在pinia中以便弹窗时显示相应数据
+  // 应该在获取角色列表成功之后后再获取部门列表, 然后将他们分别存在pinia中的roleList和departmentList以便弹窗时显示相应数据
   adminStore.getDataListAction('role').then(res => {
     adminStore.roleList = res.data.data
   })
