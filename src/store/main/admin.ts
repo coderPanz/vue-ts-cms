@@ -1,4 +1,4 @@
-import { paginationQueryReq, deleteIdUserReq, createUserReq, getRolesListReq, getDepartmentListReq, updateDataReq } from '@/server/index'
+import { queryReq, deleteReq, createReq, getRolesListReq, getDepartmentListReq, updateReq } from '@/server/index'
 import { defineStore } from "pinia";
 import type { IDialogForm } from '@/types/Dialog/dialogForm'
 
@@ -19,19 +19,24 @@ const useAdminStore = defineStore('admin', {
   }),
   actions: {
     // 1. 获取用户列表的网络请求
-    async fetchPaginationQuery(data: any) {
-      const res = await paginationQueryReq(data)
+    async getDataListAction(data: any) {
+      const res = await queryReq(data)
       this.userList = res.data.data
       this.count = res.data.totalCount
     },
     // 2. 删除用户后重新发送网络请求获取最新的数据
-    async fetchDeleteUserList(id: string) {
-      const res = await deleteIdUserReq(id)
+    async deleteDataListAction(id: string) {
+      const res = await deleteReq(id)
       return res
     },
     // 3. 创建用户
-    async fetchCreateUser(data: IDialogForm) {
-      const res = await createUserReq(data)
+    async createDataAction(data: IDialogForm) {
+      const res = await createReq(data)
+      return res
+    },
+    // 6. 更新用户
+    async updateDataAction(id: string, data: any) {
+      const res = await updateReq(id, data)
       return res
     },
     // 4. 获取角色列表以便在创建用户时显示对应的角色名称
@@ -43,11 +48,6 @@ const useAdminStore = defineStore('admin', {
     async fetchGetDepartmentList() {
       const res = await getDepartmentListReq()
       this.departmentList = res.data.data
-    },
-    // 6. 更新用户
-    async fetchUpdateUser(id: string, data: any) {
-      const res = await updateDataReq(id, data)
-      return res
     }
   }
 })

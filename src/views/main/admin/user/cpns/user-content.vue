@@ -79,7 +79,7 @@ function getPageList(formData?: any) {
   // 把search表单中的数据和size和offset数据结合起来
   const allDataReq = { ...formData, size, offset }
   // 发送网络请求
-  adminStore.fetchPaginationQuery(allDataReq)
+  adminStore.getDataListAction(allDataReq)
 }
 
 // 2.2 当页数切换时发送网络请求获取下一页的数据
@@ -93,7 +93,7 @@ defineExpose({ getPageList })
 // 3. 删除数据
 // 3.1 删除成功后在重新获取用户列表
 function deleteUser(id: string) {
-  adminStore.fetchDeleteUserList(id).then(res => {
+  adminStore.deleteDataListAction(id).then(res => {
     if(res) getPageList()
   })
 }
