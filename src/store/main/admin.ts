@@ -3,12 +3,16 @@ import { defineStore } from "pinia";
 import type { IDialogForm } from '@/types/Dialog/dialogForm'
 
 interface IState {
+  roleList: any[],
+  departmentList: any[],
   count: Number
   dataList: any[]
   id: any // 保存用户id, 用于编辑用户操作
 }
 const useAdminStore = defineStore('admin', {
   state: (): IState => ({
+    roleList: [],
+    departmentList: [],
     dataList: [],
     count: 0,
     id: ''
@@ -35,17 +39,7 @@ const useAdminStore = defineStore('admin', {
     async updateDataAction(name: string, id: string, data: any) {
       const res = await updateReq(name, id, data)
       return res
-    },
-    // 4. 获取角色列表以便在创建用户时显示对应的角色名称
-    // async fetchGetRolesList() {
-    //   const res = await getRolesListReq()
-    //   this.dataList = res.data.data
-    // },
-    // 5. 获取部门列表
-    // async fetchGetDepartmentList() {
-    //   const res = await getDepartmentListReq()
-    //   this.dataList = res.data.data
-    // }
+    }
   }
 })
 
