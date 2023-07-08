@@ -97,7 +97,7 @@ function submitBtn() {
   const { name, password, roles, department } = dialogForm
   // Judge.value 为true则说明为创建数据, 否则为更新数据
   if(Judge.value) {
-    adminStore.createDataAction({ name, password, roles, department })
+    adminStore.createDataAction('user', { name, password, roles, department })
     .then((res: any) => {
       // 如果创建成功说明res.data.data有值, 弹出成功弹出, 否则弹出失败窗口
       if (res.data.msg === '创建成功!') {
@@ -114,7 +114,7 @@ function submitBtn() {
       }
     })
   } else {
-    adminStore.updateDataAction(adminStore.id, { name, password, roles, department })
+    adminStore.updateDataAction('user', adminStore.id, { name, password, roles, department })
     .then((res: any) => {
       if(res.data.msg == '更新成功!') {
         ElMessage({

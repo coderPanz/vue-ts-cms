@@ -3,32 +3,32 @@ import type { IDialogForm } from '@/types/Dialog/dialogForm'
 
 
 // 分页查询(获取用户列表)
-export function queryReq(data: any) {
+export function queryReq(name: string, data: any) {
   return pzrequest.post({
-    url: '/user//paginationQuery',
+    url: `/${name}//paginationQuery`,
     data: data
   })
 }
 
 // 删除指定id用户
-export function deleteReq(id: string) {
+export function deleteReq(name: string, id: string) {
   return pzrequest.delete({
-    url: `/user/${id}`
+    url: `/${name}/${id}`
   })
 }
 
 // 创建用户
-export function createReq(data: IDialogForm) {
+export function createReq(name: string, data: IDialogForm) {
   return pzrequest.post({
-    url: '/user',
+    url: `/${name}`,
     data: data
   })
 }
 
 // 更新数据
-export function updateReq(id: string, data: any) {
+export function updateReq(name: string, id: string, data: any) {
   return pzrequest.patch({
-    url: `/user/${id}`,
+    url: `/${name}/${id}`,
     data: data
   })
 }
