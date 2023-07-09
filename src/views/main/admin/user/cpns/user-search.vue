@@ -1,34 +1,36 @@
 <template>
   <div class="search">
-    <el-form label-width="70px" :model="formData" ref="formDataRef">
-      <el-row :gutter="20">
-        <el-col :span="6">
-          <el-form-item label="id" prop="id">
-            <el-input v-model="formData.id"/>
-          </el-form-item>
-        </el-col>
-        <el-col :span="6">
+    <el-form label-width="90px" :model="formData" ref="formDataRef">
+      <el-row :gutter="10">
+        <el-col :span="7">
           <el-form-item label="用户名" prop="name">
-            <el-input v-model="formData.name"/>
+            <el-input v-model="formData.name" />
           </el-form-item>
         </el-col>
-        <el-col :span="6">
+        <el-col :span="7">
+          <el-form-item label="id" prop="id">
+            <el-input v-model="formData.id" />
+          </el-form-item>
+        </el-col>
+
+        <el-col :span="7">
+          <el-form-item label="状态" prop="status">
+            <el-select v-model="formData.status" style="width: 100%;">
+              <el-option label="激活" :value="1" />
+              <el-option label="关闭" :value="0" />
+            </el-select>
+          </el-form-item>
+        </el-col>
+        <el-col :span="7">
           <el-form-item label="时间" prop="createdAt">
             <el-date-picker
-            v-model="formData.createdAt"
+              v-model="formData.createdAt"
               type="daterange"
               range-separator="-"
               start-placeholder="开始时间"
               end-placeholder="结束时间"
+              format="YYYY/MM/DD"
             />
-          </el-form-item>
-        </el-col>
-        <el-col :span="6">
-          <el-form-item label="状态" prop="status">
-            <el-select v-model="formData.status">
-              <el-option label="激活" :value="1" />
-              <el-option label="关闭" :value="0" />
-            </el-select>
           </el-form-item>
         </el-col>
       </el-row>
@@ -42,8 +44,8 @@
 </template>
 
 <script setup lang="ts">
-import type { ElForm } from 'element-plus/lib/components/index.js';
-import { reactive, ref } from 'vue';
+import type { ElForm } from 'element-plus/lib/components/index.js'
+import { reactive, ref } from 'vue'
 import type { IformData } from '@/types/index'
 
 // 1. 定义表单数据对象
@@ -77,12 +79,23 @@ function queryDataList() {
 .search {
   background-color: #fff;
   border-radius: 8px;
-  height: 120px;
+  height: auto;
   .el-form-item {
     margin-top: 25px;
     margin-right: 44px;
   }
+  .el-form {
+    .el-row {
+      display: flex;
+      justify-content: space-between;
+      .el-col {
+        height: 70px;
+      }
+    }
+  }
   .btns {
+    margin-top: 18px;
+    padding-bottom: 18px;
     text-align: right;
     padding-right: 43px;
     .el-button {
