@@ -1,7 +1,7 @@
 <template>
   <div class="app">
     <div class="search">
-      <user-search @reset-data="resetDataList" @query-data="queryDataList"/>
+      <page-search @reset-data="resetDataList" @query-data="queryDataList" :searchConfig="searchConfig"/>
     </div>
     <div class="content">
       <user-content ref="userContentRef"/>
@@ -10,10 +10,11 @@
 </template>
 
 <script setup lang="ts">
-import userSearch from './cpns/user-search.vue';
 import userContent from './cpns/user-content.vue';
 import { ref } from 'vue';
 import type { IformData } from '@/types/index'
+import pageSearch from '@/components/page-search/page-search.vue';
+import searchConfig from '@/views/main/admin/user/config/config'
 
 // 1. 重置 --- 获取content组件实例调用相关方法, 重置user列表
 const userContentRef = ref<InstanceType<typeof userContent>>()

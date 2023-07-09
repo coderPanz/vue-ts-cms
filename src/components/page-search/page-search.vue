@@ -1,7 +1,38 @@
+<!-- 高度封装page-search组件 -->
+<!-- 公共组件, 可以提供给多个组件使用, 调用组件时需要提供该组件的配置信息 -->
+
 <template>
   <div class="search">
-    <el-form label-width="90px" :model="formData" ref="formDataRef">
+    <el-form label-width="90px" :model="formData" ref="formDataRef" :search-config="searchConfig">
       <el-row :gutter="10">
+        <template v-for="item in searchConfig.formConfigData" :key="item.prop">
+          <el-col :span="7">
+            <el-form-item :label="item.label" :prop="item.prop">
+              <!-- 确定组件类型再进行渲染 -->
+              <template v-if="item.type === 'input'">
+                <el-input v-model="formData[item.prop]"></el-input>
+              </template>
+              <template v-if="item.type === 'date-picker'">
+                <el-date-picker
+                  v-model="formData[item.prop]"
+                  type="daterange"
+                  range-separator="-"
+                  start-placeholder="开始时间"
+                  end-placeholder="结束时间"
+                  format="YYYY/MM/DD"
+                />
+              </template>
+              <template v-if="item.type === 'select'">
+                <el-select v-model="formData[item.prop]" style="width: 100%">
+                  <template v-for="option in item.options" :key="option.label">
+                    <el-option :label="option.label" :value="option.value" />
+                  </template>
+                </el-select>
+              </template>
+            </el-form-item>
+          </el-col>
+        </template>
+<!--
         <el-col :span="7">
           <el-form-item label="用户名" prop="name">
             <el-input v-model="formData.name" />
@@ -15,7 +46,7 @@
 
         <el-col :span="7">
           <el-form-item label="状态" prop="status">
-            <el-select v-model="formData.status" style="width: 100%;">
+            <el-select v-model="formData.status" style="width: 100%">
               <el-option label="激活" :value="1" />
               <el-option label="关闭" :value="0" />
             </el-select>
@@ -32,7 +63,7 @@
               format="YYYY/MM/DD"
             />
           </el-form-item>
-        </el-col>
+        </el-col> -->
       </el-row>
     </el-form>
 
@@ -48,13 +79,20 @@ import type { ElForm } from 'element-plus/lib/components/index.js'
 import { reactive, ref } from 'vue'
 import type { IformData } from '@/types/index'
 
-// 1. 定义表单数据对象
-const formData = reactive<IformData>({
-  id: '',
-  name: '',
-  status: '',
-  createdAt: ''
-})
+// 1. 获取配置文件传进来的定义表单数据对象
+interface IProps {
+  searchConfig: {
+    formConfigData: any[]
+  }
+}
+const prop = defineProps<IProps>()
+
+const formDataList: any = {}
+for (const item of prop.searchConfig.formConfigData) {
+  formDataList[item.prop] = ''
+}
+
+const formData = reactive(formDataList)
 
 // 定义事件
 const emit = defineEmits(['queryData', 'resetData'])

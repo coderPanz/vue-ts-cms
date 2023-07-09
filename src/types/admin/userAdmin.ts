@@ -1,6 +1,6 @@
 export interface IformData {
   id?: String
   name?: String
-  status?: Number
+  status?: String
   createdAt?: String
 }
