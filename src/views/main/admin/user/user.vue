@@ -4,7 +4,8 @@
       <page-search @reset-data="resetDataList" @query-data="queryDataList" :searchConfig="searchConfig"/>
     </div>
     <div class="content">
-      <user-content ref="userContentRef"/>
+      <!-- <user-content ref="userContentRef"/> -->
+      <page-content ref="userContentRef" :contentConfig="contentConfig"/>
     </div>
   </div>
 </template>
@@ -14,7 +15,9 @@ import userContent from './cpns/user-content.vue';
 import { ref } from 'vue';
 import type { IformData } from '@/types/index'
 import pageSearch from '@/components/page-search/page-search.vue';
-import searchConfig from '@/views/main/admin/user/config/config'
+import pageContent from '@/components/page-content/page-content.vue'
+import { searchConfig, contentConfig } from '@/views/main/admin/user/config/config'
+
 
 // 1. 重置 --- 获取content组件实例调用相关方法, 重置user列表
 const userContentRef = ref<InstanceType<typeof userContent>>()

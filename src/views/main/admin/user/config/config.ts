@@ -1,4 +1,4 @@
-const searchConfig = {
+export const searchConfig = {
   formConfigData: [
     {
       type: 'input',
@@ -27,4 +27,9 @@ const searchConfig = {
   ]
 }
 
-export default searchConfig
+export const contentConfig = {
+  contentTitle: {
+    headerName: '用户列表',
+    btnName: '新建用户'
+  }
+}

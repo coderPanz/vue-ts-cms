@@ -56,8 +56,11 @@ declare module '@vue/runtime-core' {
     NavAside: typeof import('./src/components/nav-menu/nav-aside.vue')['default']
     NavHeader: typeof import('./src/components/nav-header/nav-header.vue')['default']
     NavMenu: typeof import('./src/components/nav-menu/nav-menu.vue')['default']
+    PageContent: typeof import('./src/components/page-content/page-content.vue')['default']
+    PageSearch: typeof import('./src/components/page-search/page-search.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    UserContent: typeof import('./src/components/page-content/user-content.vue')['default']
     UserSearch: typeof import('./src/components/page-search/user-search.vue')['default']
   }
 }
