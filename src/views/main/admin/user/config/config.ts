@@ -35,7 +35,7 @@ export const contentConfig = {
   formConfigData: [
     { type: 'index', label: '序号', width: '70' },
     { type: 'normal', prop: '_id', label: 'id', width: '230' },
-    { type: 'normal', prop: 'name', label: '用户名' }
-
+    { type: 'normal', prop: 'name', label: '用户名' },
+    { type: 'status', prop: 'status', label: '状态', width: '100' }
   ]
 }

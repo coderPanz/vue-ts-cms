@@ -25,16 +25,19 @@
               align="center"
             />
           </template>
+          <template v-else-if="item.type === 'status'">
+            <el-table-column :prop="item.prop" :label="item.label" align="center"
+            :width="item.width">
+              <!-- 作用域插槽 -->
+              <template #default="scope">
+                <el-button size="small" plain :type="scope.row.status ? 'primary' : 'danger'">
+                  {{ scope.row.status ? '启用' : '禁用' }}
+                </el-button>
+              </template>
+            </el-table-column>
+          </template>
         </template>
 
-        <el-table-column prop="status" label="状态" align="center" width="100">
-          <!-- 作用域插槽 -->
-          <template #default="scope">
-            <el-button size="small" plain :type="scope.row.status ? 'primary' : 'danger'">{{
-              scope.row.status ? '启用' : '禁用'
-            }}</el-button>
-          </template>
-        </el-table-column>
         <el-table-column prop="createdAt" label="创建时间" align="center">
           <template #default="scope">
             {{ format(scope.row.createdAt) }}
