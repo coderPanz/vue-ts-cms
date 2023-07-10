@@ -2,13 +2,31 @@
   <div class="content">
     <div class="header">
       <h3>{{ contentConfig.contentTitle.headerName }}</h3>
-      <el-button type="primary" @click="dialogVisible">{{ contentConfig.contentTitle.btnName }}</el-button>
+      <el-button type="primary" @click="dialogVisible">{{
+        contentConfig.contentTitle.btnName
+      }}</el-button>
     </div>
     <div class="table">
       <el-table :data="userList" border style="width: 100%">
-        <el-table-column type="index" label="序号" width="70" align="center" />
-        <el-table-column prop="_id" label="id" align="center" width="230"/>
-        <el-table-column prop="name" label="用户名" align="center" />
+        <template v-for="item in contentConfig.formConfigData" :key="item.prop">
+          <template v-if="item.type === 'normal'">
+            <el-table-column
+              :prop="item.prop"
+              :label="item.label"
+              align="center"
+              :width="item.width"
+            />
+          </template>
+          <template v-else-if="item.type === 'index'">
+            <el-table-column
+              :type="item.type"
+              :label="item.label"
+              :width="item.width"
+              align="center"
+            />
+          </template>
+        </template>
+
         <el-table-column prop="status" label="状态" align="center" width="100">
           <!-- 作用域插槽 -->
           <template #default="scope">
@@ -46,7 +64,7 @@
         @current-change="reFreshPage"
       />
     </div>
-    <com-dialog ref="comDialogRef" @re-get-data-list="reGetDataList"/>
+    <com-dialog ref="comDialogRef" @re-get-data-list="reGetDataList" />
   </div>
 </template>
 
@@ -61,8 +79,9 @@ interface IProps {
   contentConfig: {
     contentTitle: {
       headerName: string
-      btnName : string
+      btnName: string
     }
+    formConfigData: any[]
   }
 }
 
@@ -91,7 +110,7 @@ function getPageList(formData?: any) {
   // 把search表单中的数据和size和offset数据结合起来
   const allDataReq = { ...formData, size, offset }
   // 发送网络请求
-  adminStore.getDataListAction('user', allDataReq).then(res => {
+  adminStore.getDataListAction('user', allDataReq).then((res) => {
     // 赋值给pinia中的userlist以便展示user的数据
     adminStore.userList = res.data.data
   })
@@ -108,8 +127,8 @@ defineExpose({ getPageList })
 // 3. 删除数据
 // 3.1 删除成功后在重新获取用户列表
 function deleteUser(id: string) {
-  adminStore.deleteDataListAction('user', id).then(res => {
-    if(res) getPageList()
+  adminStore.deleteDataListAction('user', id).then((res) => {
+    if (res) getPageList()
   })
 }
 

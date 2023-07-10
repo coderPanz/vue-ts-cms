@@ -31,5 +31,11 @@ export const contentConfig = {
   contentTitle: {
     headerName: '用户列表',
     btnName: '新建用户'
-  }
+  },
+  formConfigData: [
+    { type: 'index', label: '序号', width: '70' },
+    { type: 'normal', prop: '_id', label: 'id', width: '230' },
+    { type: 'normal', prop: 'name', label: '用户名' }
+
+  ]
 }
