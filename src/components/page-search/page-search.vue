@@ -32,38 +32,6 @@
             </el-form-item>
           </el-col>
         </template>
-<!--
-        <el-col :span="7">
-          <el-form-item label="用户名" prop="name">
-            <el-input v-model="formData.name" />
-          </el-form-item>
-        </el-col>
-        <el-col :span="7">
-          <el-form-item label="id" prop="id">
-            <el-input v-model="formData.id" />
-          </el-form-item>
-        </el-col>
-
-        <el-col :span="7">
-          <el-form-item label="状态" prop="status">
-            <el-select v-model="formData.status" style="width: 100%">
-              <el-option label="激活" :value="1" />
-              <el-option label="关闭" :value="0" />
-            </el-select>
-          </el-form-item>
-        </el-col>
-        <el-col :span="7">
-          <el-form-item label="时间" prop="createdAt">
-            <el-date-picker
-              v-model="formData.createdAt"
-              type="daterange"
-              range-separator="-"
-              start-placeholder="开始时间"
-              end-placeholder="结束时间"
-              format="YYYY/MM/DD"
-            />
-          </el-form-item>
-        </el-col> -->
       </el-row>
     </el-form>
 
@@ -77,7 +45,6 @@
 <script setup lang="ts">
 import type { ElForm } from 'element-plus/lib/components/index.js'
 import { reactive, ref } from 'vue'
-import type { IformData } from '@/types/index'
 
 // 1. 获取配置文件传进来的定义表单数据对象
 interface IProps {

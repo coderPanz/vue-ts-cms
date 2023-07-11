@@ -30,17 +30,6 @@ const useLoginStore = defineStore('login', {
         localIns.setCache('localMenuTree', menuTreeData.data.data)
         this.localMenuTree = menuTreeData.data.data
 
-        // 1. 获取用户roles数组中的_id
-        // const userInfos = await userInfosReq(id)
-        // const role_id = userInfos.data.data.roles[0]
-        // // 2. 获取角色id
-        // const roleInfos = await roleInfosReq(role_id)
-        // const roleId = roleInfos.data.data.id
-        // // 3. 通过角色id获取菜单树
-        // const menuTreeData = await menuTreeReq(roleId)
-        // localIns.setCache('localMenuTree', menuTreeData.data)
-        // this.localMenuTree = menuTreeData.data
-
         // 登录成功后显示main页面前动态添加路由
         increaseRoute(menuTreeData.data.data)
         // // 4. 跳转页面

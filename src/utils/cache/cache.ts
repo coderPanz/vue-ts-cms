@@ -11,6 +11,8 @@ class cacheOperate {
     const value = this.storage.getItem(key)
     if (value !== null && value !== undefined) {
       return JSON.parse(value)
+    } else {
+      return console.log('token为空, 请登录!')
     }
   }
 

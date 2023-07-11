@@ -9,15 +9,8 @@
     <div class="table">
       <el-table :data="userList" border style="width: 100%">
         <template v-for="item in contentConfig.formConfigData" :key="item.prop">
-          <template v-if="item.type === 'normal'">
-            <el-table-column
-              :prop="item.prop"
-              :label="item.label"
-              align="center"
-              :width="item.width"
-            />
-          </template>
-          <template v-else-if="item.type === 'index'">
+          <!-- 表格常用类型的渲染 -->
+          <template v-if="item.type === 'index'">
             <el-table-column
               :type="item.type"
               :label="item.label"
@@ -25,29 +18,37 @@
               align="center"
             />
           </template>
-          <template v-else-if="item.type === 'status'">
-            <el-table-column :prop="item.prop" :label="item.label" align="center"
-            :width="item.width">
-              <!-- 作用域插槽 -->
+          <template v-else-if="item.type === 'normal'">
+            <el-table-column
+              :prop="item.prop"
+              :label="item.label"
+              align="center"
+              :width="item.width"
+            />
+          </template>
+          <template v-else-if="item.type === 'time'">
+            <el-table-column :prop="item.prop" :label="item.label" align="center">
               <template #default="scope">
-                <el-button size="small" plain :type="scope.row.status ? 'primary' : 'danger'">
-                  {{ scope.row.status ? '启用' : '禁用' }}
-                </el-button>
+                {{ format(scope.row[item.prop]) }}
               </template>
             </el-table-column>
           </template>
-        </template>
+          <!-- 通过作用域插槽进行表格的特殊定制化: 添加一个作用域插槽, 并把数据传输到父组件, 通过父组件进行定制化渲染 -->
+          <template v-else-if="item.type === 'custom'">
+            <el-table-column
+              :prop="item.prop"
+              :label="item.label"
+              align="center"
+              :width="item.width"
+            >
+              <!-- 作用域插槽, 属性通过v-bind="scope"传到父组件 -->
+              <template #default="scope">
+                <slot :name="item.slotName" v-bind="scope"></slot>
+              </template>
+            </el-table-column>
+          </template>
 
-        <el-table-column prop="createdAt" label="创建时间" align="center">
-          <template #default="scope">
-            {{ format(scope.row.createdAt) }}
-          </template>
-        </el-table-column>
-        <el-table-column prop="updatedAt" label="更新时间" align="center">
-          <template #default="scope">
-            {{ format(scope.row.createdAt) }}
-          </template>
-        </el-table-column>
+        </template>
         <el-table-column prop="date" label="操作" align="center">
           <!-- 使用作用域插槽获取当前数据的唯一标识:id -->
           <template #default="scope">
@@ -67,7 +68,7 @@
         @current-change="reFreshPage"
       />
     </div>
-    <com-dialog ref="comDialogRef" @re-get-data-list="reGetDataList" />
+    <page-pop-up ref="pagePopUpRef" @re-get-data-list="reGetDataList" />
   </div>
 </template>
 
@@ -76,10 +77,11 @@ import useAdminStore from '@/store/main/admin'
 import { storeToRefs } from 'pinia'
 import format from '@/utils/formatDate/format'
 import { ref } from 'vue'
-import comDialog from '@/components/Dialog/com-Dialog.vue'
+import pagePopUp from '@/components/page-pop-up/page-pop-up.vue'
 
 interface IProps {
   contentConfig: {
+    pageName: string
     contentTitle: {
       headerName: string
       btnName: string
@@ -113,7 +115,7 @@ function getPageList(formData?: any) {
   // 把search表单中的数据和size和offset数据结合起来
   const allDataReq = { ...formData, size, offset }
   // 发送网络请求
-  adminStore.getDataListAction('user', allDataReq).then((res) => {
+  adminStore.getDataListAction(props.contentConfig.pageName, allDataReq).then((res) => {
     // 赋值给pinia中的userlist以便展示user的数据
     adminStore.userList = res.data.data
   })
@@ -130,16 +132,16 @@ defineExpose({ getPageList })
 // 3. 删除数据
 // 3.1 删除成功后在重新获取用户列表
 function deleteUser(id: string) {
-  adminStore.deleteDataListAction('user', id).then((res) => {
+  adminStore.deleteDataListAction(props.contentConfig.pageName, id).then((res) => {
     if (res) getPageList()
   })
 }
 
 // 4. 点击新建用户btn弹出新建用户弹窗
-const comDialogRef = ref<InstanceType<typeof comDialog>>()
+const pagePopUpRef = ref<InstanceType<typeof pagePopUp>>()
 const isShow = ref<boolean>(false)
 function dialogVisible() {
-  comDialogRef.value?.isShowExpose(isShow.value, true)
+  pagePopUpRef.value?.isShowExpose(isShow.value, true)
 }
 // 4.2 若新建用户成功则重新获取用户列表
 function reGetDataList() {
@@ -148,7 +150,7 @@ function reGetDataList() {
 
 // 5. 更新用户
 function updateUser(id: string) {
-  comDialogRef.value?.isShowExpose(isShow.value, false, id)
+  pagePopUpRef.value?.isShowExpose(isShow.value, false, id)
 }
 </script>
 

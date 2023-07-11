@@ -100,6 +100,7 @@ const emit = defineEmits(['reGetDataList'])
 
 function submitBtn() {
   const { name, password, roles, department } = dialogForm
+  // console.log(name, password, roles, department)
   // Judge.value 为true则说明为创建数据, 否则为更新数据
   if(Judge.value) {
     adminStore.createDataAction('user', { name, password, roles, department })

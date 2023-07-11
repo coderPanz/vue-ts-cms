@@ -11,7 +11,7 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     Aside: typeof import('./src/components/aside/aside.vue')['default']
     'BreadCrumb ': typeof import('./src/components/nav-header/cpn/bread-crumb .vue')['default']
-    ComDialog: typeof import('./src/components/Dialog/com-Dialog.vue')['default']
+    ComDialog: typeof import('./src/components/page-pop-up/com-Dialog.vue')['default']
     Dialog: typeof import('./src/components/Dialog/Dialog.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
@@ -52,15 +52,12 @@ declare module '@vue/runtime-core' {
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
     ElTabPane: typeof import('element-plus/es')['ElTabPane']
     ElTabs: typeof import('element-plus/es')['ElTabs']
-    Header: typeof import('./src/components/nav-header/header.vue')['default']
-    NavAside: typeof import('./src/components/nav-menu/nav-aside.vue')['default']
     NavHeader: typeof import('./src/components/nav-header/nav-header.vue')['default']
     NavMenu: typeof import('./src/components/nav-menu/nav-menu.vue')['default']
     PageContent: typeof import('./src/components/page-content/page-content.vue')['default']
+    PagePopUp: typeof import('./src/components/page-pop-up/page-pop-up.vue')['default']
     PageSearch: typeof import('./src/components/page-search/page-search.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    UserContent: typeof import('./src/components/page-content/user-content.vue')['default']
-    UserSearch: typeof import('./src/components/page-search/user-search.vue')['default']
   }
 }
