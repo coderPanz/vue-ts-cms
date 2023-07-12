@@ -78,6 +78,7 @@ import { storeToRefs } from 'pinia'
 import format from '@/utils/formatDate/format'
 import { ref } from 'vue'
 import pagePopUp from '@/components/page-pop-up/page-pop-up.vue'
+import { ElMessage } from 'element-plus/lib/components/index.js'
 
 interface IProps {
   contentConfig: {
@@ -133,7 +134,15 @@ defineExpose({ getPageList })
 // 3.1 删除成功后在重新获取用户列表
 function deleteUser(id: string) {
   adminStore.deleteDataListAction(props.contentConfig.pageName, id).then((res) => {
-    if (res) getPageList()
+    if(res.data.msg === '权限不足, 无法删除!') {
+      ElMessage.error('权限不足, 无法删除!')
+    }
+    if(res.data.msg === '删除失败!') {
+      ElMessage.error('服务器异常!')
+    } else {
+      // 删除成功后查询获取数据列表!
+      getPageList()
+    }
   })
 }
 
