@@ -42,8 +42,11 @@ function loginAction(isRemember: any) {
     if (valid) {
       const name = account.name
       const password = account.password
-      loginStore.fetchgetBackInfos({ name, password }).then(res => {
-        if(isRemember) {
+      loginStore.fetchgetBackInfos({ name, password }).then((res) => {
+        // 此时返回的res一定是没有token的, 所以需要显示登录失败提示!
+        if(!res?.data.token) { ElMessage.error('帐号密码错误!') }
+        // 是否记住密码
+        if (isRemember) {
           localIns.setCache(NAME, name)
           localIns.setCache(PASSWORD, password)
         } else {
@@ -60,7 +63,6 @@ function loginAction(isRemember: any) {
 defineExpose({
   loginAction
 })
-
 </script>
 
 <style lang="less" scoped>

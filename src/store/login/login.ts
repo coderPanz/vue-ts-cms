@@ -20,20 +20,26 @@ const useLoginStore = defineStore('login', {
     async fetchgetBackInfos(account: ILogin) {
       try {
         const res = await postLoginRequest(account)
-        // 封装工具进行本地缓存
-        localIns.setCache('token', res.data.token)
-        this.token = res.data.token
-        // 1. 获取角色id
-        const role_id = res.data.id
-        // 2. 通过角色id获取菜单树
-        const menuTreeData = await menuTreeReq(role_id)
-        localIns.setCache('localMenuTree', menuTreeData.data.data)
-        this.localMenuTree = menuTreeData.data.data
+        if (res.data.token) {
+          // 封装工具进行本地缓存
+          localIns.setCache('token', res.data.token)
+          this.token = res.data.token
+          // 1. 获取角色id
+          const role_id = res.data.id
+          // 2. 通过角色id获取菜单树
+          const menuTreeData = await menuTreeReq(role_id)
+          localIns.setCache('localMenuTree', menuTreeData.data.data)
+          this.localMenuTree = menuTreeData.data.data
 
-        // 登录成功后显示main页面前动态添加路由
-        increaseRoute(menuTreeData.data.data)
-        // // 4. 跳转页面
-        router.push('/main')
+          // 登录成功后显示main页面前动态添加路由
+          increaseRoute(menuTreeData.data.data)
+          // 4. 跳转页面
+          router.push('/main')
+          return res
+        } else {
+          // 返回res信息作登录失败提示
+          return res
+        }
       } catch (error) {
         console.error()
       }
@@ -47,7 +53,7 @@ const useLoginStore = defineStore('login', {
 
         // 在登录后刷新页面时再次动态添加路由
         const Routes = increaseRoute(localMenuTree)
-        Routes.forEach(item => {
+        Routes.forEach((item) => {
           router.addRoute('main', item)
         })
       }
