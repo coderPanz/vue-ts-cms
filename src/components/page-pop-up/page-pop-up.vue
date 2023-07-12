@@ -9,15 +9,15 @@
           <el-input v-model="dialogForm.password" />
         </el-form-item>
         <el-form-item label="所属角色">
-          <el-select v-model="dialogForm.roles">
+          <el-select v-model="dialogForm.roles" placeholder="必选项">
             <!-- v-for渲染出所需列表 -->
             <template v-for="item in roleList" :key="item._id">
               <el-option :label="item.name" :value="item._id" />
             </template>
           </el-select>
         </el-form-item>
-        <el-form-item label="所属部门">
-          <el-select v-model="dialogForm.department">
+        <el-form-item label="所属部门" >
+          <el-select v-model="dialogForm.department" placeholder="必选项">
             <template v-for="item in departmentList" :key="item._id">
               <el-option :label="item.name" :value="item._id" />
             </template>

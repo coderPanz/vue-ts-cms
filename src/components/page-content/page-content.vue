@@ -140,7 +140,7 @@ function deleteUser(id: string) {
     if(res.data.msg === '删除失败!') {
       ElMessage.error('服务器异常!')
     } else {
-      // 删除成功后查询获取数据列表!
+      // 删除成功后查询重新获取数据列表!
       getPageList()
     }
   })
