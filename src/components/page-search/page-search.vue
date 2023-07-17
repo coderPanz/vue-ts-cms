@@ -3,7 +3,7 @@
 
 <template>
   <div class="search">
-    <el-form label-width="90px" :model="formData" ref="formDataRef" :search-config="searchConfig">
+    <el-form label-width="90px" :model="formData" ref="formDataRef">
       <el-row :gutter="10">
         <template v-for="item in searchConfig.formConfigData" :key="item.prop">
           <el-col :span="7">
@@ -56,7 +56,7 @@ const prop = defineProps<IProps>()
 
 const formDataList: any = {}
 for (const item of prop.searchConfig.formConfigData) {
-  formDataList[item.prop] = ''
+  formDataList[item.prop] = item.initialValue
 }
 
 const formData = reactive(formDataList)

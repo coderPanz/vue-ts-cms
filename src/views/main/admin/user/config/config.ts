@@ -1,14 +1,17 @@
+import { type IConfig } from '../config/config-type'
 export const searchConfig = {
   formConfigData: [
     {
       type: 'input',
       prop: 'id',
-      label:'id'
+      label:'id',
+      initialValue: ''
     },
     {
       type: 'input',
       prop: 'name',
       label: '用户名',
+      initialValue: ''
     },
     {
       type: 'date-picker',
@@ -19,6 +22,7 @@ export const searchConfig = {
       type: 'select',
       prop: 'status',
       label: '状态',
+      initialValue: '',
       options: [
         { label: '激活', value: 1 },
         { label: '关闭', value: 0 }
@@ -47,5 +51,42 @@ export const contentConfig = {
     // 普通定制
     { type: 'time', prop: 'createdAt', label: '创建时间' },
     { type: 'time', prop: 'updatedAt', label: '更新时间' },
+  ]
+}
+
+export const popUpConfig: IConfig = {
+  pageName: 'user',
+  createName: '新建用户',
+  editName: '编辑用户',
+  labelWidth: '70px',
+  formConfigData: [
+    {
+      type: 'normal',
+      label: '用户名',
+      prop: 'name',
+      initialValue: ''
+    },
+    {
+      type: 'normal',
+      label: '密码',
+      prop: 'password',
+      initialValue: ''
+    },
+    {
+      type: 'select',
+      label: '所属角色',
+      prop: 'role',
+      initialValue: [],
+      placeholder: '必填项',
+      options: []
+    },
+    {
+      type: 'select',
+      label: '所属部门',
+      prop: 'department',
+      initialValue: [],
+      placeholder: '必填项',
+      options: []
+    },
   ]
 }

@@ -2,7 +2,7 @@
   <div class="content">
     <div class="header">
       <h3>{{ contentConfig.contentTitle.headerName }}</h3>
-      <el-button type="primary" @click="dialogVisible">{{
+      <el-button type="primary" @click="popUpClick">{{
         contentConfig.contentTitle.btnName
       }}</el-button>
     </div>
@@ -68,7 +68,7 @@
         @current-change="reFreshPage"
       />
     </div>
-    <page-pop-up ref="pagePopUpRef" @re-get-data-list="reGetDataList" />
+    <page-pop-up ref="pagePopUpRef" @re-get-data-list="reGetDataList" :popUpConfig="popUpConfigReq"/>
   </div>
 </template>
 
@@ -76,9 +76,26 @@
 import useAdminStore from '@/store/main/admin'
 import { storeToRefs } from 'pinia'
 import format from '@/utils/formatDate/format'
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import pagePopUp from '@/components/page-pop-up/page-pop-up.vue'
 import { ElMessage } from 'element-plus/lib/components/index.js'
+import { popUpConfig } from '@/views/main/admin/user/config/config'
+
+// 创建store实例
+const adminStore = useAdminStore()
+
+// 把popUp的配置传入其组件內部时需要进行把配置文件中的optins空数组填充所需的内容
+const popUpConfigReq = computed(() => {
+  popUpConfig.formConfigData.forEach(item => {
+    if(item.prop === 'role') {
+      item.options = adminStore.roleList
+    }
+    if (item.prop === 'department') {
+      item.options = adminStore.departmentList
+    }
+  })
+  return popUpConfig
+})
 
 interface IProps {
   contentConfig: {
@@ -98,8 +115,6 @@ const props = defineProps<IProps>()
 const currentPage = ref(1)
 const pageSize = ref(10)
 
-// 创建store实例
-const adminStore = useAdminStore()
 
 // 1. 获取用户列表
 // 1. 1 发送网络请求(第一次渲染页面后发送网络请求)
@@ -149,7 +164,7 @@ function deleteUser(id: string) {
 // 4. 点击新建用户btn弹出新建用户弹窗
 const pagePopUpRef = ref<InstanceType<typeof pagePopUp>>()
 const isShow = ref<boolean>(false)
-function dialogVisible() {
+function popUpClick() {
   pagePopUpRef.value?.isShowExpose(isShow.value, true)
 }
 // 4.2 若新建用户成功则重新获取用户列表
