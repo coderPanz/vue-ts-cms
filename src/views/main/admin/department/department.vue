@@ -1,13 +1,64 @@
 <template>
   <div class="app">
-    <h2>department</h2>
+    <div class="search">
+      <page-search
+        @reset-data="resetDataList"
+        @query-data="queryDataList"
+        :searchConfig="searchConfig"
+      />
+    </div>
+    <div class="content">
+      <page-content ref="pageContentRef" :contentConfig="contentConfig" />
+    </div>
+    <div class="popUp">
+      <page-pop-up
+        ref="pagePopUpRef"
+        @re-get-data-list="reGetDataList"
+        :popUpConfig="popUpConfigReq"
+      />
+    </div>
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import pageSearch from '@/components/page-search/page-search.vue'
+import pageContent from '@/components/page-content/page-content.vue'
+import pagePopUp from '@/components/page-pop-up/page-pop-up.vue'
+import { searchConfig, contentConfig, popUpConfig } from '@/views/main/admin/department/config/config'
+import { ref, computed } from 'vue';
+import useAdminStore from '@/store/main/admin'
+import type { IformData } from '@/types/index'
+
+const adminStore = useAdminStore()
+
+// 一. page-content组件的操作
+// 1. 重置 --- 获取content组件实例调用相关方法, 重置user列表
+const pageContentRef = ref<InstanceType<typeof pageContent>>()
+function resetDataList() {
+  pageContentRef.value?.getPageList()
+}
+
+// 2. 查询 ---- 从子组件中获取查询条件并调用请求函数查询数据
+function queryDataList(formData: IformData) {
+  pageContentRef.value?.getPageList(formData)
+}
+
+// 二. page-popup组件的操作
+
+// 1. 把popUp的配置传入其组件內部时需要把配置文件中的optins初始值空数组填充所需的内容
+const popUpConfigReq = computed(() => {
+  popUpConfig.formConfigData.forEach((item) => {
+    if (item.prop === 'role') {
+      item.options = adminStore.roleList
+    }
+    if (item.prop === 'department') {
+      item.options = adminStore.departmentList
+    }
+  })
+  return popUpConfig
+})
+
+</script>
 
 <style lang="less" scoped>
-.app {
-  font-size: 14px;
-}
 </style>

@@ -24,13 +24,5 @@ export interface IConfig {
         placeholder: string
         options: any[]
       },
-      {
-        type: string
-        label: string
-        prop: string
-        initialValue: [],
-        placeholder: string
-        options: any[]
-      }
     ]
-  }
+}

@@ -2,12 +2,12 @@
   <div class="content">
     <div class="header">
       <h3>{{ contentConfig.contentTitle.headerName }}</h3>
-      <el-button type="primary" @click="popUpClick">{{
-        contentConfig.contentTitle.btnName
-      }}</el-button>
+      <el-button type="primary" @click="popUpClick">
+        {{ contentConfig.contentTitle.btnName }}
+      </el-button>
     </div>
     <div class="table">
-      <el-table :data="userList" border style="width: 100%">
+      <el-table :data="dataList" border style="width: 100%">
         <template v-for="item in contentConfig.formConfigData" :key="item.prop">
           <!-- 表格常用类型的渲染 -->
           <template v-if="item.type === 'index'">
@@ -47,7 +47,6 @@
               </template>
             </el-table-column>
           </template>
-
         </template>
         <el-table-column prop="date" label="操作" align="center">
           <!-- 使用作用域插槽获取当前数据的唯一标识:id -->
@@ -68,7 +67,6 @@
         @current-change="reFreshPage"
       />
     </div>
-    <page-pop-up ref="pagePopUpRef" @re-get-data-list="reGetDataList" :popUpConfig="popUpConfigReq"/>
   </div>
 </template>
 
@@ -83,19 +81,6 @@ import { popUpConfig } from '@/views/main/admin/user/config/config'
 
 // 创建store实例
 const adminStore = useAdminStore()
-
-// 把popUp的配置传入其组件內部时需要进行把配置文件中的optins空数组填充所需的内容
-const popUpConfigReq = computed(() => {
-  popUpConfig.formConfigData.forEach(item => {
-    if(item.prop === 'role') {
-      item.options = adminStore.roleList
-    }
-    if (item.prop === 'department') {
-      item.options = adminStore.departmentList
-    }
-  })
-  return popUpConfig
-})
 
 interface IProps {
   contentConfig: {
@@ -115,12 +100,11 @@ const props = defineProps<IProps>()
 const currentPage = ref(1)
 const pageSize = ref(10)
 
-
 // 1. 获取用户列表
 // 1. 1 发送网络请求(第一次渲染页面后发送网络请求)
 getPageList()
 // 1. 2  注意异步操作请求数据的时候需要对数据进行响应式处理才能在页面实时渲染
-const { userList, count } = storeToRefs(adminStore)
+const { dataList, count } = storeToRefs(adminStore)
 
 // 2. 分页器
 // 2.1 定义一个函数发送请求获取分页数据(这里我们定义一页显示10条数据)
@@ -132,8 +116,8 @@ function getPageList(formData?: any) {
   const allDataReq = { ...formData, size, offset }
   // 发送网络请求
   adminStore.getDataListAction(props.contentConfig.pageName, allDataReq).then((res) => {
-    // 赋值给pinia中的userlist以便展示user的数据
-    adminStore.userList = res.data.data
+    // 赋值给pinia中的dataList以便展示user的数据
+    adminStore.dataList = res.data.data
   })
 }
 
@@ -149,10 +133,10 @@ defineExpose({ getPageList })
 // 3.1 删除成功后在重新获取用户列表
 function deleteUser(id: string) {
   adminStore.deleteDataListAction(props.contentConfig.pageName, id).then((res) => {
-    if(res.data.msg === '权限不足, 无法删除!') {
+    if (res.data.msg === '权限不足, 无法删除!') {
       ElMessage.error('权限不足, 无法删除!')
     }
-    if(res.data.msg === '删除失败!') {
+    if (res.data.msg === '删除失败!') {
       ElMessage.error('服务器异常!')
     } else {
       // 删除成功后查询重新获取数据列表!
@@ -161,26 +145,26 @@ function deleteUser(id: string) {
   })
 }
 
-// 4. 点击新建用户btn弹出新建用户弹窗
-const pagePopUpRef = ref<InstanceType<typeof pagePopUp>>()
+// 4. 点击新建按钮发出事件到父组件中连接popUp组件
+const emit = defineEmits([ 'createBtnClick', 'updateBtnClick' ])
 const isShow = ref<boolean>(false)
 function popUpClick() {
-  pagePopUpRef.value?.isShowExpose(isShow.value, true)
-}
-// 4.2 若新建用户成功则重新获取用户列表
-function reGetDataList() {
-  getPageList()
+  emit('createBtnClick', isShow.value, true)
 }
 
-// 5. 更新用户
+// 5.点击编辑按钮发出事件到父组件中连接popUp组件
 function updateUser(id: string) {
-  pagePopUpRef.value?.isShowExpose(isShow.value, false, id)
+  emit('updateBtnClick', isShow.value, false, id)
 }
+
 </script>
 
 <style lang="less" scoped>
 .content {
   padding: 30px;
+  margin-top: 25px;
+  border-radius: 8px;
+  background-color: #fff;
   .header {
     display: flex;
     justify-content: space-between;

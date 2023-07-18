@@ -45,10 +45,10 @@ import { validationRules } from '@/utils/FormRules/FormRules'
 // 接收组件的配置信息
 interface IProps {
   popUpConfig: {
-    pageName: String
-    createName: String
-    editName: String
-    labelWidth: String
+    pageName: string
+    createName: string
+    editName: string
+    labelWidth: string
     formConfigData: any[]
   }
 }
@@ -102,7 +102,7 @@ function submitBtn() {
   const popUpFormData = popUpForm
   // Judge.value 为true则说明为创建数据, 否则为更新数据
   if(Judge.value) {
-    adminStore.createDataAction(props.popUpConfig.pageName.toString(), popUpFormData)
+    adminStore.createDataAction(props.popUpConfig.pageName, popUpFormData)
     .then((res: any) => {
       // 如果创建成功说明res.data.data有值, 弹出成功弹出, 否则弹出失败窗口
       if (res.data.msg === '创建成功!') {
@@ -110,6 +110,7 @@ function submitBtn() {
           message: '创建成功!',
           type: 'success'
         })
+        // 创建数据成功后发出查询获取数据列表的事件进行刷新操作
         emit('reGetDataList')
       } else {
         ElMessage({
@@ -119,7 +120,7 @@ function submitBtn() {
       }
     })
   } else {
-    adminStore.updateDataAction(props.popUpConfig.pageName.toString(), adminStore.id, popUpFormData)
+    adminStore.updateDataAction(props.popUpConfig.pageName, adminStore.id, popUpFormData)
     .then((res: any) => {
       if(res.data.msg == '更新成功!') {
         ElMessage({

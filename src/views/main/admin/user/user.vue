@@ -8,26 +8,38 @@
       />
     </div>
     <div class="content">
-      <page-content ref="pageContentRef" :contentConfig="contentConfig">
+      <page-content ref="pageContentRef" :contentConfig="contentConfig" @create-btn-click="createBtnClick" @update-btn-click="updateBtnClick">
         <template #status="scope">
           <el-button size="small" plain :type="scope.row.status ? 'primary' : 'danger'">
-            {{ scope.row.status ? '启用': '禁用' }}
+            {{ scope.row.status ? '启用' : '禁用' }}
           </el-button>
         </template>
       </page-content>
+    </div>
+    <div class="popUp">
+      <page-pop-up
+        ref="pagePopUpRef"
+        @re-get-data-list="reGetDataList"
+        :popUpConfig="popUpConfigReq"
+      />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
-import type { IformData } from '@/types/index'
 import pageSearch from '@/components/page-search/page-search.vue'
 import pageContent from '@/components/page-content/page-content.vue'
-import { searchConfig, contentConfig } from '@/views/main/admin/user/config/config'
+import pagePopUp from '@/components/page-pop-up/page-pop-up.vue'
+import { searchConfig, contentConfig, popUpConfig } from '@/views/main/admin/user/config/config'
+import { ref, computed } from 'vue'
+import useAdminStore from '@/store/main/admin'
+import type { IformData } from '@/types/index'
 
-// 1. 重置 --- 获取content组件实例调用相关方法, 重置user列表
+const adminStore = useAdminStore()
 const pageContentRef = ref<InstanceType<typeof pageContent>>()
+
+// 一 page-content组件的操作
+// 1. 重置 --- 获取content组件实例调用相关方法, 重置user列表
 function resetDataList() {
   pageContentRef.value?.getPageList()
 }
@@ -36,14 +48,39 @@ function resetDataList() {
 function queryDataList(formData: IformData) {
   pageContentRef.value?.getPageList(formData)
 }
+
+// 二. page-popUp组件的操作
+
+// 1. 把popUp的配置传入其组件內部时需要把配置文件中的optins初始值空数组填充所需的内容
+const popUpConfigReq = computed(() => {
+  popUpConfig.formConfigData.forEach((item) => {
+    if (item.prop === 'role') {
+      item.options = adminStore.roleList
+    }
+    if (item.prop === 'department') {
+      item.options = adminStore.departmentList
+    }
+  })
+  return popUpConfig
+})
+
+// 2. 若新建用户成功则重新获取用户列表
+function reGetDataList() {
+  pageContentRef.value?.getPageList()
+}
+
+// 3. 点击新建用户按钮弹出新建用户弹窗
+const pagePopUpRef = ref<InstanceType<typeof pagePopUp>>()
+function createBtnClick(isShow: boolean, bool: boolean) {
+  pagePopUpRef.value?.isShowExpose(isShow, bool)
+}
+
+// 3. 点击编辑用户按钮弹出编辑用户弹窗
+function updateBtnClick(isShow: boolean, bool: boolean, id: string) {
+  pagePopUpRef.value?.isShowExpose(isShow, bool, id)
+}
+
+
 </script>
 
-<style lang="less" scoped>
-.app {
-  .content {
-    margin-top: 25px;
-    border-radius: 8px;
-    background-color: #fff;
-  }
-}
-</style>
+<style lang="less" scoped></style>
