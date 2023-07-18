@@ -34,7 +34,7 @@ export const contentConfig = {
     // 普通定制
     { type: 'normal', prop: 'name', label: '部门名称' },
     { type: 'normal', prop: 'leader', label: '部门领导' },
-    { type: 'normal', prop: 'parentId', label: '上级部门' },
+    { type: 'normal', prop: 'parentId', label: '上级部门', width: '230' },
 
     // 普通定制
     { type: 'time', prop: 'createdAt', label: '创建时间' },
@@ -46,7 +46,7 @@ export const popUpConfig: IConfig = {
   pageName: 'department',
   createName: '新建部门',
   editName: '编辑部门',
-  labelWidth: '70px',
+  labelWidth: '80px',
   formConfigData: [
     {
       type: 'normal',

@@ -74,10 +74,8 @@
 import useAdminStore from '@/store/main/admin'
 import { storeToRefs } from 'pinia'
 import format from '@/utils/formatDate/format'
-import { computed, ref } from 'vue'
-import pagePopUp from '@/components/page-pop-up/page-pop-up.vue'
+import { ref } from 'vue'
 import { ElMessage } from 'element-plus/lib/components/index.js'
-import { popUpConfig } from '@/views/main/admin/user/config/config'
 
 // 创建store实例
 const adminStore = useAdminStore()

@@ -1,6 +1,10 @@
 export const validationRules = {
   name: [
-    { required: true, message: '请输入用户名', trigger: 'blur' },
+    { required: true, message: '请输入', trigger: 'blur' },
+    { min: 3, max: 12, message: '用户名长度为3到12位', trigger: 'blur' }
+  ],
+  leader: [
+    { required: true, message: '请输入', trigger: 'blur' },
     { min: 3, max: 12, message: '用户名长度为3到12位', trigger: 'blur' }
   ],
   password: [

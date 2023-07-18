@@ -8,7 +8,7 @@
       />
     </div>
     <div class="content">
-      <page-content ref="pageContentRef" :contentConfig="contentConfig" />
+      <page-content ref="pageContentRef" :contentConfig="contentConfig" @create-btn-click="createBtnClick" @update-btn-click="updateBtnClick"/>
     </div>
     <div class="popUp">
       <page-pop-up
@@ -48,15 +48,28 @@ function queryDataList(formData: IformData) {
 // 1. 把popUp的配置传入其组件內部时需要把配置文件中的optins初始值空数组填充所需的内容
 const popUpConfigReq = computed(() => {
   popUpConfig.formConfigData.forEach((item) => {
-    if (item.prop === 'role') {
-      item.options = adminStore.roleList
-    }
-    if (item.prop === 'department') {
+    if (item.prop === 'parentId') {
       item.options = adminStore.departmentList
     }
   })
   return popUpConfig
 })
+
+// 2. 若新建用户成功则重新获取用户列表
+function reGetDataList() {
+  pageContentRef.value?.getPageList()
+}
+
+// 3. 点击新建用户按钮弹出新建用户弹窗
+const pagePopUpRef = ref<InstanceType<typeof pagePopUp>>()
+function createBtnClick(isShow: boolean, bool: boolean) {
+  pagePopUpRef.value?.isShowExpose(isShow, bool)
+}
+
+// 4. 点击编辑用户按钮弹出编辑用户弹窗
+function updateBtnClick(isShow: boolean, bool: boolean, id: string) {
+  pagePopUpRef.value?.isShowExpose(isShow, bool, id)
+}
 
 </script>
 

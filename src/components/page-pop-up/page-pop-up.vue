@@ -48,7 +48,7 @@ interface IProps {
     pageName: string
     createName: string
     editName: string
-    labelWidth: string
+    labelWidth?: string
     formConfigData: any[]
   }
 }
