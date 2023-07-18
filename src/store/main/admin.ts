@@ -6,6 +6,7 @@ interface IState {
   roleList: any[]
   departmentList: any[]
   userList: any[]
+  menuList: any[]
   dataList: any[]
   count: Number
   id: any // 保存用户id, 用于编辑用户操作
@@ -15,6 +16,7 @@ const useAdminStore = defineStore('admin', {
     roleList: [],
     departmentList: [],
     userList: [],
+    menuList: [],
 
     dataList: [],
     count: 0,
@@ -28,6 +30,7 @@ const useAdminStore = defineStore('admin', {
       const roleRes = await queryReq('role')
       const departmentRes = await queryReq('department')
       const userRes = await queryReq('user')
+      const menusRes = await queryReq('menu')
 
       this.dataList = res.data.data
       this.count = res.data.totalCount
@@ -35,7 +38,7 @@ const useAdminStore = defineStore('admin', {
       this.roleList = roleRes.data.data
       this.departmentList = departmentRes.data.data
       this.userList = userRes.data.data
-      console.log(this.dataList)
+      this.menuList = menusRes.data.data
       return res
     },
     // 2. 删除用户后重新发送网络请求获取最新的数据

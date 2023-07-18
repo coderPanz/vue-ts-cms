@@ -4,7 +4,7 @@ export const searchConfig = {
     {
       type: 'input',
       prop: 'id',
-      label:'id',
+      label: 'id',
       initialValue: ''
     },
     {
@@ -50,7 +50,7 @@ export const contentConfig = {
 
     // 普通定制
     { type: 'time', prop: 'createdAt', label: '创建时间' },
-    { type: 'time', prop: 'updatedAt', label: '更新时间' },
+    { type: 'time', prop: 'updatedAt', label: '更新时间' }
   ]
 }
 
@@ -87,6 +87,6 @@ export const popUpConfig: IConfig = {
       initialValue: [],
       placeholder: '必填项',
       options: []
-    },
+    }
   ]
 }

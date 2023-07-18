@@ -56,6 +56,7 @@ function exitLogin() {
   .icon {
     display: flex;
     align-items: center;
+    padding-left: 20px;
   }
   .content {
     height: 100%;

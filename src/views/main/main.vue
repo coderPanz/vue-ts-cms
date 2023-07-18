@@ -47,12 +47,19 @@ function iconSwitch(isSubFold: boolean) {
         display: none;
       }
     }
+    .el-container {
+      background-color: #f0f2f5;
+    }
     .el-header {
-      padding: 0;
+      padding-left: 20px;
+      padding-right: 22px;
       height: 46px;
+      .nav-header {
+        background-color: #fff;
+        border-radius: 0 0 8px 8px;
+      }
     }
     .el-main {
-      background-color: #f0f2f5;
       border-radius: 8px;
     }
   }

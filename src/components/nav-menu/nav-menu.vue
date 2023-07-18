@@ -35,7 +35,6 @@
 </template>
 
 <script setup lang="ts">
-import Vue from 'vue'
 import useLoginStore from '@/store/login/login'
 
 // 获取store中的menuTree
@@ -68,6 +67,11 @@ defineProps({
       font-size: 16px;
       font-weight: 700;
       white-space: nowrap;
+    }
+  }
+  .el-menu {
+    .el-menu-item {
+      padding-left: 71px;
     }
   }
   .el-icon {

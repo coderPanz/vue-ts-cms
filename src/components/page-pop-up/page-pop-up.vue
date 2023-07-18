@@ -1,9 +1,19 @@
 <template>
   <div class="dialog">
-    <el-dialog center :title="Judge? popUpConfig.createName: popUpConfig.editName" width="30%" v-model="isShow" :before-close="handleClose">
-      <el-form :label-width="popUpConfig.labelWidth" ref="ruleFormRef" :model="popUpForm" :rules="rules">
+    <el-dialog
+      center
+      :title="Judge ? popUpConfig.createName : popUpConfig.editName"
+      width="30%"
+      v-model="isShow"
+      :before-close="handleClose"
+    >
+      <el-form
+        :label-width="popUpConfig.labelWidth"
+        ref="ruleFormRef"
+        :model="popUpForm"
+        :rules="rules"
+      >
         <template v-for="item in popUpConfig.formConfigData" :key="item.prop">
-
           <template v-if="item.type === 'normal'">
             <el-form-item :label="item.label" :prop="item.prop">
               <el-input v-model="popUpForm[item.prop]" />
@@ -13,18 +23,27 @@
           <template v-else-if="item.type === 'select'">
             <el-form-item :label="item.label">
               <el-select v-model="popUpForm[item.prop]" :placeholder="item.placeholder">
-
                 <template v-for="itemOption in item.options" :key="itemOption._id">
                   <el-option :label="itemOption.name" :value="itemOption._id" />
                 </template>
-
               </el-select>
             </el-form-item>
           </template>
 
-
+          <template v-else-if="item.type === 'multiple-select'">
+            <el-form-item :label="item.label">
+              <el-select
+              multiple
+              v-model="popUpForm[item.prop]"
+              :placeholder="item.placeholder"
+              >
+                <template v-for="itemOption in item.options" :key="itemOption._id">
+                  <el-option :label="itemOption.name" :value="itemOption._id" />
+                </template>
+              </el-select>
+            </el-form-item>
+          </template>
         </template>
-
       </el-form>
       <template #footer>
         <span class="dialog-footer">
@@ -101,9 +120,8 @@ const emit = defineEmits(['reGetDataList'])
 function submitBtn() {
   const popUpFormData = popUpForm
   // Judge.value 为true则说明为创建数据, 否则为更新数据
-  if(Judge.value) {
-    adminStore.createDataAction(props.popUpConfig.pageName, popUpFormData)
-    .then((res: any) => {
+  if (Judge.value) {
+    adminStore.createDataAction(props.popUpConfig.pageName, popUpFormData).then((res: any) => {
       // 如果创建成功说明res.data.data有值, 弹出成功弹出, 否则弹出失败窗口
       if (res.data.msg === '创建成功!') {
         ElMessage({
@@ -120,21 +138,22 @@ function submitBtn() {
       }
     })
   } else {
-    adminStore.updateDataAction(props.popUpConfig.pageName, adminStore.id, popUpFormData)
-    .then((res: any) => {
-      if(res.data.msg == '更新成功!') {
-        ElMessage({
-          message: '更新成功!',
-          type: 'success'
-        })
-        emit('reGetDataList')
-      } else {
-        ElMessage({
-          message: '更新失败!',
-          type: 'warning'
-        })
-      }
-    })
+    adminStore
+      .updateDataAction(props.popUpConfig.pageName, adminStore.id, popUpFormData)
+      .then((res: any) => {
+        if (res.data.msg == '更新成功!') {
+          ElMessage({
+            message: '更新成功!',
+            type: 'success'
+          })
+          emit('reGetDataList')
+        } else {
+          ElMessage({
+            message: '更新失败!',
+            type: 'warning'
+          })
+        }
+      })
   }
 
   ruleFormRef.value?.resetFields()
@@ -142,7 +161,6 @@ function submitBtn() {
 }
 // 把相关方法暴露出去
 defineExpose({ isShowExpose, submitBtn })
-
 </script>
 
 <style lang="less" scoped>
