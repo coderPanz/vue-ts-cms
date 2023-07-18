@@ -31,17 +31,8 @@
           </template>
 
           <template v-else-if="item.type === 'multiple-select'">
-            <el-form-item :label="item.label">
-              <el-select
-              multiple
-              v-model="popUpForm[item.prop]"
-              :placeholder="item.placeholder"
-              >
-                <template v-for="itemOption in item.options" :key="itemOption._id">
-                  <el-option :label="itemOption.name" :value="itemOption._id" />
-                </template>
-              </el-select>
-            </el-form-item>
+            <span class="desc">{{ item.label }}</span>
+            <el-tree :data="item.options" :props="{ children: 'children', label: 'name' }" show-checkbox node-key="id"/>
           </template>
         </template>
       </el-form>
@@ -173,6 +164,12 @@ defineExpose({ isShowExpose, submitBtn })
   }
   .el-select {
     width: 100%;
+  }
+  .el-tree {
+    margin-top: 10px;
+  }
+  .desc {
+    margin-left: 12px;
   }
 }
 </style>

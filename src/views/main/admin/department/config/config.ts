@@ -3,6 +3,12 @@ export const searchConfig = {
   formConfigData: [
     {
       type: 'input',
+      prop: 'id',
+      label:'上级id',
+      initialValue: ''
+    },
+    {
+      type: 'input',
       prop: 'name',
       label:'部门名称',
       initialValue: ''
@@ -35,7 +41,7 @@ export const contentConfig = {
     { type: 'normal', prop: 'name', label: '部门名称' },
     { type: 'normal', prop: 'leader', label: '部门领导' },
 
-    { type: 'normal', prop: 'parentId', label: '上级部门', width: '250', slotName: 'parentId' },
+    { type: 'normal', prop: 'parentId', label: '上级部门编号', width: '250', slotName: 'parentId' },
 
     // 普通定制
     { type: 'time', prop: 'createdAt', label: '创建时间' },
