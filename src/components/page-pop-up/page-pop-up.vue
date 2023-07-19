@@ -15,7 +15,11 @@
       >
         <template v-for="item in popUpConfig.formConfigData" :key="item.prop">
           <template v-if="item.type === 'normal'">
-            <el-form-item :label="item.label" :prop="item.prop">
+            <el-form-item
+              v-if="Judge || item.prop !== 'password'"
+              :label="item.label"
+              :prop="item.prop"
+            >
               <el-input v-model="popUpForm[item.prop]" />
             </el-form-item>
           </template>
@@ -33,7 +37,6 @@
           <template v-else-if="item.type === 'custom'">
             <slot :name="item.slotName"></slot>
           </template>
-
         </template>
       </el-form>
       <template #footer>
@@ -82,12 +85,23 @@ const adminStore = useAdminStore()
 const isShow = ref<boolean>(false)
 // 3.1 不直接操作属性, 封装一层函数再继续操作就有了后期的可控制属性的空间
 // 3.3 传入第二个参数记录点击的按钮, 若是新建btn则弹窗显示'新建用户', 若是编辑btn则显示'编辑用户'
-// 3.4 保存这个id到store中, 以便submitBtn使用
+// 3.4 backData:点击编辑按钮进行数据的回显
+// 3.5 且编辑时不需要显示密码框
 const Judge = ref<boolean>(true)
-function isShowExpose(isParam: boolean, judge: boolean, id?: string) {
+function isShowExpose(isParam: boolean, isJudge: boolean, backData?: any) {
   isShow.value = !isParam
-  Judge.value = judge
-  adminStore.id = id
+  Judge.value = isJudge
+
+  // 若为编辑则进行数据回显, 否则新建不需要回显
+  if (!isJudge && backData) {
+    for (const key in popUpForm) {
+      popUpForm[key] = backData[key]
+    }
+  } else {
+    for (const key in popUpForm) {
+      popUpForm[key] = ''
+    }
+  }
 }
 
 // 4. 点击取消后先重置数据后关闭弹窗
@@ -112,7 +126,7 @@ const emit = defineEmits(['reGetDataList'])
 function submitBtn() {
   let popUpFormData = popUpForm
   // 创建或者编辑角色时, 若传入权限则接收权限
-  if(props.permissionList) popUpFormData = { ...props.permissionList, ...popUpFormData }
+  if (props.permissionList) popUpFormData = { ...props.permissionList, ...popUpFormData }
   console.log(popUpFormData)
   // Judge.value 为true则说明为创建数据, 否则为更新数据
   if (Judge.value) {

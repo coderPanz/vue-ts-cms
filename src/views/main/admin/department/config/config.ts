@@ -29,6 +29,7 @@ export const searchConfig = {
 
 export const contentConfig = {
   pageName: 'department',
+  isShowOperate: true,
   contentTitle: {
     headerName: '部门列表',
     btnName: '新建部门'
@@ -70,7 +71,7 @@ export const popUpConfig: IConfig = {
     {
       type: 'select',
       label: '上级部门',
-      prop: 'parentId',
+      prop: 'parentDepartment',
       initialValue: [],
       placeholder: '必填项',
       options: []

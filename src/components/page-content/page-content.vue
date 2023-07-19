@@ -2,12 +2,12 @@
   <div class="content">
     <div class="header">
       <h3>{{ contentConfig.contentTitle.headerName }}</h3>
-      <el-button type="primary" @click="popUpClick">
+      <el-button v-if="contentConfig.contentTitle.btnName" type="primary" @click="popUpClick">
         {{ contentConfig.contentTitle.btnName }}
       </el-button>
     </div>
     <div class="table">
-      <el-table :data="dataList" border style="width: 100%">
+      <el-table :data="dataList" border style="width: 100%" :row-key="contentConfig.childrenTree">
         <template v-for="item in contentConfig.formConfigData" :key="item.prop">
           <!-- 表格常用类型的渲染 -->
           <template v-if="item.type === 'index'">
@@ -48,10 +48,10 @@
             </el-table-column>
           </template>
         </template>
-        <el-table-column prop="date" label="操作" align="center">
+        <el-table-column v-if="contentConfig.isShowOperate" prop="date" label="操作" align="center">
           <!-- 使用作用域插槽获取当前数据的唯一标识:id -->
           <template #default="scope">
-            <el-button @click="updateUser(scope.row._id)">编辑</el-button>
+            <el-button @click="updateUser(scope.row)">编辑</el-button>
             <el-button type="danger" @click="deleteUser(scope.row._id)">删除</el-button>
           </template>
         </el-table-column>
@@ -83,9 +83,11 @@ const adminStore = useAdminStore()
 interface IProps {
   contentConfig: {
     pageName: string
+    isShowOperate: boolean
+    childrenTree?: string
     contentTitle: {
       headerName: string
-      btnName: string
+      btnName?: string
     }
     formConfigData: any[]
   }
@@ -145,14 +147,16 @@ function deleteUser(id: string) {
 
 // 4. 点击新建按钮发出事件到父组件中连接popUp组件
 const emit = defineEmits([ 'createBtnClick', 'updateBtnClick' ])
-const isShow = ref<boolean>(false)
+const isShow = ref<boolean>(false) // 控制弹窗的出现和消失(一开始为是消失的状态)
+const isJudge = ref<boolean>(true) // 判断点击的弹窗的是新建or编辑
 function popUpClick() {
-  emit('createBtnClick', isShow.value, true)
+  emit('createBtnClick', isShow.value, isJudge.value)
 }
 
 // 5.点击编辑按钮发出事件到父组件中连接popUp组件
-function updateUser(id: string) {
-  emit('updateBtnClick', isShow.value, false, id)
+// 编辑需要进行回显操作: 需要把表单数据跟随事件一起导出
+function updateUser(backData: any) {
+  emit('updateBtnClick', isShow.value, !isJudge.value, backData)
 }
 
 </script>

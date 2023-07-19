@@ -24,6 +24,7 @@ export const searchConfig = {
 
 export const contentConfig = {
   pageName: 'role',
+  isShowOperate: true,
   contentTitle: {
     headerName: '角色列表',
     btnName: '新建角色'

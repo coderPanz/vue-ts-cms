@@ -31,6 +31,7 @@
         <template #permissions>
           <div class="permissTitle">权限分配</div>
           <el-tree
+            ref="treeRef"
             :data="menuList"
             show-checkbox
             node-key="_id"
@@ -53,6 +54,7 @@ import useAdminStore from '@/store/main/admin'
 import { pageContentHooks, pagePopUpHooks } from '@/hooks/index'
 import { storeToRefs } from 'pinia'
 import { ref } from 'vue'
+import type { ElTree } from 'element-plus/lib/components/index.js'
 
 // 插槽(展示树形结构菜单)
 const adminStore = useAdminStore()
@@ -63,18 +65,25 @@ const defaultProps = {
 }
 
 const permissionList = ref<any[]>([])
-// 点击节点复选框之后触发(通过参数二获取其权限id, 并传入popup组件进行角色的创建)
+// 1. 点击节点复选框之后触发(通过参数二获取其权限id列表, 并传入popup组件进行角色的创建)
 function checkClick(data1: any, data2: any) {
   let permissionIds: any[] = []
   permissionIds = [...data2.checkedKeys, ...data2.halfCheckedKeys]
   permissionList.value = permissionIds
 }
 
+// 2.1 权限回显的高阶操作(难点: 把hooks中的数据提取出来, 通过传入函数进入hooks, 在其内部调用函数并传出所需数据)
+// 2.2 得到权限id列表后设置对应的节点
+const treeRef = ref<InstanceType<typeof ElTree>>()
+function backPermission(backData: any) {
+  treeRef.value?.setCheckedKeys(backData.menus)
+}
+
 // 对setup具有相同的逻辑进行hooks抽取
 // 1. page-content组件抽取的解构
 const { pageContentRef, resetDataList, queryDataList, reGetDataList } = pageContentHooks()
 // 2. page-popup组件的抽取解构
-const { pagePopUpRef, createBtnClick, updateBtnClick } = pagePopUpHooks()
+const { pagePopUpRef, createBtnClick, updateBtnClick } = pagePopUpHooks(backPermission)
 
 </script>
 

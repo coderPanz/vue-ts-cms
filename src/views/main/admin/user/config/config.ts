@@ -33,6 +33,7 @@ export const searchConfig = {
 
 export const contentConfig = {
   pageName: 'user',
+  isShowOperate: true,
   contentTitle: {
     headerName: '用户列表',
     btnName: '新建用户'
