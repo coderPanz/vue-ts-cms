@@ -39,6 +39,7 @@ const useAdminStore = defineStore('admin', {
       this.departmentList = departmentRes.data.data
       this.userList = userRes.data.data
       this.menuList = menusRes.data.data
+      // console.log(menusRes.data.data)
       return res
     },
     // 2. 删除用户后重新发送网络请求获取最新的数据

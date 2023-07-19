@@ -30,10 +30,10 @@
             </el-form-item>
           </template>
 
-          <template v-else-if="item.type === 'multiple-select'">
-            <span class="desc">{{ item.label }}</span>
-            <el-tree :data="item.options" :props="{ children: 'children', label: 'name' }" show-checkbox node-key="id"/>
+          <template v-else-if="item.type === 'custom'">
+            <slot :name="item.slotName"></slot>
           </template>
+
         </template>
       </el-form>
       <template #footer>
@@ -61,6 +61,7 @@ interface IProps {
     labelWidth?: string
     formConfigData: any[]
   }
+  permissionList?: any[]
 }
 
 const props = defineProps<IProps>()
@@ -109,7 +110,10 @@ function handleClose() {
 const emit = defineEmits(['reGetDataList'])
 
 function submitBtn() {
-  const popUpFormData = popUpForm
+  let popUpFormData = popUpForm
+  // 创建或者编辑角色时, 若传入权限则接收权限
+  if(props.permissionList) popUpFormData = { ...props.permissionList, ...popUpFormData }
+  console.log(popUpFormData)
   // Judge.value 为true则说明为创建数据, 否则为更新数据
   if (Judge.value) {
     adminStore.createDataAction(props.popUpConfig.pageName, popUpFormData).then((res: any) => {
@@ -167,9 +171,6 @@ defineExpose({ isShowExpose, submitBtn })
   }
   .el-tree {
     margin-top: 10px;
-  }
-  .desc {
-    margin-left: 12px;
   }
 }
 </style>

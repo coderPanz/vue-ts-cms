@@ -13,11 +13,7 @@ export interface IConfig {
       },
       {
         type: string
-        label: string
-        prop: string
-        initialValue: any[],
-        placeholder: string
-        options: any[]
+        slotName: string
       },
     ]
 }

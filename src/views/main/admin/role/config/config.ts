@@ -56,12 +56,8 @@ export const popUpConfig: IConfig = {
       initialValue: ''
     },
     {
-      type: 'multiple-select',
-      label: '权限分配',
-      prop: 'menus',
-      initialValue: [],
-      placeholder: '必填项',
-      options: []
+      type: 'custom',
+      slotName: 'permissions',
     }
   ]
 }

@@ -14,19 +14,32 @@
         @create-btn-click="createBtnClick"
         @update-btn-click="updateBtnClick"
       >
-      <template #parentId="scope">
-        <span>
-          {{ scope.row.parentId }}
-        </span>
-      </template>
+        <template #parentId="scope">
+          <span>
+            {{ scope.row.parentId }}
+          </span>
+        </template>
       </page-content>
     </div>
     <div class="popUp">
       <page-pop-up
         ref="pagePopUpRef"
         @re-get-data-list="reGetDataList"
-        :popUpConfig="popUpConfigReq"
-      />
+        :popUpConfig="popUpConfig"
+        :permissionList="permissionList"
+      >
+        <template #permissions>
+          <div class="permissTitle">权限分配</div>
+          <el-tree
+            :data="menuList"
+            show-checkbox
+            node-key="_id"
+            highlight-current
+            :props="defaultProps"
+            @check="checkClick"
+          />
+        </template>
+      </page-pop-up>
     </div>
   </div>
 </template>
@@ -36,20 +49,26 @@ import pageSearch from '@/components/page-search/page-search.vue'
 import pageContent from '@/components/page-content/page-content.vue'
 import pagePopUp from '@/components/page-pop-up/page-pop-up.vue'
 import { searchConfig, contentConfig, popUpConfig } from '@/views/main/admin/role/config/config'
-import { computed } from 'vue'
 import useAdminStore from '@/store/main/admin'
 import { pageContentHooks, pagePopUpHooks } from '@/hooks/index'
+import { storeToRefs } from 'pinia'
+import { ref } from 'vue'
 
+// 插槽(展示树形结构菜单)
 const adminStore = useAdminStore()
-// 1. 把popUp的配置传入其组件內部时需要把配置文件中的optins初始值空数组填充所需的内容
-const popUpConfigReq = computed(() => {
-  popUpConfig.formConfigData.forEach((item) => {
-    if (item.prop === 'menus') {
-      item.options = adminStore.menuList
-    }
-  })
-  return popUpConfig
-})
+const { menuList } = storeToRefs(adminStore)
+const defaultProps = {
+  children: 'children',
+  label: 'name',
+}
+
+const permissionList = ref<any[]>([])
+// 点击节点复选框之后触发(通过参数二获取其权限id, 并传入popup组件进行角色的创建)
+function checkClick(data1: any, data2: any) {
+  let permissionIds: any[] = []
+  permissionIds = [...data2.checkedKeys, ...data2.halfCheckedKeys]
+  permissionList.value = permissionIds
+}
 
 // 对setup具有相同的逻辑进行hooks抽取
 // 1. page-content组件抽取的解构
@@ -60,4 +79,8 @@ const { pagePopUpRef, createBtnClick, updateBtnClick } = pagePopUpHooks()
 </script>
 
 <style lang="less" scoped>
+  .permissTitle {
+    margin-left: 13px;
+    margin-bottom: 10px;
+  }
 </style>
