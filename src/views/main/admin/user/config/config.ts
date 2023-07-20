@@ -76,7 +76,7 @@ export const popUpConfig: IConfig = {
     {
       type: 'select',
       label: '所属角色',
-      prop: 'role',
+      prop: 'roles',
       initialValue: [],
       placeholder: '必填项',
       options: []

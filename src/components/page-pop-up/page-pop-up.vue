@@ -127,7 +127,6 @@ function submitBtn() {
   let popUpFormData = popUpForm
   // 创建或者编辑角色时, 若传入权限则接收权限
   if (props.permissionList) popUpFormData = { ...props.permissionList, ...popUpFormData }
-  console.log(popUpFormData)
   // Judge.value 为true则说明为创建数据, 否则为更新数据
   if (Judge.value) {
     adminStore.createDataAction(props.popUpConfig.pageName, popUpFormData).then((res: any) => {

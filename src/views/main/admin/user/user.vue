@@ -39,7 +39,7 @@ const adminStore = useAdminStore()
 // 把popUp的配置传入其组件內部时需要把配置文件中的optins初始值空数组填充所需的内容
 const popUpConfigReq = computed(() => {
   popUpConfig.formConfigData.forEach((item) => {
-    if (item.prop === 'role') {
+    if (item.prop === 'roles') {
       item.options = adminStore.roleList
     }
     if (item.prop === 'department') {

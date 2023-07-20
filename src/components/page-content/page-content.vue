@@ -2,7 +2,7 @@
   <div class="content">
     <div class="header">
       <h3>{{ contentConfig.contentTitle.headerName }}</h3>
-      <el-button v-if="contentConfig.contentTitle.btnName" type="primary" @click="popUpClick">
+      <el-button v-if="contentConfig.contentTitle.btnName && isCreate" type="primary" @click="popUpClick">
         {{ contentConfig.contentTitle.btnName }}
       </el-button>
     </div>
@@ -51,8 +51,8 @@
         <el-table-column v-if="contentConfig.isShowOperate" prop="date" label="操作" align="center">
           <!-- 使用作用域插槽获取当前数据的唯一标识:id -->
           <template #default="scope">
-            <el-button @click="updateUser(scope.row)">编辑</el-button>
-            <el-button type="danger" @click="deleteUser(scope.row._id)">删除</el-button>
+            <el-button v-if="isUpdate" @click="updateUser(scope.row)">编辑</el-button>
+            <el-button v-if="isDelete" type="danger" @click="deleteUser(scope.row._id)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -76,9 +76,12 @@ import { storeToRefs } from 'pinia'
 import format from '@/utils/formatDate/format'
 import { ref } from 'vue'
 import { ElMessage } from 'element-plus/lib/components/index.js'
+import useLoginStore from '@/store/login/login'
+import { userCreate, userDelete, userUpdate, userFind } from  '@/hooks/index'
 
 // 创建store实例
 const adminStore = useAdminStore()
+const loginStore = useLoginStore()
 
 interface IProps {
   contentConfig: {
@@ -100,9 +103,17 @@ const props = defineProps<IProps>()
 const currentPage = ref(1)
 const pageSize = ref(10)
 
+// 设置用户按钮权限(hooks抽取)
+// 由于查找时在本组件中发送请求的, 所以在该组件根据isFind是否拦截请求即可
+const isCreate = userCreate(props.contentConfig.pageName)
+const isDelete = userDelete(props.contentConfig.pageName)
+const isUpdate = userUpdate(props.contentConfig.pageName)
+const isFind = userFind(props.contentConfig.pageName)
+
 // 1. 获取用户列表
 // 1. 1 发送网络请求(第一次渲染页面后发送网络请求)
-getPageList()
+// 1. 2 根据isFind赋予查找权限
+if(isFind) getPageList()
 // 1. 2  注意异步操作请求数据的时候需要对数据进行响应式处理才能在页面实时渲染
 const { dataList, count } = storeToRefs(adminStore)
 

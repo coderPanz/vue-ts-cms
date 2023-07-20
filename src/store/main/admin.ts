@@ -1,6 +1,5 @@
 import { queryReq, deleteReq, createReq, updateReq } from '@/server/index'
 import { defineStore } from 'pinia'
-import type { IPopUpForm } from '@/types/popUp/popUpForm'
 
 interface IState {
   roleList: any[]
@@ -39,7 +38,6 @@ const useAdminStore = defineStore('admin', {
       this.departmentList = departmentRes.data.data
       this.userList = userRes.data.data
       this.menuList = menusRes.data.data
-      // console.log(menusRes.data.data)
       return res
     },
     // 2. 删除用户后重新发送网络请求获取最新的数据
@@ -48,7 +46,7 @@ const useAdminStore = defineStore('admin', {
       return res
     },
     // 3. 创建用户
-    async createDataAction(name: string, data: IPopUpForm) {
+    async createDataAction(name: string, data: any) {
       const res = await createReq(name, data)
       return res
     },

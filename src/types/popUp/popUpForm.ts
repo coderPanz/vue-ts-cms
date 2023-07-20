@@ -1,6 +1,6 @@
 export interface IPopUpForm {
   name: String
   password: String
-  roles: String []
+  role: String []
   department: String []
 }

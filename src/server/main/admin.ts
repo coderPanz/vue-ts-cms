@@ -1,5 +1,4 @@
 import { pzrequest } from '../requestPackage'
-import type { IPopUpForm } from '@/types/popUp/popUpForm'
 
 // 分页查询(获取用户列表)
 export function queryReq(name: string, data?: any) {
@@ -17,7 +16,7 @@ export function deleteReq(name: string, id: string) {
 }
 
 // 创建用户
-export function createReq(name: string, data: IPopUpForm) {
+export function createReq(name: string, data: any) {
   return pzrequest.post({
     url: `/${name}`,
     data: data

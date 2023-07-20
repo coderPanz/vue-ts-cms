@@ -2,7 +2,7 @@
   <div class="nav-menu">
     <div class="system-name">
       <img src="../../assets//img//系统图标.svg" alt="" />
-      <span v-show="isFold">后台管理系统</span>
+      <span v-show="isFold">Panz-cms</span>
     </div>
     <el-menu
       :default-active="$route.path"
@@ -53,7 +53,7 @@ defineProps({
 
 <style lang="less" scoped>
 .nav-menu {
-  width: 100%;
+  width: auto;
   .system-name {
     display: flex;
     align-items: center;

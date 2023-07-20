@@ -71,7 +71,7 @@ export const popUpConfig: IConfig = {
     {
       type: 'select',
       label: '上级部门',
-      prop: 'parentDepartment',
+      prop: 'parentId',
       initialValue: [],
       placeholder: '必填项',
       options: []

@@ -53,7 +53,7 @@ import { searchConfig, contentConfig, popUpConfig } from '@/views/main/admin/rol
 import useAdminStore from '@/store/main/admin'
 import { pageContentHooks, pagePopUpHooks } from '@/hooks/index'
 import { storeToRefs } from 'pinia'
-import { ref } from 'vue'
+import { nextTick, ref } from 'vue'
 import type { ElTree } from 'element-plus/lib/components/index.js'
 
 // 插槽(展示树形结构菜单)
@@ -75,15 +75,24 @@ function checkClick(data1: any, data2: any) {
 // 2.1 权限回显的高阶操作(难点: 把hooks中的数据提取出来, 通过传入函数进入hooks, 在其内部调用函数并传出所需数据)
 // 2.2 得到权限id列表后设置对应的节点
 const treeRef = ref<InstanceType<typeof ElTree>>()
+
+// 2.3 点击编辑回显
 function backPermission(backData: any) {
-  treeRef.value?.setCheckedKeys(backData.menus)
+  // 当dom渲染弹窗成功后立即执行回显操作, 完成实时渲染回显
+  nextTick(() => {
+    treeRef.value?.setCheckedKeys(backData.menus)
+  })
+}
+// 2.4 点击新建清空回显
+function clearBackShow() {
+  treeRef.value?.setCheckedKeys([])
 }
 
 // 对setup具有相同的逻辑进行hooks抽取
 // 1. page-content组件抽取的解构
 const { pageContentRef, resetDataList, queryDataList, reGetDataList } = pageContentHooks()
 // 2. page-popup组件的抽取解构
-const { pagePopUpRef, createBtnClick, updateBtnClick } = pagePopUpHooks(backPermission)
+const { pagePopUpRef, createBtnClick, updateBtnClick } = pagePopUpHooks(backPermission, clearBackShow)
 
 </script>
 
