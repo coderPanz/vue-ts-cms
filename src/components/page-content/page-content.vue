@@ -74,14 +74,12 @@
 import useAdminStore from '@/store/main/admin'
 import { storeToRefs } from 'pinia'
 import format from '@/utils/formatDate/format'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { ElMessage } from 'element-plus/lib/components/index.js'
-import useLoginStore from '@/store/login/login'
 import { userCreate, userDelete, userUpdate, userFind } from  '@/hooks/index'
 
 // 创建store实例
 const adminStore = useAdminStore()
-const loginStore = useLoginStore()
 
 interface IProps {
   contentConfig: {
@@ -112,22 +110,31 @@ const isFind = userFind(props.contentConfig.pageName)
 
 // 1. 获取用户列表
 // 1. 1 发送网络请求(第一次渲染页面后发送网络请求)
-// 1. 2 根据isFind赋予查找权限
-if(isFind) getPageList()
+getPageList()
 // 1. 2  注意异步操作请求数据的时候需要对数据进行响应式处理才能在页面实时渲染
 const { dataList, count } = storeToRefs(adminStore)
 
 // 2. 分页器
 // 2.1 定义一个函数发送请求获取分页数据(这里我们定义一页显示10条数据)
 function getPageList(formData?: any) {
+  //根据isFind赋予查找权限(按钮权限之查找权限)
+  if(!isFind) return
   const size = pageSize.value
   const offset = (currentPage.value - 1) * pageSize.value
 
   // 把search表单中的数据和size和offset数据结合起来
   const allDataReq = { ...formData, size, offset }
   // 发送网络请求
+
   adminStore.getDataListAction(props.contentConfig.pageName, allDataReq).then((res) => {
     // 赋值给pinia中的dataList以便展示user的数据
+    if(res.data.msg === '服务器异常!') {
+      ElMessage({
+            message: '查询失败!',
+            type: 'warning'
+        })
+      return
+    }
     adminStore.dataList = res.data.data
   })
 }

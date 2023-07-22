@@ -9,7 +9,7 @@
           <el-col :span="7">
             <el-form-item :label="item.label" :prop="item.prop">
               <!-- 确定组件类型再进行渲染 -->
-              <template v-if="item.type === 'input'">
+              <template v-if="item.type === 'normal'">
                 <el-input v-model="formData[item.prop]"></el-input>
               </template>
               <template v-if="item.type === 'date-picker'">

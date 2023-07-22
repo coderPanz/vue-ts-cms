@@ -28,12 +28,13 @@ const useLoginStore = defineStore('login', {
           localIns.setCache('token', res.data.token)
           this.token = res.data.token
           // 1. 获取角色id
-          const role_id = res.data.id
+          const roleId = res.data.id
+          localIns.setCache('roleId', roleId) // 在admin的store中会用到, 先缓存起来
+          console.log(roleId)
           // 2. 通过角色id获取菜单树
-          const menuTreeData = await menuTreeReq(role_id)
+          const menuTreeData = await menuTreeReq(roleId)
           localIns.setCache('localMenuTree', menuTreeData.data.data)
           this.localMenuTree = menuTreeData.data.data
-          console.log(menuTreeData.data.data)
 
           // 3. 获取用户按钮权限并缓存
           const userBtnPermissionList = mapMenuForPermission(this.localMenuTree)

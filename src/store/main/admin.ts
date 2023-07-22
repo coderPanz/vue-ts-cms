@@ -1,4 +1,4 @@
-import { queryReq, deleteReq, createReq, updateReq } from '@/server/index'
+import { queryReq, deleteReq, createReq, updateReq, menuTreeReq, allMenuTreeReq } from '@/server/index'
 import { defineStore } from 'pinia'
 
 interface IState {
@@ -25,20 +25,23 @@ const useAdminStore = defineStore('admin', {
   actions: {
     // 1.查询（进入系统管理菜单后直接获取角色，部门，用户列表存到pinia中）
     async getDataListAction(name: string, data?: any) {
-      const res = await queryReq(name, data)
-      const roleRes = await queryReq('role')
-      const departmentRes = await queryReq('department')
-      const userRes = await queryReq('user')
-      const menusRes = await queryReq('menu')
+      // 因为菜单的获取和其他的请求不是公用一个api所以需要单独处理
+        const res = await queryReq(name, data)
+        const roleRes = await queryReq('role')
+        const departmentRes = await queryReq('department')
+        const userRes = await queryReq('user')
 
-      this.dataList = res.data.data
-      this.count = res.data.totalCount
+        // 这里获取全部菜单树
+        const menus = await allMenuTreeReq()
+        this.menuList = menus.data.data
 
-      this.roleList = roleRes.data.data
-      this.departmentList = departmentRes.data.data
-      this.userList = userRes.data.data
-      this.menuList = menusRes.data.data
-      return res
+        this.dataList = res.data.data
+        this.count = res.data.totalCount
+
+        this.roleList = roleRes.data.data
+        this.departmentList = departmentRes.data.data
+        this.userList = userRes.data.data
+        return res
     },
     // 2. 删除用户后重新发送网络请求获取最新的数据
     async deleteDataListAction(name: string, id: string) {

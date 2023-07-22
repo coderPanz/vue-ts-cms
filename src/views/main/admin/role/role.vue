@@ -59,6 +59,7 @@ import type { ElTree } from 'element-plus/lib/components/index.js'
 // 插槽(展示树形结构菜单)
 const adminStore = useAdminStore()
 const { menuList } = storeToRefs(adminStore)
+
 const defaultProps = {
   children: 'children',
   label: 'name',
@@ -85,7 +86,9 @@ function backPermission(backData: any) {
 }
 // 2.4 点击新建清空回显
 function clearBackShow() {
-  treeRef.value?.setCheckedKeys([])
+  nextTick(() => {
+    treeRef.value?.setCheckedKeys([])
+  })
 }
 
 // 对setup具有相同的逻辑进行hooks抽取

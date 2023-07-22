@@ -2,14 +2,14 @@ import { type IConfig } from '../config/config-type'
 export const searchConfig = {
   formConfigData: [
     {
-      type: 'input',
+      type: 'normal',
       prop: 'id',
       label:'id',
       width: '230',
       initialValue: ''
     },
     {
-      type: 'input',
+      type: 'normal',
       prop: 'name',
       label: '角色名称',
       initialValue: ''

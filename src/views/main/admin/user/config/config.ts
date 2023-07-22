@@ -2,13 +2,13 @@ import { type IConfig } from '../config/config-type'
 export const searchConfig = {
   formConfigData: [
     {
-      type: 'input',
+      type: 'normal',
       prop: 'id',
       label: 'id',
       initialValue: ''
     },
     {
-      type: 'input',
+      type: 'normal',
       prop: 'name',
       label: '用户名',
       initialValue: ''
@@ -16,7 +16,8 @@ export const searchConfig = {
     {
       type: 'date-picker',
       prop: 'createdAt',
-      label: '创建时间'
+      label: '创建时间',
+      initialValue: ''
     },
     {
       type: 'select',
