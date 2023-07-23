@@ -1,4 +1,4 @@
-import { queryReq, deleteReq, createReq, updateReq, menuTreeReq, allMenuTreeReq } from '@/server/index'
+import { queryReq, deleteReq, createReq, updateReq } from '@/server/index'
 import { defineStore } from 'pinia'
 
 interface IState {
@@ -11,7 +11,7 @@ interface IState {
   id: any // 保存用户id, 用于编辑用户操作
 }
 const useAdminStore = defineStore('admin', {
-  state: (): IState => ({
+  state: () => ({
     roleList: [],
     departmentList: [],
     userList: [],
@@ -27,17 +27,15 @@ const useAdminStore = defineStore('admin', {
     async getDataListAction(name: string, data?: any) {
       // 因为菜单的获取和其他的请求不是公用一个api所以需要单独处理
         const res = await queryReq(name, data)
+
+        const userRes = await queryReq('user')
         const roleRes = await queryReq('role')
         const departmentRes = await queryReq('department')
-        const userRes = await queryReq('user')
-
-        // 这里获取全部菜单树
-        const menus = await allMenuTreeReq()
-        this.menuList = menus.data.data
+        const menuRes = await queryReq('menu')
 
         this.dataList = res.data.data
         this.count = res.data.totalCount
-
+        this.menuList = menuRes.data.data
         this.roleList = roleRes.data.data
         this.departmentList = departmentRes.data.data
         this.userList = userRes.data.data

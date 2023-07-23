@@ -14,7 +14,9 @@
   "dependencies": {
     "@element-plus/icons-vue": "^2.1.0",
     "axios": "^1.4.0",
+    "countup.js": "^2.7.0",
     "dayjs": "^1.11.8",
+    "echarts": "^5.4.3",
     "element-plus": "^2.3.5",
     "normalize.css": "^8.0.1",
     "pinia": "^2.1.3",
