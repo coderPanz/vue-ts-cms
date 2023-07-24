@@ -47,7 +47,7 @@ onMounted(() => {
   display: flex;
   align-items: center;
   background-color: #fff;
-  height: 130px;
+  height: 100px;
   border-radius: 8px;
   padding: 15px;
   .item-data {
@@ -56,9 +56,9 @@ onMounted(() => {
       color: #909399;
     }
     .middle {
-      font-size: 38px;
-      margin-top: 20px;
-      margin-bottom: 20px;
+      font-size: 35px;
+      margin-top: 15px;
+      margin-bottom: 15px;
     }
     .bottom {
       width: 250px;

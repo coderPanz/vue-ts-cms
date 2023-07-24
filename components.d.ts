@@ -9,7 +9,12 @@ export {}
 
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
-    Aside: typeof import('./src/components/aside/aside.vue')['default']
+    BaseEcharts: typeof import('./src/components/echarts/src/base-echarts.vue')['default']
+    BaseGrade: typeof import('./src/components/echarts/src/base-grade.vue')['default']
+    BaseHistogram: typeof import('./src/components/echarts/src/base-histogram.vue')['default']
+    BaseLine: typeof import('./src/components/echarts/src/base-line.vue')['default']
+    BaseMap: typeof import('./src/components/echarts/src/base-map.vue')['default']
+    BasePie: typeof import('./src/components/echarts/src/base-pie.vue')['default']
     'BreadCrumb ': typeof import('./src/components/nav-header/cpn/bread-crumb .vue')['default']
     ComDialog: typeof import('./src/components/page-pop-up/com-Dialog.vue')['default']
     Dialog: typeof import('./src/components/Dialog/Dialog.vue')['default']
@@ -19,6 +24,7 @@ declare module '@vue/runtime-core' {
     ElBreadcrumbItem: typeof import('element-plus/es')['ElBreadcrumbItem']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElButtonc: typeof import('element-plus/es')['ElButtonc']
+    ElCard: typeof import('element-plus/es')['ElCard']
     ElCheckbox: typeof import('element-plus/es')['ElCheckbox']
     ElCol: typeof import('element-plus/es')['ElCol']
     ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']
@@ -53,6 +59,7 @@ declare module '@vue/runtime-core' {
     ElTabPane: typeof import('element-plus/es')['ElTabPane']
     ElTabs: typeof import('element-plus/es')['ElTabs']
     ElTree: typeof import('element-plus/es')['ElTree']
+    LineEcharts: typeof import('./src/components/echarts/src/line-echarts.vue')['default']
     NavHeader: typeof import('./src/components/nav-header/nav-header.vue')['default']
     NavMenu: typeof import('./src/components/nav-menu/nav-menu.vue')['default']
     PageContent: typeof import('./src/components/page-content/page-content.vue')['default']
