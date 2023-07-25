@@ -32,8 +32,11 @@ router.beforeEach((to) => {
   if (to.path === '/main' && !token) {
     return '/login'
   }
+  if(to.path === '/main/system/main/system') {
+    return '/main'
+  }
   // 登陆成功后默认进入到第一个菜单显示第一个页面
-  if (to.path === '/main') {
+  if (to.path === '/main' && token) {
     return firstMenu.path
   }
 })

@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <h2>ts</h2>
+    <iframe src="https://www.typescriptlang.org/" frameborder="1" class="ts"></iframe>
   </div>
 </template>
 
@@ -8,6 +8,12 @@
 
 <style lang="less" scoped>
 .app {
-  font-size: 14px;
+  width: 100%;
+  height: 100%;
+  .ts {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+  }
 }
 </style>

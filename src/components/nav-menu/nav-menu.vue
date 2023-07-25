@@ -1,15 +1,10 @@
 <template>
   <div class="nav-menu">
     <div class="system-name">
-      <img src="../../assets//img//系统图标.svg" alt="" />
-      <span v-show="isFold">Panz-cms</span>
+      <img src="../../assets//img//favicon.ico" alt="" />
+      <span v-show="isFold">小米后台</span>
     </div>
-    <el-menu
-      :default-active="$route.path"
-      router
-      :collapse="!isFold"
-      active-text-color="#409EFF"
-    >
+    <el-menu :default-active="$route.path" router :collapse="!isFold" active-text-color="#ff6900">
       <template v-for="item in menuTree" :key="item.id">
         <!-- 子菜单 -->
         <el-sub-menu :index="item.url">
@@ -57,7 +52,7 @@ defineProps({
   .system-name {
     display: flex;
     align-items: center;
-    padding: 12px 10px 8px 27px;
+    padding: 12px 10px 8px 30px;
     img {
       width: 22px;
       height: 22px;
@@ -73,9 +68,10 @@ defineProps({
     .el-menu-item {
       padding-left: 71px;
     }
+    --el-menu-hover-bg-color: #faecd8;
   }
   .el-icon {
-    color: #409eff;
+    color: #ff6900;
     margin-right: 13px;
   }
 }

@@ -2,7 +2,7 @@
   <div class="crumb">
     <el-breadcrumb separator="/">
       <template v-for="item in breadCrumbPaths" :key="item.name">
-        <el-breadcrumb-item :to="item.path">{{ item.name }}</el-breadcrumb-item>
+        <el-breadcrumb-item :to="item.path" class="crumbTitle">{{ item.name }}</el-breadcrumb-item>
       </template>
     </el-breadcrumb>
   </div>
@@ -27,5 +27,10 @@ const breadCrumbPaths = computed(() => {
 <style lang="less" scoped>
 .crumb {
   padding-left: 10px;
+  .crumbTitle {
+    :hover {
+      color: #ff6700;
+    }
+  }
 }
 </style>

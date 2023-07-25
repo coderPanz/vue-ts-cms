@@ -12,7 +12,7 @@
         <el-icon size="22"><Message /></el-icon>
         <el-avatar> user </el-avatar>
         <el-dropdown>
-          <el-button type="primary">
+          <el-button style="background-color: #ff6000; color: #fff;">
             <span>个人中心</span>
           </el-button>
           <template #dropdown>

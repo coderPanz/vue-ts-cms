@@ -2,7 +2,7 @@
   <div class="content">
     <div class="header">
       <h3>{{ contentConfig.contentTitle.headerName }}</h3>
-      <el-button v-if="contentConfig.contentTitle.btnName && isCreate" type="primary" @click="popUpClick">
+      <el-button v-if="contentConfig.contentTitle.btnName && isCreate" @click="popUpClick" class="headerBtn" type="primary">
         {{ contentConfig.contentTitle.btnName }}
       </el-button>
     </div>

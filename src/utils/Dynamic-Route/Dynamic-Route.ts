@@ -23,8 +23,9 @@ export default function increaseRoute(menuTree: any) {
       // 类型缩小, 并把匹配到的路由添加到Routes中
       if (route) Routes.push(route)
       // 面包屑需求: 遍历所有菜单为其设置重定向: 当点击第一个面包屑导航的时候(也就是进入到某一个主菜单时), 我们重定向到该主菜单的第一个子菜单, 所以我们只保存一个重定向到Routes中, 一旦if语句中检测到item.path === menuData.url的时候就是遍历到第二个子菜单了就不要取了, 因为重定向若取多个的话会选择最后一个进行重定
+
       if(!Routes.find(item => item.path === menuData.url)) {
-        Routes.push({ path: menuData.url, redirect: subMenu.url })
+        Routes.push({ path: menuData.url, redirect: subMenu.url ?? '' })
       }
       // 遍历路由菜单找到第一个路由并记录以便登录成功后显示第一个菜单页面
       if (!firstMenu && route) firstMenu = route

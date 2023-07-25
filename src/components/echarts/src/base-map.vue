@@ -50,8 +50,9 @@ const setOption = computed<EChartsOption>(() => {
     geo: {
       // 设置使用的地图(注册过的china地址)
       map: 'china',
-      // 漫步: 支持鼠标缩放效果
-      roam: 'scale',
+      // 漫步: 支持鼠标拖动和缩放效果
+      roam: true,
+      
       emphasis: {
         areaColor: '#f4cccc',
         borderColor: 'rgb(9, 54, 95)',

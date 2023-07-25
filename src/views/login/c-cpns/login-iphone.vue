@@ -6,7 +6,7 @@
       </el-form-item>
       <el-form-item label="验证码">
         <el-input clearable style="width: 120px" v-model="iphoneInfos.iphoneCode"/>
-        <el-button type="primary" class="code" @click="iphoneCode">getCode</el-button>
+        <el-button style="background-color: #ff6700; color: #fff;" class="code" @click="iphoneCode">getCode</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -30,6 +30,9 @@ function iphoneCode() {
   .code {
     margin-left: 10px;
     width: 70px;
+  }
+  .el-input {
+    --el-color-primary: orange;
   }
 }
 </style>

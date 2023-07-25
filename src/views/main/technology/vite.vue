@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <h2>vite</h2>
+    <iframe src="https://cn.vitejs.dev/" frameborder="1" class="vite"></iframe>
   </div>
 </template>
 
@@ -8,6 +8,12 @@
 
 <style lang="less" scoped>
 .app {
-  font-size: 14px;
+  width: 100%;
+  height: 100%;
+  .vite {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+  }
 }
 </style>

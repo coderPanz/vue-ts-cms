@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <h2>vue3</h2>
+    <iframe src="https://cn.vuejs.org/" frameborder="0" class="vue3"></iframe>
   </div>
 </template>
 
@@ -8,6 +8,12 @@
 
 <style lang="less" scoped>
 .app {
-  font-size: 14px;
+  width: 100%;
+  height: 100%;
+  .vue3 {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+  }
 }
 </style>

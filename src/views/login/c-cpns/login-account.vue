@@ -2,7 +2,7 @@
   <div class="login-account">
     <el-form ref="ruleFormRef" :model="account" :rules="rules" label-width="60px">
       <el-form-item label="帐号" prop="name">
-        <el-input v-model="account.name" clearable style="width: 200px" />
+        <el-input v-model="account.name" clearable style="width: 200px" class="input" />
       </el-form-item>
 
       <el-form-item label="密码" prop="password">
@@ -44,7 +44,9 @@ function loginAction(isRemember: any) {
       const password = account.password
       loginStore.fetchgetBackInfos({ name, password }).then((res) => {
         // 此时返回的res一定是没有token的, 所以需要显示登录失败提示!
-        if(!res?.data.token) { ElMessage.error('帐号密码错误!') }
+        if (!res?.data.token) {
+          ElMessage.error('帐号密码错误!')
+        }
         // 是否记住密码
         if (isRemember) {
           localIns.setCache(NAME, name)
@@ -67,6 +69,8 @@ defineExpose({
 
 <style lang="less" scoped>
 .login-account {
-  font-size: 14px;
+  .el-input {
+    --el-color-primary: orange;
+  }
 }
 </style>

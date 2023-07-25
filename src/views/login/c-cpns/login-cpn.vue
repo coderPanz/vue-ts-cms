@@ -1,25 +1,25 @@
 <template>
   <div class="loginCpn">
-    <div class="projectNama">学生登录</div>
+    <div class="projectNama">后台版</div>
     <el-tabs type="border-card" stretch v-model="activeName">
       <el-tab-pane name="account">
         <template #label>
-          <el-icon><User /></el-icon>
-          <span>帐号登录</span>
+          <el-icon class="icon"><User /></el-icon>
+          <span class="accountLogin">帐号登录</span>
         </template>
         <login-account ref="accountIns"/>
       </el-tab-pane>
       <el-tab-pane name="iphone">
         <template #label>
-          <el-icon><Phone /></el-icon>
-          <span>手机登录</span>
+          <el-icon class="icon"><Phone /></el-icon>
+          <span class="accountLogin">手机登录</span>
         </template>
         <login-iphone />
       </el-tab-pane>
     </el-tabs>
     <div class="select">
-      <el-checkbox label="记住密码" size="large" v-model="isRemember"/>
-      <a class="forgot">忘记密码</a>
+      <el-checkbox label="记住密码" size="large" v-model="isRemember" class="remeber"/>
+      <a class="forgot" href="https://account.xiaomi.com/fe/service/forgetPassword?_bannerBiz=&sid=mi_eshop&callback=http%3A%2F%2Forder.mi.com%2Flogin%2Fcallback%3Ffollowup%3Dhttps%253A%252F%252Fwww.mi.com%252Fshop%26sign%3DODA5NjU3ZjZkYjkxMWE3ZjVkYTE5M2MxMDNlYmJkYzJhZGFjNzBhYg%2C%2C&qs=&_locale=zh_CN">忘记密码?</a>
     </div>
     <el-link class="loginNow" @click="loginNow">立即登录</el-link>
   </div>
@@ -72,9 +72,21 @@ function loginNow() {
     width: auto;
     height: 40px;
     border-radius: 6px;
-    background-color: #409eff;
+    background-color: #ff6700;
 
     display: flex;
+  }
+  .accountLogin {
+    color: black;
+  }
+  .icon {
+    color: #ff6700;
+  }
+  .remeber {
+    --el-color-primary: #ff5c00;
+  }
+  .forgot {
+    color: #ff5c00;
   }
 }
 </style>

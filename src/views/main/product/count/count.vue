@@ -1,33 +1,33 @@
 <template>
   <div class="product-count">
     <div class="count-top">
-      <el-row :gutter="20">
+      <el-row :gutter="10">
         <template v-for="item in localProductList" :key="item.keywords">
-          <el-col :span="6">
+          <el-col :lg="6" :md="8" :sm="12">
             <count-top :item="item" />
           </el-col>
         </template>
       </el-row>
     </div>
     <div class="count-middle">
-      <el-row :gutter="20">
-        <el-col :span="7">
+      <el-row :gutter="10">
+        <el-col :lg="7" :md="8" :sm="9">
           <base-pie :data="basePieData" />
         </el-col>
-        <el-col :span="10">
+        <el-col :lg="10" :md="8" :sm="8">
           <base-map :data="baseMapData"/>
         </el-col>
-        <el-col :span="7">
+        <el-col :lg=7 :md="8" :sm="9">
           <base-grade />
         </el-col>
       </el-row>
     </div>
     <div class="count-bottom">
-      <el-row :gutter="20">
-        <el-col :span="12">
+      <el-row :gutter="10">
+        <el-col :lg="12" :md="24">
           <base-histogram :data="baseHistogramData"/>
         </el-col>
-        <el-col :span="12">
+        <el-col :lg="12" :md="24">
           <base-line :data="baseLineData"/>
         </el-col>
       </el-row>

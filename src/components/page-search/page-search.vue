@@ -6,7 +6,7 @@
     <el-form label-width="90px" :model="formData" ref="formDataRef">
       <el-row :gutter="10">
         <template v-for="item in searchConfig.formConfigData" :key="item.prop">
-          <el-col :span="7">
+          <el-col :lg="8" :md="12" :sm="24">
             <el-form-item :label="item.label" :prop="item.prop">
               <!-- 确定组件类型再进行渲染 -->
               <template v-if="item.type === 'normal'">
@@ -36,8 +36,9 @@
     </el-form>
 
     <div class="btns">
-      <el-button @click="resetDataList">重置</el-button>
-      <el-button @click="queryDataList" type="primary">查询</el-button>
+      <el-button @click="resetDataList" class="reset">重置</el-button>
+      <el-button @click="queryDataList" class="query" type="primary">查询</el-button
+      >
     </div>
   </div>
 </template>

@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <h2>document</h2>
+    <iframe src="https://www.mi.com/shop" frameborder="1" class="shop"></iframe>
   </div>
 </template>
 
@@ -8,6 +8,12 @@
 
 <style lang="less" scoped>
 .app {
-  font-size: 14px;
+  width: 100%;
+  height: 100%;
+  .shop {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+  }
 }
 </style>
