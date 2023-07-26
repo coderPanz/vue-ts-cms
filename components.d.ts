@@ -60,7 +60,6 @@ declare module '@vue/runtime-core' {
     ElTabPane: typeof import('element-plus/es')['ElTabPane']
     ElTabs: typeof import('element-plus/es')['ElTabs']
     ElTree: typeof import('element-plus/es')['ElTree']
-    LineEcharts: typeof import('./src/components/echarts/src/line-echarts.vue')['default']
     NavHeader: typeof import('./src/components/nav-header/nav-header.vue')['default']
     NavMenu: typeof import('./src/components/nav-menu/nav-menu.vue')['default']
     PageContent: typeof import('./src/components/page-content/page-content.vue')['default']

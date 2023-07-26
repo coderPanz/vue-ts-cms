@@ -9,9 +9,10 @@ interface IState {
   dataList: any[]
   count: Number
   id: any // 保存用户id, 用于编辑用户操作
+  productTypeList: any[] //商品类型列表
 }
 const useAdminStore = defineStore('admin', {
-  state: () => ({
+  state: (): IState => ({
     roleList: [],
     departmentList: [],
     userList: [],
@@ -19,7 +20,8 @@ const useAdminStore = defineStore('admin', {
 
     dataList: [],
     count: 0,
-    id: ''
+    id: '',
+    productTypeList: []
   }),
   // 发送网络请求中转站, 尽量避免在vue组件中直接发送网络请求, 而是通过调用actions间接发送网络请求
   actions: {
@@ -27,11 +29,11 @@ const useAdminStore = defineStore('admin', {
     async getDataListAction(name: string, data?: any) {
       // 因为菜单的获取和其他的请求不是公用一个api所以需要单独处理
         const res = await queryReq(name, data)
-
         const userRes = await queryReq('user')
         const roleRes = await queryReq('role')
         const departmentRes = await queryReq('department')
         const menuRes = await queryReq('menu')
+        const productType = await queryReq('productType')
 
         this.dataList = res.data.data
         this.count = res.data.totalCount
@@ -39,6 +41,7 @@ const useAdminStore = defineStore('admin', {
         this.roleList = roleRes.data.data
         this.departmentList = departmentRes.data.data
         this.userList = userRes.data.data
+        this.productTypeList = productType.data.data
         return res
     },
     // 2. 删除用户后重新发送网络请求获取最新的数据

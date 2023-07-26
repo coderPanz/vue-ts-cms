@@ -88,5 +88,8 @@ function loginNow() {
   .forgot {
     color: #ff5c00;
   }
+  .el-tabs {
+    border-radius: 8px;
+  }
 }
 </style>

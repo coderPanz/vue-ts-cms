@@ -1,13 +1,13 @@
 import { pzrequest } from '../requestPackage'
 
-// count-top
+// 商品统计-top
 export function goodsCountListReq() {
   return pzrequest.get({
     url: `/goods/count/list`
   })
 }
 
-// count-middle
+// 商品统计-middle
 export function goodsCountTypeSaleReq() {
   return pzrequest.get({
     url: `/goods/count/type-sale`

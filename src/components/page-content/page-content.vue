@@ -47,6 +47,7 @@
               </template>
             </el-table-column>
           </template>
+
         </template>
         <el-table-column v-if="contentConfig.isShowOperate" prop="date" label="操作" align="center">
           <!-- 使用作用域插槽获取当前数据的唯一标识:id -->

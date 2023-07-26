@@ -39,6 +39,7 @@ const useLoginStore = defineStore('login', {
           // 3. 获取用户按钮权限并缓存
           const userBtnPermissionList = mapMenuForPermission(this.localMenuTree)
           this.localPermissionList = userBtnPermissionList
+          console.log(userBtnPermissionList)
 
           // 4. 登录成功后显示main页面前动态添加路由
           increaseRoute(menuTreeData.data.data)

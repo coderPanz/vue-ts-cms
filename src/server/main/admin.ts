@@ -1,6 +1,6 @@
 import { pzrequest } from '../requestPackage'
 
-// 分页查询(获取用户列表)
+// 获取数据列表
 export function queryReq(name: string, data?: any) {
   return pzrequest.post({
     url: `/${name}//paginationQuery`,
@@ -17,6 +17,7 @@ export function deleteReq(name: string, id: string) {
 
 // 创建用户
 export function createReq(name: string, data: any) {
+  console.log(name, data)
   return pzrequest.post({
     url: `/${name}`,
     data: data
@@ -25,6 +26,7 @@ export function createReq(name: string, data: any) {
 
 // 更新数据
 export function updateReq(name: string, id: string, data: any) {
+  console.log(data)
   return pzrequest.patch({
     url: `/${name}/${id}`,
     data: data

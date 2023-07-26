@@ -2,7 +2,7 @@
   <div class="nav-menu">
     <div class="system-name">
       <img src="../../assets//img//favicon.ico" alt="" />
-      <span v-show="isFold">小米后台</span>
+      <span v-show="isFold" style="color: #fff;">小米后台</span>
     </div>
     <el-menu :default-active="$route.path" router :collapse="!isFold" active-text-color="#ff6900">
       <template v-for="item in menuTree" :key="item.id">
@@ -15,12 +15,12 @@
               <component :is="item.icon"></component>
             </el-icon>
             <!-- 设置name -->
-            <span class="name">{{ item.name }}</span>
+            <span style="color: #fff;">{{ item.name }}</span>
           </template>
           <!-- 遍历子菜单list -->
           <template v-for="subItem in item.children" :key="subItem.id">
             <el-menu-item :index="subItem.url">
-              <span class="name">{{ subItem.name }}</span>
+              <span class="el-menu-name">{{ subItem.name }}</span>
             </el-menu-item>
           </template>
         </el-sub-menu>
@@ -65,10 +65,19 @@ defineProps({
     }
   }
   .el-menu {
-    .el-menu-item {
-      padding-left: 71px;
+    background-color: #333;
+    .el-sub-menu {
+      --el-menu-text-color: #fff !important;
     }
-    --el-menu-hover-bg-color: #faecd8;
+    .el-menu-item {
+      background-color: #333;
+      --el-menu-text-color: #fff;
+      padding-left: 71px;
+
+    }
+    --el-menu-active-color: #ff6900 !important;
+    --el-menu-hover-bg-color: #222;
+    --el-menu-border-color: #222 !important;
   }
   .el-icon {
     color: #ff6900;

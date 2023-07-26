@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { goodsCountListReq, goodsCountTypeSaleReq, goodsMapReq} from '@/server/index'
+import { goodsCountListReq, goodsCountTypeSaleReq, goodsMapReq } from '@/server/index'
 
 interface IState {
   localProductList: [
@@ -26,6 +26,13 @@ interface IState {
     {
       address: string
       count: number
+    }
+  ]
+  localProductTypeList: [
+    {
+      _id: string
+      name: string
+      type: number
     }
   ]
 }
@@ -56,20 +63,27 @@ const useProductStore = defineStore('product', {
         address: '',
         count: 0
       }
+    ],
+    localProductTypeList: [
+      {
+        _id: '',
+        name: '',
+        type: 0
+      }
     ]
   }),
   actions: {
-    // count-top
+    // 商品统计-top
     async getProductListAction() {
       const res = await goodsCountListReq()
       this.localProductList = res.data.data
     },
-    // count-middle
+    // 商品统计-middle
     async getProductTypeSaleActon() {
       const res = await goodsCountTypeSaleReq()
       this.localProductTypeSaleList  = res.data.data
     },
-    // map-data
+    // 地图数据-data
     async getProductMapDataAction() {
       const res = await goodsMapReq()
       this.localProductMapDataList = res.data.data

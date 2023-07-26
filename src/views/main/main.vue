@@ -46,6 +46,7 @@ function iconSwitch(isSubFold: boolean) {
       &::-webkit-scrollbar {
         display: none;
       }
+      background-color: #333;
     }
     .el-container {
       background-color: #f0f2f5;

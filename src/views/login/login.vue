@@ -76,6 +76,7 @@ import loginCpn from './c-cpns/login-cpn.vue'
   }
   .loginCpn {
     margin-left: 300px;
+    border-radius: 8px;
   }
   img {
     width: 375px;
