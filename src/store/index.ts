@@ -9,4 +9,5 @@ function registerRoute(app: App) {
   loginStore.refreshLoadRoute()
 }
 
+
 export default registerRoute

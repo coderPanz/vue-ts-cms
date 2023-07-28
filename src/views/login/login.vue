@@ -24,6 +24,7 @@
 
 <script setup lang="ts">
 import loginCpn from './c-cpns/login-cpn.vue'
+console.log('ddd')
 </script>
 
 <style lang="less" scoped>

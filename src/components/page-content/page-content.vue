@@ -2,7 +2,12 @@
   <div class="content">
     <div class="header">
       <h3>{{ contentConfig.contentTitle.headerName }}</h3>
-      <el-button v-if="contentConfig.contentTitle.btnName && isCreate" @click="popUpClick" class="headerBtn" type="primary">
+      <el-button
+        v-if="contentConfig.contentTitle.btnName && isCreate"
+        @click="popUpClick"
+        class="headerBtn"
+        type="primary"
+      >
         {{ contentConfig.contentTitle.btnName }}
       </el-button>
     </div>
@@ -47,13 +52,14 @@
               </template>
             </el-table-column>
           </template>
-
         </template>
         <el-table-column v-if="contentConfig.isShowOperate" prop="date" label="操作" align="center">
           <!-- 使用作用域插槽获取当前数据的唯一标识:id -->
           <template #default="scope">
             <el-button v-if="isUpdate" @click="updateUser(scope.row)">编辑</el-button>
-            <el-button v-if="isDelete" type="danger" @click="deleteUser(scope.row._id)">删除</el-button>
+            <el-button v-if="isDelete" type="danger" @click="deleteUser(scope.row._id)"
+              >删除</el-button
+            >
           </template>
         </el-table-column>
       </el-table>
@@ -77,7 +83,7 @@ import { storeToRefs } from 'pinia'
 import format from '@/utils/formatDate/format'
 import { ref } from 'vue'
 import { ElMessage } from 'element-plus/lib/components/index.js'
-import { userCreate, userDelete, userUpdate, userFind } from  '@/hooks/index'
+import { userCreate, userDelete, userUpdate, userFind } from '@/hooks/index'
 
 // 创建store实例
 const adminStore = useAdminStore()
@@ -119,7 +125,7 @@ const { dataList, count } = storeToRefs(adminStore)
 // 2.1 定义一个函数发送请求获取分页数据(这里我们定义一页显示10条数据)
 function getPageList(formData?: any) {
   //根据isFind赋予查找权限(按钮权限之查找权限)
-  if(!isFind) return
+  if (!isFind) return
   const size = pageSize.value
   const offset = (currentPage.value - 1) * pageSize.value
 
@@ -129,11 +135,11 @@ function getPageList(formData?: any) {
 
   adminStore.getDataListAction(props.contentConfig.pageName, allDataReq).then((res) => {
     // 赋值给pinia中的dataList以便展示user的数据
-    if(res.data.msg === '服务器异常!') {
+    if (res.data.msg === '服务器异常!') {
       ElMessage({
-            message: '查询失败!',
-            type: 'warning'
-        })
+        message: '查询失败!',
+        type: 'warning'
+      })
       return
     }
     adminStore.dataList = res.data.data
@@ -165,7 +171,7 @@ function deleteUser(id: string) {
 }
 
 // 4. 点击新建按钮发出事件到父组件中连接popUp组件
-const emit = defineEmits([ 'createBtnClick', 'updateBtnClick' ])
+const emit = defineEmits(['createBtnClick', 'updateBtnClick'])
 const isShow = ref<boolean>(false) // 控制弹窗的出现和消失(一开始为是消失的状态)
 const isJudge = ref<boolean>(true) // 判断点击的弹窗的是新建or编辑
 function popUpClick() {
@@ -177,7 +183,6 @@ function popUpClick() {
 function updateUser(backData: any) {
   emit('updateBtnClick', isShow.value, !isJudge.value, backData)
 }
-
 </script>
 
 <style lang="less" scoped>

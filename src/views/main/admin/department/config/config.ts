@@ -42,7 +42,7 @@ export const contentConfig = {
     { type: 'normal', prop: 'name', label: '部门名称' },
     { type: 'normal', prop: 'leader', label: '部门领导' },
 
-    { type: 'normal', prop: 'parentId', label: '上级部门编号', width: '250', slotName: 'parentId' },
+    { type: 'normal', prop: 'parentName', label: '上级部门', width: '250' },
 
     // 普通定制
     { type: 'time', prop: 'createdAt', label: '创建时间' },

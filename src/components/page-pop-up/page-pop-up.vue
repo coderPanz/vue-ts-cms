@@ -96,7 +96,10 @@ function isShowExpose(isParam: boolean, isJudge: boolean, backData?: any) {
   // 若为编辑则进行数据回显, 否则新建不需要回显
   if (!isJudge && backData) {
     for (const key in backData) {
-      popUpForm[key] = backData[key]
+      // 由于部门管理的后端数据设计不太规范, 所以部门管理编辑就不回显上级部门了
+      if(key !== 'parentId') {
+        popUpForm[key] = backData[key]
+      }
     }
   } else {
     for (const key in backData) {

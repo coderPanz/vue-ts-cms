@@ -13,13 +13,7 @@
         :contentConfig="contentConfig"
         @create-btn-click="createBtnClick"
         @update-btn-click="updateBtnClick"
-      >
-      <template #parentId="scope">
-        <span>
-          {{ scope.row.parentId }}
-        </span>
-      </template>
-      </page-content>
+       />
     </div>
     <div class="popUp">
       <page-pop-up
