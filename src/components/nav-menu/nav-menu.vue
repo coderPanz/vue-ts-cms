@@ -2,7 +2,7 @@
   <div class="nav-menu">
     <div class="system-name">
       <img src="../../assets//img//favicon.ico" alt="" />
-      <span v-show="isFold" style="color: #fff;">小米后台</span>
+      <span v-show="isFold" style="color: #fff;">小米数据中台</span>
     </div>
     <el-menu :default-active="$route.path" router :collapse="!isFold" active-text-color="#ff6900">
       <template v-for="item in menuTree" :key="item.id">
@@ -52,7 +52,7 @@ defineProps({
   .system-name {
     display: flex;
     align-items: center;
-    padding: 12px 10px 8px 30px;
+    padding: 12px 30px 8px 30px;
     img {
       width: 22px;
       height: 22px;
@@ -72,7 +72,7 @@ defineProps({
     .el-menu-item {
       background-color: #333;
       --el-menu-text-color: #fff;
-      padding-left: 71px;
+      padding-left: 75px;
 
     }
     --el-menu-active-color: #ff6900 !important;
@@ -84,4 +84,5 @@ defineProps({
     margin-right: 13px;
   }
 }
+
 </style>

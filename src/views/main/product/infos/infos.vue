@@ -15,7 +15,7 @@
         @update-btn-click="updateBtnClick"
       >
         <template #productInfos="scope">
-          <img :src="scope.row.img" alt="">
+          <img style="height: 50px; width: 50px;" :src="scope.row.img" alt="">
         </template>
       </page-content>
     </div>

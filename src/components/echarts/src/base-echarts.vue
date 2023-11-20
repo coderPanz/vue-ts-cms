@@ -21,7 +21,7 @@ interface IProps {
 
 const props = defineProps<IProps>()
 // 初始化一个图表实例，并将其渲染到指定的元素上。
-// 因为init函数需要绑定dom所以需要在onMounted中执行
+// 因为init函数需要绑定dom所以需要在onMounted中执行确保dom已经渲染
 onMounted(() => {
   const myChart = echarts.init(echartsRef.value, 'light', { renderer: 'canvas' })
   myChart.setOption(props.setOption)

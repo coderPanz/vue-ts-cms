@@ -2,6 +2,10 @@
   "name": "vue3-ts-bms",
   "version": "0.0.0",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/coderPanz/vue-ts-cms"
+  },
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check build-only",

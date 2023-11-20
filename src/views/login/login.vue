@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <img src="../../assets//img/小米登录bgi.jpg" alt="" />
+    <img class="xiaomiImg" src="../../assets//img/小米登录bgi.jpg" alt="" />
     <div class="login-top">
       <div class="left">
         <img src="../../assets//img/小米logo.png" alt="" />
@@ -24,7 +24,6 @@
 
 <script setup lang="ts">
 import loginCpn from './c-cpns/login-cpn.vue'
-console.log('ddd')
 </script>
 
 <style lang="less" scoped>
@@ -32,6 +31,9 @@ console.log('ddd')
   width: 100%;
   height: 100%;
 
+  .xiaomiImg {
+    height: 100vh;
+  }
   display: flex;
   align-items: center;
   justify-content: center;

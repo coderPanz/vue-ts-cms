@@ -2,7 +2,7 @@
   <div class="login-iphone">
     <el-form label-width="60px" v-model="iphoneInfos">
       <el-form-item label="手机号">
-        <el-input v-model="iphoneInfos.iphone" clearable style="width: 200px" />
+        <el-input placeholder="仅提供参考项" v-model="iphoneInfos.iphone" clearable style="width: 200px" />
       </el-form-item>
       <el-form-item label="验证码">
         <el-input clearable style="width: 120px" v-model="iphoneInfos.iphoneCode"/>
