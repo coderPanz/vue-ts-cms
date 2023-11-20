@@ -98,7 +98,7 @@ const clickMessage = () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  right: 250px;
+  right: 200px;
   height: 30px;
   width: 80px;
   border-radius: 4px;
