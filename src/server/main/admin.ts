@@ -3,7 +3,7 @@ import { pzrequest } from '../requestPackage'
 // 获取数据列表
 export function queryReq(name: string, data?: any) {
   return name === 'user'? pzrequest.post({
-    url: `/user/paginationQuery`,
+    url: `/userpaginationQuery`,
     data: data
   }): pzrequest.post({
     url: `/${name}/paginationQuery`,
