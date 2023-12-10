@@ -9,7 +9,7 @@
       <bread-crumb />
       <div class="infos">
         <el-icon @click="clickMessage" size="22" style="margin-right: 5px;"><BellFilled /></el-icon>
-        <img src="http://localhost:5173/src/assets/img/favicon.ico" alt="avatar" style="width: 27; height: 27px; border-radius: 100%;">
+        <img src="../../assets/img/favicon.ico" alt="avatar" style="width: 27; height: 27px; border-radius: 100%;">
         <el-button @click="exitLogin" style="background-color: #ff6000; color: #fff; margin-left: 17px;">
           <span>退出登录</span>
         </el-button>
