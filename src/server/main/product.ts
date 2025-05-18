@@ -20,3 +20,20 @@ export function goodsMapReq() {
     url: `/goods/count/country`
   })
 }
+
+// 数据上报
+export function goodsDataUploadReq(id: string, data?: any) {
+  return pzrequest.post({
+    url: `/goods/count/${id}`,
+    data: data
+  })
+}
+
+
+// 全国销售数据上报
+export function goodsSaleCountryUploadReq(data?: any) {
+  return pzrequest.post({
+    url: `/goods/count/country/data`,
+    data: data
+  })
+}

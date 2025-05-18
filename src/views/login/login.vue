@@ -4,7 +4,7 @@
     <div class="login-top">
       <div class="left">
         <img src="../../assets//img/小米logo.png" alt="" />
-        <span class="loginTitle">小米帐号</span>
+        <span class="loginTitle">电商后台</span>
       </div>
       <div class="rigth">
         <a href="https://static.account.xiaomi.com/html/agreement/user/zh_CN.html">

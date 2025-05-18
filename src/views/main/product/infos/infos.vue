@@ -1,3 +1,12 @@
+<!--
+ * @Author: qs
+ * @Date: 2024-11-22 16:27:18
+ * @LastEditTime: 2025-05-15 19:50:55
+ * @LastEditors: qs
+ * @Description: 
+ * @FilePath: /vue-ts-cms/src/views/main/product/infos/infos.vue
+ * 
+-->
 <template>
   <div class="app">
     <div class="search">
@@ -14,8 +23,10 @@
         @create-btn-click="createBtnClick"
         @update-btn-click="updateBtnClick"
       >
-        <template #productInfos="scope">
-          <img style="height: 50px; width: 50px;" :src="scope.row.img" alt="">
+        <template #status="scope">
+          <el-button size="small" plain :type="scope.row.status ? 'primary' : 'danger'">
+            {{ scope.row.status ? '上架' : '下架' }}
+          </el-button>
         </template>
       </page-content>
     </div>
@@ -39,18 +50,18 @@ import { pageContentHooks, pagePopUpHooks } from '@/hooks/index'
 import { computed } from 'vue'
 
 const adminStore = useAdminStore()
-adminStore.getDataListAction('productType')
+adminStore.getDataListAction('productTypeList')
 
 // 对select类型的数据进行处理(下拉显示数据列表)
-const popUpConfigReq =  computed(() => {
-  popUpConfig.formConfigData.forEach(item => {
-    if(item.type === 'select') {
-      item.options = adminStore.productTypeList
+const popUpConfigReq = computed(() => {
+  popUpConfig.formConfigData.forEach((item: any) => {
+    if (item.type === 'select' && item.prop === 'type') {
+      // 只有status为1的数据才会被添加到options中
+      item.options = adminStore.productTypeList.filter((type) => type.status === 1)
     }
   })
   return popUpConfig
 })
-
 
 // 对setup具有相同的逻辑进行hooks抽取
 // 1. page-content组件抽取的解构

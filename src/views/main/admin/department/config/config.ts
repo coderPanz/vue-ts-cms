@@ -1,16 +1,25 @@
+/*
+ * @Author: qs
+ * @Date: 2024-11-22 16:27:18
+ * @LastEditTime: 2025-05-15 22:59:57
+ * @LastEditors: qs
+ * @Description: 
+ * @FilePath: /vue-ts-cms/src/views/main/admin/department/config/config.ts
+ * 
+ */
 import { type IConfig } from '../config/config-type'
 export const searchConfig = {
   formConfigData: [
     {
       type: 'normal',
       prop: 'id',
-      label:'上级id',
+      label: '上级id',
       initialValue: ''
     },
     {
       type: 'normal',
       prop: 'name',
-      label:'部门名称',
+      label: '部门名称',
       initialValue: ''
     },
     {
@@ -20,10 +29,16 @@ export const searchConfig = {
       initialValue: ''
     },
     {
+      type: 'normal',
+      prop: 'parentId',
+      label: '上级部门',
+      initialValue: ''
+    },
+    {
       type: 'date-picker',
       prop: 'createdAt',
       label: '创建时间'
-    },
+    }
   ]
 }
 
@@ -39,6 +54,8 @@ export const contentConfig = {
     { type: 'index', label: '序号', width: '70' },
 
     // 普通定制
+    { type: 'normal', prop: '_id', label: 'id', width: '230' },
+
     { type: 'normal', prop: 'name', label: '部门名称' },
     { type: 'normal', prop: 'leader', label: '部门领导' },
 
@@ -46,7 +63,7 @@ export const contentConfig = {
 
     // 普通定制
     { type: 'time', prop: 'createdAt', label: '创建时间' },
-    { type: 'time', prop: 'updatedAt', label: '更新时间' },
+    { type: 'time', prop: 'updatedAt', label: '更新时间' }
   ]
 }
 

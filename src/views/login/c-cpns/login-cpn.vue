@@ -1,35 +1,41 @@
 <template>
   <div class="loginCpn">
-    <div class="projectNama">后台版</div>
+    <div class="projectNama">商家端</div>
     <el-tabs type="border-card" stretch v-model="activeName">
       <el-tab-pane name="account">
         <template #label>
           <el-icon class="icon"><User /></el-icon>
-          <span class="accountLogin">帐号登录</span>
+          <span class="accountLogin">商家登录</span>
         </template>
-        <login-account ref="accountIns"/>
+        <login-account ref="accountIns" />
       </el-tab-pane>
       <el-tab-pane name="iphone">
         <template #label>
           <el-icon class="icon"><Phone /></el-icon>
-          <span class="accountLogin">手机登录</span>
+          <span class="accountLogin">商家注册</span>
         </template>
-        <login-iphone />
+        <login-iphone ref="iphoneIns"/>
       </el-tab-pane>
     </el-tabs>
     <div class="select">
-      <el-checkbox label="记住密码" size="large" v-model="isRemember" class="remeber"/>
-      <a class="forgot" href="https://account.xiaomi.com/fe/service/forgetPassword?_bannerBiz=&sid=mi_eshop&callback=http%3A%2F%2Forder.mi.com%2Flogin%2Fcallback%3Ffollowup%3Dhttps%253A%252F%252Fwww.mi.com%252Fshop%26sign%3DODA5NjU3ZjZkYjkxMWE3ZjVkYTE5M2MxMDNlYmJkYzJhZGFjNzBhYg%2C%2C&qs=&_locale=zh_CN">忘记密码?</a>
+      <el-checkbox label="记住密码" size="large" v-model="isRemember" class="remeber" />
+      <a
+        class="forgot"
+        href="https://account.xiaomi.com/fe/service/forgetPassword?_bannerBiz=&sid=mi_eshop&callback=http%3A%2F%2Forder.mi.com%2Flogin%2Fcallback%3Ffollowup%3Dhttps%253A%252F%252Fwww.mi.com%252Fshop%26sign%3DODA5NjU3ZjZkYjkxMWE3ZjVkYTE5M2MxMDNlYmJkYzJhZGFjNzBhYg%2C%2C&qs=&_locale=zh_CN"
+        >忘记密码?</a
+      >
     </div>
-    <el-link class="loginNow" @click="loginNow">立即登录</el-link>
+    <el-link class="loginNow" @click="loginNow">
+      {{ activeName === 'account' ? '立即登录' : '立即注册' }}
+    </el-link>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 import loginAccount from './login-account.vue'
-import loginIphone from './login-iphone.vue';
-import { localIns } from '@/utils/cache/cache';
+import loginIphone from './login-iphone.vue'
+import { localIns } from '@/utils/cache/cache'
 
 // 3.点击登录
 // 3.1 获取子组件实例并指定类型, 使用InstanceType表示获取该类的返回值的类型
@@ -39,8 +45,8 @@ import { localIns } from '@/utils/cache/cache';
 const activeName = ref('account')
 const isRemember = ref(localIns.getCache('isRemember'))
 const accountIns = ref<InstanceType<typeof loginAccount>>()
-
-watch(isRemember, newValue => {
+const iphoneIns = ref<InstanceType<typeof loginIphone>>()
+watch(isRemember, (newValue) => {
   localIns.setCache('isRemember', newValue)
 })
 
@@ -48,10 +54,10 @@ function loginNow() {
   if (activeName.value === 'account') {
     accountIns.value?.loginAction(isRemember.value)
   } else {
-    console.log('手机登录')
+    // 调用新建用户接口，模拟用户商户注册
+    iphoneIns.value?.registerAction()
   }
 }
-
 </script>
 
 <style lang="less" scoped>

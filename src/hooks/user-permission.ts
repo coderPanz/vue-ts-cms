@@ -1,3 +1,12 @@
+/*
+ * @Author: qs
+ * @Date: 2024-11-22 16:27:18
+ * @LastEditTime: 2025-05-15 20:34:16
+ * @LastEditors: qs
+ * @Description: 
+ * @FilePath: /vue-ts-cms/src/hooks/user-permission.ts
+ * 
+ */
 import useLoginStore from '@/store/login/login'
 const loginStore = useLoginStore()
 

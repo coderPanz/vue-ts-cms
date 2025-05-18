@@ -10,6 +10,7 @@ interface IState {
   count: Number
   id: any // 保存用户id, 用于编辑用户操作
   productTypeList: any[] //商品类型列表
+  productInfosList: any[]
 }
 const useAdminStore = defineStore('admin', {
   state: (): IState => ({
@@ -21,32 +22,36 @@ const useAdminStore = defineStore('admin', {
     dataList: [],
     count: 0,
     id: '',
-    productTypeList: []
+    productTypeList: [],
+    productInfosList: []
   }),
   // 发送网络请求中转站, 尽量避免在vue组件中直接发送网络请求, 而是通过调用actions间接发送网络请求
   actions: {
     // 1.查询（进入系统管理菜单后直接获取角色，部门，用户列表存到pinia中）
     async getDataListAction(name: string, data?: any) {
       // 因为菜单的获取和其他的请求不是公用一个api所以需要单独处理
-        const res = await queryReq(name, data)
-        const userRes = await queryReq('user')
-        const roleRes = await queryReq('role')
-        const departmentRes = await queryReq('department')
-        const menuRes = await queryReq('menu')
-        const productType = await queryReq('productType')
+      const res = await queryReq(name, data)
+      const userRes = await queryReq('user')
+      const roleRes = await queryReq('role')
+      const departmentRes = await queryReq('department')
+      const menuRes = await queryReq('menu')
+      const productType = await queryReq('productType')
+      const productInfos = await queryReq('productInfos')
+      console.log('productInfos', productInfos)
 
-        this.dataList = res.data.data
-        this.count = res.data.totalCount
-        this.menuList = menuRes.data.data
-        this.roleList = roleRes.data.data
-        this.departmentList = departmentRes.data.data
-        this.userList = userRes.data.data
-        this.productTypeList = productType.data.data
-        return res
+      this.dataList = res.data.data
+      this.count = res.data.totalCount
+      this.menuList = menuRes.data.data
+      this.roleList = roleRes.data.data
+      this.departmentList = departmentRes.data.data
+      this.userList = userRes.data.data
+      this.productTypeList = productType.data.data
+      this.productInfosList = productType.data.data
+      return res
     },
     // 2. 删除用户后重新发送网络请求获取最新的数据
-    async deleteDataListAction(name: string, id: string) {
-      const res = await deleteReq(name, id)
+    async deleteDataListAction(name: string, id: string, userId: string) {
+      const res = await deleteReq(name, id, userId)
       return res
     },
     // 3. 创建用户

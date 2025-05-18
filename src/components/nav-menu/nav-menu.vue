@@ -1,8 +1,8 @@
 <template>
   <div class="nav-menu">
-    <div class="system-name">
-      <img src="../../assets//img//favicon.ico" alt="" />
-      <span v-show="isFold" style="color: #fff;">小米数据中台</span>
+    <div class="system-name" style="display: flex; align-items: center; justify-content: center">
+      <!-- <img src="../../assets//img//favicon.ico" alt="" /> -->
+      <span v-show="isFold" style="color: #fff;">{{ companyName }}</span>
     </div>
     <el-menu :default-active="$route.path" router :collapse="!isFold" active-text-color="#ff6900">
       <template v-for="item in menuTree" :key="item.id">
@@ -15,7 +15,7 @@
               <component :is="item.icon"></component>
             </el-icon>
             <!-- 设置name -->
-            <span style="color: #fff;">{{ item.name }}</span>
+            <span style="color: #fff">{{ item.name }}</span>
           </template>
           <!-- 遍历子菜单list -->
           <template v-for="subItem in item.children" :key="subItem.id">
@@ -30,11 +30,15 @@
 </template>
 
 <script setup lang="ts">
+import { localIns } from '@/utils/cache/cache'
 import useLoginStore from '@/store/login/login'
 
 // 获取store中的menuTree
 const loginStore = useLoginStore()
 const menuTree = loginStore.localMenuTree
+
+// 获取企业名称
+const companyName = localIns.getCache('companyName') || '电商运营平台'
 
 // 1.1菜单显示与隐藏状态切换
 // 1.2接收父组件的参数
@@ -73,7 +77,6 @@ defineProps({
       background-color: #333;
       --el-menu-text-color: #fff;
       padding-left: 75px;
-
     }
     --el-menu-active-color: #ff6900 !important;
     --el-menu-hover-bg-color: #222;
@@ -84,5 +87,4 @@ defineProps({
     margin-right: 13px;
   }
 }
-
 </style>

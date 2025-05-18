@@ -30,19 +30,20 @@ const useLoginStore = defineStore('login', {
           // 1. 获取角色id
           const roleId = res.data.id
           localIns.setCache('roleId', roleId) // 在admin的store中会用到, 先缓存起来
-          console.log(roleId)
+          console.log('roleId', roleId)
           // 2. 通过角色id获取菜单树
           const menuTreeData = await menuTreeReq(roleId)
           localIns.setCache('localMenuTree', menuTreeData.data.data)
           this.localMenuTree = menuTreeData.data.data
+          
 
           // 3. 获取用户按钮权限并缓存
           const userBtnPermissionList = mapMenuForPermission(this.localMenuTree)
           this.localPermissionList = userBtnPermissionList
+          console.log('按钮权限', userBtnPermissionList)
 
           // 4. 登录成功后显示main页面前动态添加路由
           increaseRoute(menuTreeData.data.data)
-
           // 5. 跳转页面
           router.push('/main')
 
@@ -68,9 +69,9 @@ const useLoginStore = defineStore('login', {
           router.addRoute('main', item)
         })
 
-         // 登录成功后刷新时缓存用户按钮权限
-         const userBtnPermissionList = mapMenuForPermission(this.localMenuTree)
-         this.localPermissionList = userBtnPermissionList
+        // 登录成功后刷新时缓存用户按钮权限
+        const userBtnPermissionList = mapMenuForPermission(this.localMenuTree)
+        this.localPermissionList = userBtnPermissionList
       } else {
         return
       }

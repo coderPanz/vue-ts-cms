@@ -93,7 +93,6 @@ function queryDataList() {
   .el-form {
     .el-row {
       display: flex;
-      justify-content: space-between;
       .el-col {
         height: 70px;
       }

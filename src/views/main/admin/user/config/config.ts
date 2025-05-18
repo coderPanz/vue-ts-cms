@@ -14,6 +14,18 @@ export const searchConfig = {
       initialValue: ''
     },
     {
+      type: 'normal',
+      prop: 'rolesId',
+      label: '所属角色',
+      initialValue: ''
+    },
+    {
+      type: 'normal',
+      prop: 'departmentId',
+      label: '所属部门',
+      initialValue: ''
+    },
+    {
       type: 'date-picker',
       prop: 'createdAt',
       label: '创建时间',
@@ -44,11 +56,13 @@ export const contentConfig = {
     { type: 'index', label: '序号', width: '70' },
 
     // 普通定制
-    { type: 'normal', prop: '_id', label: 'id', width: '230' },
+    { type: 'normal', prop: '_id', label: 'id'},
     { type: 'normal', prop: 'name', label: '用户名' },
+    { type: 'normal', prop: 'rolesId', label: '所属角色' },
+    { type: 'normal', prop: 'departmentId', label: '所属部门' },
 
     // 特殊定制(按钮, 特殊样式等等)
-    { type: 'custom', prop: 'status', label: '状态', width: '100', slotName: 'status' },
+    { type: 'custom', prop: 'status', label: '状态', width: '80', slotName: 'status' },
 
     // 普通定制
     { type: 'time', prop: 'createdAt', label: '创建时间' },

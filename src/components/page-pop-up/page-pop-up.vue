@@ -65,6 +65,7 @@ interface IProps {
     formConfigData: any[]
   }
   permissionList?: any[]
+  productType: string
 }
 
 const props = defineProps<IProps>()
@@ -97,7 +98,7 @@ function isShowExpose(isParam: boolean, isJudge: boolean, backData?: any) {
   if (!isJudge && backData) {
     for (const key in backData) {
       // 由于部门管理的后端数据设计不太规范, 所以部门管理编辑就不回显上级部门了
-      if(key !== 'parentId') {
+      if (key !== 'parentId') {
         popUpForm[key] = backData[key]
       }
     }
@@ -125,7 +126,7 @@ function handleClose() {
 // 6.2 若创建成功弹窗一个成功的窗口, 若失败弹出失败窗口
 // 6.3 创建成功后后需要重新获取用户列表的操作
 // 6.4 重置数据后关闭弹窗
-const emit = defineEmits(['reGetDataList'])
+const emit = defineEmits(['reGetDataList', 'reGetProductType'])
 
 function submitBtn() {
   let popUpFormData = popUpForm
@@ -140,8 +141,13 @@ function submitBtn() {
           message: '创建成功!',
           type: 'success'
         })
-        // 创建数据成功后发出查询获取数据列表的事件进行刷新操作
-        emit('reGetDataList')
+        if (props.productType === 'productType') {
+          // 单独刷新商品类型
+          emit('reGetProductType')
+        } else {
+          // 创建数据成功后发出查询获取数据列表的事件进行刷新操作
+          emit('reGetDataList')
+        }
       } else {
         ElMessage({
           message: '创建失败!',
@@ -158,7 +164,13 @@ function submitBtn() {
             message: '更新成功!',
             type: 'success'
           })
-          emit('reGetDataList')
+          if (props.productType === 'productType') {
+            // 单独刷新商品类型
+            emit('reGetProductType')
+          } else {
+            // 创建数据成功后发出查询获取数据列表的事件进行刷新操作
+            emit('reGetDataList')
+          }
         } else {
           ElMessage({
             message: '更新失败!',

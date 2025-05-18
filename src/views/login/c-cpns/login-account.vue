@@ -1,11 +1,11 @@
 <template>
   <div class="login-account">
-    <el-form ref="ruleFormRef" :model="account" :rules="rules" label-width="60px">
+    <el-form ref="ruleFormRef" :model="account" :rules="rules" label-width="100px">
       <el-form-item label="帐号" prop="name">
         <el-input v-model="account.name" clearable style="width: 200px" class="input" />
       </el-form-item>
 
-      <el-form-item label="密码" prop="password">
+      <el-form-item label="密码" prop="password" label-width="100px">
         <el-input v-model="account.password" show-password clearable style="width: 200px" />
       </el-form-item>
     </el-form>
@@ -55,6 +55,13 @@ function loginAction(isRemember: any) {
           localIns.removeCache(NAME)
           localIns.removeCache(PASSWORD)
         }
+        // 将用户信息存入localStorage
+        console.log('登录成功-----', res)
+        localIns.setCache('accountName', res.data.name)
+        localIns.setCache('registrationDate', res.data.createTime)
+        localIns.setCache('userId', res.data.userId)
+        localIns.setCache('mainPageName', '')
+        localIns.setCache('mainPageUrl', '')
       })
     } else {
       ElMessage.error('输入信息格式错误!')

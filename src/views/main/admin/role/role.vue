@@ -63,7 +63,7 @@ const { menuList } = storeToRefs(adminStore)
 const defaultProps = {
   children: 'children',
   label: 'name',
-}
+} 
 
 const permissionList = ref<any[]>([])
 // 1. 点击节点复选框之后触发(通过参数二获取其权限id列表, 并传入popup组件进行角色的创建)
@@ -71,6 +71,7 @@ function checkClick(data1: any, data2: any) {
   let permissionIds: any[] = []
   permissionIds = [...data2.checkedKeys, ...data2.halfCheckedKeys]
   permissionList.value = permissionIds
+
 }
 
 // 2.1 权限回显的高阶操作(难点: 把hooks中的数据提取出来, 通过传入函数进入hooks, 在其内部调用函数并传出所需数据)
